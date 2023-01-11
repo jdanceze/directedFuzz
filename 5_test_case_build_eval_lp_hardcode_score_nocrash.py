@@ -1061,13 +1061,13 @@ def create_one_test_and_run(target_function, all_functions,
         #detected_crash(test_file_name, test_i)
         print('timeout detected?')
         print('exception = ', e)
-        #raise e
+        raise e
     except BrokenPipeError as e:
 
         detected_crash(test_file_name, test_i)
         print('crash detected?')
         print('exception = ', e)
-        #raise e
+        raise e
 
     print("[test builder] Received", data)
 
@@ -1114,6 +1114,7 @@ def create_one_test_and_run(target_function, all_functions,
         else:
             pass
             #run_script_server()
+        print("set is_crash to True")
         is_crash = True
 
     else:
@@ -1146,7 +1147,7 @@ def create_one_test_and_run(target_function, all_functions,
         
         if final:
             #create a new file to new directory
-            filename = "/final/final_" + test_i + ".py"
+            filename = "/final/final_" + str(test_i) + ".py"
             shutil.copy(test_file_name, filename)
             # with open("/final/final.txt", "a") as myfile:
             #     myfile.write("\n\n# score: " + test_i)
@@ -1158,7 +1159,7 @@ def create_one_test_and_run(target_function, all_functions,
             score_max = score
             outcome = 'valid'
 
-            valid_filename = "/valid/valid_" + test_i + ".py"
+            valid_filename = "/valid/valid_" + str(test_i) + ".py"
             shutil.copy(test_file_name, valid_filename)
 
             if len(valid_mapping) == 0:
@@ -1492,6 +1493,7 @@ def create_tests_for_the_target_functions(arguments):
 
                     
             except (BrokenPipeError, socket.timeout):
+                print("got the exception in except()")
                 if last_crash_index != 0:  # if it's zero, we're dealing with some error starting the script-server
                     crashes_for_target_func[target_function] += 1
                 if crashes_for_target_func[target_function] >= 1:

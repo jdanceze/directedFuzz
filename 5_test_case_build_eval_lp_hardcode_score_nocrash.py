@@ -22,7 +22,12 @@ INV_EXTRACTION = 'fuzzingbook_invariant_utils.get_invariants_hold(fuzzingbook_in
 
 num_crashes = 0
 last_crash_index = -1
-NUM_TESTS_PER_FUNC = 2000
+
+NUM_TESTS_PER_FUNC = 100
+READ_DIRECTORY = "/fileout3"
+TARGET_FINAL_FILE_NAME = "Final"
+FINAL_DIRECTORY_OUT = "/final"
+VALID_DIRECTORY_OUT = "/valid"
 
 
 try:
@@ -1138,16 +1143,16 @@ def create_one_test_and_run(target_function, all_functions,
         # count the number of txt file in the output folder
         score = 0
         final = False
-        for file in os.listdir("/fileout3"):
+        for file in os.listdir(READ_DIRECTORY):
             if file.endswith(".txt"):
                 score+=1
-            if file.endswith(".txt") and file.startswith("Final"):
+            if file.endswith(".txt") and file.startswith(TARGET_FINAL_FILE_NAME):
                 final = True
-            os.remove("/fileout3/"+file)
+            os.remove(READ_DIRECTORY+file)
         
         if final:
             #create a new file to new directory
-            filename = "/final/final_" + str(test_i) + ".py"
+            filename = FINAL_DIRECTORY_OUT + "/final_" + str(test_i) + ".py"
             shutil.copy(test_file_name, filename)
             # with open("/final/final.txt", "a") as myfile:
             #     myfile.write("\n\n# score: " + test_i)
@@ -1159,7 +1164,7 @@ def create_one_test_and_run(target_function, all_functions,
             score_max = score
             outcome = 'valid'
 
-            valid_filename = "/valid/valid_" + str(test_i) + ".py"
+            valid_filename = VALID_DIRECTORY_OUT + "/valid_" + str(test_i) + ".py"
             shutil.copy(test_file_name, valid_filename)
 
             if len(valid_mapping) == 0:

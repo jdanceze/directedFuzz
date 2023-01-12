@@ -24,11 +24,12 @@ num_crashes = 0
 last_crash_index = -1
 
 NUM_TESTS_PER_FUNC = 100
+
+TARGET_API_LIST = 'target_test_func.txt'
 READ_DIRECTORY = "/fileout3"
 TARGET_FINAL_FILE_NAME = "Final"
 FINAL_DIRECTORY_OUT = "/final"
 VALID_DIRECTORY_OUT = "/valid"
-
 
 try:
     rand_ident = sys.argv[1]
@@ -832,7 +833,7 @@ def find_all_known_functions():
     functions_to_imports = {}
     crawled_function_arg_to_index = {}
     # with open('all_functions.txt') as infile:
-    with open('target_test_func.txt') as infile:
+    with open(TARGET_API_LIST) as infile:
         way = ''
         imports = []
         function_name = None

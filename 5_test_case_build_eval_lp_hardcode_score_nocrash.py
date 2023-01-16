@@ -625,12 +625,12 @@ def get_rules(target_function, functions_to_sigs, target_arg,
                 if random.choice([True, False]):
                     if(list(functions_to_sigs[target_function].keys())[i]=='output_encoding'):
                         print("output_encodinggggggg")
-                        target_invariant_set_for_arg[i] = 9919999999
-                        #target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
+                        #target_invariant_set_for_arg[i] = 9919999999
+                        target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
                     elif(list(functions_to_sigs[target_function].keys())[i]=='errors'):
                         print("errorsssssssssss")
-                        target_invariant_set_for_arg[i] = 9929999999
-                        #target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
+                        #target_invariant_set_for_arg[i] = 9929999999
+                        target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
                     else:    
                         target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
                 else:
@@ -652,10 +652,12 @@ def get_rules(target_function, functions_to_sigs, target_arg,
         random_or_solved_choices[target_arg].append('target')
         if(list(functions_to_sigs[target_function].keys())[target_arg]=='output_encoding'):
             print("output_encodinggggggg")
-            target_invariant_set_for_arg[target_arg] = 9919999999
+            #target_invariant_set_for_arg[target_arg] = 9919999999
+            target_invariant_set_for_arg[target_arg] = int(rand_target)
         elif(list(functions_to_sigs[target_function].keys())[target_arg]=='errors'):
             print("errorsssssssssss")
-            target_invariant_set_for_arg[target_arg] = 9929999999   
+            #target_invariant_set_for_arg[target_arg] = 9929999999
+            target_invariant_set_for_arg[target_arg] = int(rand_target)   
         else:                
             target_invariant_set_for_arg[target_arg] = int(rand_target)
 
@@ -667,10 +669,12 @@ def get_rules(target_function, functions_to_sigs, target_arg,
             selected_invset = random.choice(undominated_invariant_sets)
             if(list(functions_to_sigs[target_function].keys())[target_arg]=='output_encoding'):
                 print("output_encodinggggggg")
-                target_invariant_set_for_arg[target_arg] = 9919999999
+                #target_invariant_set_for_arg[target_arg] = 9919999999
+                target_invariant_set_for_arg[target_arg] = selected_invset
             elif(list(functions_to_sigs[target_function].keys())[target_arg]=='errors'):
                 print("errorsssssssssss")
-                target_invariant_set_for_arg[target_arg] = 9929999999   
+                #target_invariant_set_for_arg[target_arg] = 9929999999
+                target_invariant_set_for_arg[target_arg] = selected_invset   
             else: 
                 target_invariant_set_for_arg[target_arg] = selected_invset
 
@@ -702,10 +706,12 @@ def get_rules(target_function, functions_to_sigs, target_arg,
 
                 if(list(functions_to_sigs[target_function].keys())[target_arg]=='output_encoding'):
                     print("output_encodinggggggg")
-                    target_invariant_set_for_arg[target_arg] = 9919999999
+                    #target_invariant_set_for_arg[target_arg] = 9919999999
+                    target_invariant_set_for_arg[target_arg] = int(invset)
                 elif(list(functions_to_sigs[target_function].keys())[target_arg]=='errors'):
                     print("errorsssssssssss")
-                    target_invariant_set_for_arg[target_arg] = 9929999999   
+                    #target_invariant_set_for_arg[target_arg] = 9929999999
+                    target_invariant_set_for_arg[target_arg] = int(invset)   
                 else: 
                     target_invariant_set_for_arg[target_arg] = int(invset)
             random_or_solved_choices[target_arg].append('solution')
@@ -968,6 +974,7 @@ def create_one_test_and_run(target_function, all_functions,
                             test_i):
 
     global num_crashes
+    global score_max
 
     is_no_problemo_runs = False
     is_problem = False
@@ -1157,7 +1164,7 @@ def create_one_test_and_run(target_function, all_functions,
             shutil.copy(test_file_name, filename)
             # with open("/final/final.txt", "a") as myfile:
             #     myfile.write("\n\n# score: " + test_i)
-        global score_max
+        
         print("score: ",score)
         print("score_max: ",score_max) 
         if(score > 0 and score >= score_max):
@@ -1185,9 +1192,13 @@ def create_one_test_and_run(target_function, all_functions,
             outcome = 'invalid'
             
     elif is_crash:
+        for file in os.listdir(READ_DIRECTORY):
+            os.remove(READ_DIRECTORY+file)
         outcome = 'crash'
         #outcome = 'invalid'
     else:
+        for file in os.listdir(READ_DIRECTORY):
+            os.remove(READ_DIRECTORY+file)
         outcome = 'invalid'
 
     if target_arg != -1:

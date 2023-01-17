@@ -23,7 +23,7 @@ INV_EXTRACTION = 'fuzzingbook_invariant_utils.get_invariants_hold(fuzzingbook_in
 num_crashes = 0
 last_crash_index = -1
 
-NUM_TESTS_PER_FUNC = 100
+NUM_TESTS_PER_FUNC = 800
 
 TARGET_API_LIST = 'target_test_func.txt'
 READ_DIRECTORY = "/fileout3"
@@ -1058,7 +1058,7 @@ def create_one_test_and_run(target_function, all_functions,
                 print('too much time elapsed, but has data_raw=', data_raw)
             if time_elapsed > 15 and len(data_raw) == 0:
                 print('receiving: too much time elapsed', end_time)
-                print('tced', time_elapsed)
+                print('too much time elasped', time_elapsed)
                 data = 'Server down!'
                 break
         # print('received', end_time)
@@ -1156,7 +1156,7 @@ def create_one_test_and_run(target_function, all_functions,
                 score+=1
             if file.endswith(".txt") and file.startswith(TARGET_FINAL_FILE_NAME):
                 final = True
-            os.remove(READ_DIRECTORY+file)
+            os.remove(READ_DIRECTORY+ "/" + file)
         
         if final:
             #create a new file to new directory
@@ -1193,12 +1193,12 @@ def create_one_test_and_run(target_function, all_functions,
             
     elif is_crash:
         for file in os.listdir(READ_DIRECTORY):
-            os.remove(READ_DIRECTORY+file)
+            os.remove(READ_DIRECTORY+ "/" + file)
         outcome = 'crash'
         #outcome = 'invalid'
     else:
         for file in os.listdir(READ_DIRECTORY):
-            os.remove(READ_DIRECTORY+file)
+            os.remove(READ_DIRECTORY+ "/" + file)
         outcome = 'invalid'
 
     if target_arg != -1:

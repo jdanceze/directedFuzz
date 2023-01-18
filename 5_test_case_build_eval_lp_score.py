@@ -1648,6 +1648,7 @@ def create_tests_for_the_target_functions(arguments):
                 print('swapped to port=', port)
 
                 target_function_i += 1
+                
             print_final(final_sus, final_crash, final_invalid)
             print_outcomes(run_outcomes[target_function], target_function,
                            'outcomes_' + rand_ident + '_' + target_function + '.txt')

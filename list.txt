@@ -18,3 +18,23 @@ python 5_test_case_build_eval_lp_valid_all.py run_0_1 0 1 | tee 01ExtractVolumeP
 
 ====================================================================================================
 
+tf.broadcast_to
+TARGET_API_LIST = 'target_BroadCastTo.txt'
+READ_DIRECTORY = "/fileout_BroadCastTo"
+TARGET_FINAL_FILE_NAME = "Final"
+FINAL_DIRECTORY_OUT = "/final_s_BroadCastTo"
+VALID_DIRECTORY_OUT = "/valid_s_BroadCastTo"
+01BroadCastTo8000_score_all.txt
+
+tf.broadcast_to
+TARGET_API_LIST = 'target_BroadcastTo.txt'
+READ_DIRECTORY = "/fileout_BroadCastTo"
+TARGET_FINAL_FILE_NAME = "Final"
+FINAL_DIRECTORY_OUT = "/final_v_BroadCastTo"
+VALID_DIRECTORY_OUT = "/valid_v_BroadCastTo"
+01BroadCastTo8000_valid_all.txt
+
+python 5_test_case_build_eval_lp_score_all.py run_0_1 0 1 | tee 01BroadCastTo4000_score_all.txt
+
+====================================================================================================
+

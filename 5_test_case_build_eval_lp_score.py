@@ -1175,8 +1175,8 @@ def create_one_test_and_run(target_function, all_functions,
             score_max = score
             outcome = 'valid'
 
-            valid_filename = VALID_DIRECTORY_OUT + "/valid_sus_" + str(test_i) + ".py"
-            shutil.copy(test_file_name, valid_filename)
+            #valid_filename = VALID_DIRECTORY_OUT + "/valid_sus_" + str(test_i) + ".py"
+            #shutil.copy(test_file_name, valid_filename)
 
             if len(valid_mapping) == 0:
                 for key, val in target_invariant_set_for_arg.items():
@@ -1218,8 +1218,8 @@ def create_one_test_and_run(target_function, all_functions,
             score_max = score
             outcome = 'valid'
 
-            valid_filename = VALID_DIRECTORY_OUT + "/valid_crash_" + str(test_i) + ".py"
-            shutil.copy(test_file_name, valid_filename)
+            #valid_filename = VALID_DIRECTORY_OUT + "/valid_crash_" + str(test_i) + ".py"
+            #shutil.copy(test_file_name, valid_filename)
 
             if len(valid_mapping) == 0:
                 for key, val in target_invariant_set_for_arg.items():
@@ -1261,8 +1261,8 @@ def create_one_test_and_run(target_function, all_functions,
             score_max = score
             outcome = 'valid'
 
-            valid_filename = VALID_DIRECTORY_OUT + "/valid_invalid_" + str(test_i) + ".py"
-            shutil.copy(test_file_name, valid_filename)
+            #valid_filename = VALID_DIRECTORY_OUT + "/valid_invalid_" + str(test_i) + ".py"
+            #shutil.copy(test_file_name, valid_filename)
 
             if len(valid_mapping) == 0:
                 for key, val in target_invariant_set_for_arg.items():

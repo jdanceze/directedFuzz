@@ -23,7 +23,7 @@ INV_EXTRACTION = 'fuzzingbook_invariant_utils.get_invariants_hold(fuzzingbook_in
 num_crashes = 0
 last_crash_index = -1
 
-NUM_TESTS_PER_FUNC = 100
+NUM_TESTS_PER_FUNC = 8000
 
 TARGET_API_LIST = 'target_test_func.txt'
 READ_DIRECTORY = "/fileout3"
@@ -1156,7 +1156,7 @@ def create_one_test_and_run(target_function, all_functions,
 
         if final:
             #create a new file to new directory
-            filename = FINAL_DIRECTORY_OUT + "/final_" + str(test_i) + ".py"
+            filename = FINAL_DIRECTORY_OUT + "/final_sus_" + str(test_i) + ".py"
             shutil.copy(test_file_name, filename)
         
         outcome = 'valid'

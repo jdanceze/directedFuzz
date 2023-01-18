@@ -4,7 +4,7 @@ READ_DIRECTORY = "/fileout_ExtractVolumePatches"
 TARGET_FINAL_FILE_NAME = "Final"
 FINAL_DIRECTORY_OUT = "/final_s_ExtractVolumePatches"
 VALID_DIRECTORY_OUT = "/valid_s_ExtractVolumePatches"
-01ExtractVolumePatches8000_score.txt
+01ExtractVolumePatches8000_score_all.txt
 
 tf.compat.v1.extract_volume_patches
 TARGET_API_LIST = 'target_ExtractVolumePatches.txt'
@@ -12,6 +12,9 @@ READ_DIRECTORY = "/fileout_ExtractVolumePatches"
 TARGET_FINAL_FILE_NAME = "Final"
 FINAL_DIRECTORY_OUT = "/final_v_ExtractVolumePatches"
 VALID_DIRECTORY_OUT = "/valid_v_ExtractVolumePatches"
-01ExtractVolumePatches8000_valid.txt
+01ExtractVolumePatches8000_valid_all.txt
+
+python 5_test_case_build_eval_lp_valid_all.py run_0_1 0 1 | tee 01ExtractVolumePatches8000_valid_all.txt
+
 ====================================================================================================
 

@@ -975,6 +975,9 @@ def create_one_test_and_run(target_function, all_functions,
 
     global num_crashes
     global score_max
+    global final_sus
+    global final_crash
+    global final_invalid
 
     is_no_problemo_runs = False
     is_problem = False
@@ -1159,8 +1162,8 @@ def create_one_test_and_run(target_function, all_functions,
             os.remove(READ_DIRECTORY+ "/" + file)
         
         if final:
-            #create a new file to new directory
-            filename = FINAL_DIRECTORY_OUT + "/final_" + str(test_i) + ".py"
+            final_sus+=1
+            filename = FINAL_DIRECTORY_OUT + "/final_sus_" + str(test_i) + ".py"
             shutil.copy(test_file_name, filename)
             # with open("/final/final.txt", "a") as myfile:
             #     myfile.write("\n\n# score: " + test_i)
@@ -1172,7 +1175,7 @@ def create_one_test_and_run(target_function, all_functions,
             score_max = score
             outcome = 'valid'
 
-            valid_filename = VALID_DIRECTORY_OUT + "/valid_" + str(test_i) + ".py"
+            valid_filename = VALID_DIRECTORY_OUT + "/valid_sus_" + str(test_i) + ".py"
             shutil.copy(test_file_name, valid_filename)
 
             if len(valid_mapping) == 0:
@@ -1202,7 +1205,7 @@ def create_one_test_and_run(target_function, all_functions,
             os.remove(READ_DIRECTORY+ "/" + file)
         
         if final:
-            #create a new file to new directory
+            final_crash+=1
             filename = FINAL_DIRECTORY_OUT + "/final_crash_" + str(test_i) + ".py"
             shutil.copy(test_file_name, filename)
             # with open("/final/final.txt", "a") as myfile:
@@ -1245,7 +1248,7 @@ def create_one_test_and_run(target_function, all_functions,
             os.remove(READ_DIRECTORY+ "/" + file)
         
         if final:
-            #create a new file to new directory
+            final_invalid+=1
             filename = FINAL_DIRECTORY_OUT + "/final_invalid_" + str(test_i) + ".py"
             shutil.copy(test_file_name, filename)
             # with open("/final/final.txt", "a") as myfile:
@@ -1414,6 +1417,15 @@ def create_tests_for_the_target_functions(arguments):
 
     global score_max
     score_max = 0
+
+    global final_sus
+    final_sus = 0
+
+    global final_crash
+    final_crash = 0
+
+    global final_invalid
+    final_invalid = 0
 
     run_outcomes = {}
     valid_mappings = {}
@@ -1611,6 +1623,7 @@ def create_tests_for_the_target_functions(arguments):
                 print('detected server down')
                 # print('total tests ran for func=', target_function, " times=", len(run_outcomes[target_function]))
                 # print('===stat===')
+                print_final(final_sus, final_crash, final_invalid)
                 print_outcomes(run_outcomes[target_function])
 
                 global_threadpool_executor.submit(run_and_assign_script_server, script_server_procs, script_server_procs[port], delay=1, port = port)
@@ -1635,7 +1648,7 @@ def create_tests_for_the_target_functions(arguments):
                 print('swapped to port=', port)
 
                 target_function_i += 1
-
+            print_final(final_sus, final_crash, final_invalid)
             print_outcomes(run_outcomes[target_function], target_function,
                            'outcomes_' + rand_ident + '_' + target_function + '.txt')
             print('===stat===')
@@ -1741,7 +1754,12 @@ def print_outcomes(outcomes, log_name=None, filename = None):
             for k, v in result.items():
                 outfile.write(k + ':' + str(v) + '\n')
 
-
+def print_final(sus_count, crash_count, invalid_count):
+    outFile = open(FINAL_DIRECTORY_OUT + '/Final_count.txt', 'w')
+    outFile.write('sus_count: ' + str(sus_count) + '\n')
+    outFile.write('crash_count: ' + str(crash_count) + '\n')
+    outFile.write('invalid_count: ' + str(invalid_count) + '\n')
+    outFile.close()
 
 main()
 

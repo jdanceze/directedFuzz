@@ -1192,14 +1192,90 @@ def create_one_test_and_run(target_function, all_functions,
             outcome = 'invalid'
             
     elif is_crash:
+        score = 0
+        final = False
         for file in os.listdir(READ_DIRECTORY):
+            if file.endswith(".txt"):
+                score+=1
+            if file.endswith(".txt") and file.startswith(TARGET_FINAL_FILE_NAME):
+                final = True
             os.remove(READ_DIRECTORY+ "/" + file)
-        outcome = 'crash'
+        
+        if final:
+            #create a new file to new directory
+            filename = FINAL_DIRECTORY_OUT + "/final_crash_" + str(test_i) + ".py"
+            shutil.copy(test_file_name, filename)
+            # with open("/final/final.txt", "a") as myfile:
+            #     myfile.write("\n\n# score: " + test_i)
+        
+        print("score: ",score)
+        print("score_max: ",score_max) 
+        if(score > 0 and score >= score_max):
+            
+            score_max = score
+            outcome = 'valid'
+
+            valid_filename = VALID_DIRECTORY_OUT + "/valid_crash_" + str(test_i) + ".py"
+            shutil.copy(test_file_name, valid_filename)
+
+            if len(valid_mapping) == 0:
+                for key, val in target_invariant_set_for_arg.items():
+                    valid_mapping[key] = val
+
+            if target_arg == -1:
+                for key in target_invariant_set_for_arg.keys():
+                    # seed history with the valid call.
+                    print('[calling add to history] ', 'target_function', target_function , 'key(for target arg=-1)', key, 'target inv set',
+                            target_invariant_set_for_arg[key], 'outcome', outcome)
+                    add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
+                            target_function, outcome)
+                    add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
+                            target_function, outcome)
+        else:
+            outcome = 'crash'
         #outcome = 'invalid'
     else:
+        score = 0
+        final = False
         for file in os.listdir(READ_DIRECTORY):
+            if file.endswith(".txt"):
+                score+=1
+            if file.endswith(".txt") and file.startswith(TARGET_FINAL_FILE_NAME):
+                final = True
             os.remove(READ_DIRECTORY+ "/" + file)
-        outcome = 'invalid'
+        
+        if final:
+            #create a new file to new directory
+            filename = FINAL_DIRECTORY_OUT + "/final_invalid_" + str(test_i) + ".py"
+            shutil.copy(test_file_name, filename)
+            # with open("/final/final.txt", "a") as myfile:
+            #     myfile.write("\n\n# score: " + test_i)
+        
+        print("score: ",score)
+        print("score_max: ",score_max) 
+        if(score > 0 and score >= score_max):
+            
+            score_max = score
+            outcome = 'valid'
+
+            valid_filename = VALID_DIRECTORY_OUT + "/valid_invalid_" + str(test_i) + ".py"
+            shutil.copy(test_file_name, valid_filename)
+
+            if len(valid_mapping) == 0:
+                for key, val in target_invariant_set_for_arg.items():
+                    valid_mapping[key] = val
+
+            if target_arg == -1:
+                for key in target_invariant_set_for_arg.keys():
+                    # seed history with the valid call.
+                    print('[calling add to history] ', 'target_function', target_function , 'key(for target arg=-1)', key, 'target inv set',
+                            target_invariant_set_for_arg[key], 'outcome', outcome)
+                    add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
+                            target_function, outcome)
+                    add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
+                            target_function, outcome)
+        else:
+            outcome = 'invalid'
 
     if target_arg != -1:
         print('[calling add to history] ','target_function', target_function, 'target arg', target_arg, 'target inv set', target_invariant_set_for_arg[target_arg], 'outcome', outcome)

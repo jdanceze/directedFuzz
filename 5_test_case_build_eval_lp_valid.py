@@ -1175,13 +1175,30 @@ def create_one_test_and_run(target_function, all_functions,
                 add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
                                target_function, outcome)
     elif is_crash:
+        final = False
         for file in os.listdir(READ_DIRECTORY):
+            if file.endswith(".txt") and file.startswith(TARGET_FINAL_FILE_NAME):
+                final = True
             os.remove(READ_DIRECTORY+ "/" +file)
+
+        if final:
+            #create a new file to new directory
+            filename = FINAL_DIRECTORY_OUT + "/final_crash_" + str(test_i) + ".py"
+            shutil.copy(test_file_name, filename)
+        
         outcome = 'crash'
         #outcome = 'invalid'
     else:
+        final = False
         for file in os.listdir(READ_DIRECTORY):
+            if file.endswith(".txt") and file.startswith(TARGET_FINAL_FILE_NAME):
+                final = True
             os.remove(READ_DIRECTORY+ "/" +file)
+
+        if final:
+            #create a new file to new directory
+            filename = FINAL_DIRECTORY_OUT + "/final_invalid_" + str(test_i) + ".py"
+            shutil.copy(test_file_name, filename)
         outcome = 'invalid'
 
     if target_arg != -1:

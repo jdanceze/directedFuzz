@@ -45,13 +45,13 @@ TARGET_FINAL_FILE_NAME = "Final"
 FINAL_DIRECTORY_OUT = "/final_s_outer"
 01outer8000_score_all.txt
 
-tf.broadcast_to
+tf.experimental.numpy.outer
 TARGET_API_LIST = 'target_outer.txt'
 READ_DIRECTORY = "/fileout_outer"
 TARGET_FINAL_FILE_NAME = "Final"
 FINAL_DIRECTORY_OUT = "/final_v_outer"
 01outer8000_valid_all.txt
 
-python 5_test_case_build_eval_lp_score_all.py run_0_1 0 1 | tee 01outer8000_score_all.txt
+python 5_test_case_build_eval_lp_valid_all.py run_0_1 0 1 | tee 01outer8000_valid_all.txt
 
 ====================================================================================================

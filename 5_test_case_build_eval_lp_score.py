@@ -29,7 +29,7 @@ TARGET_API_LIST = 'target_test_func.txt'
 READ_DIRECTORY = "/fileout3"
 TARGET_FINAL_FILE_NAME = "Final"
 FINAL_DIRECTORY_OUT = "/final"
-VALID_DIRECTORY_OUT = "/valid"
+#VALID_DIRECTORY_OUT = "/valid"
 
 try:
     rand_ident = sys.argv[1]

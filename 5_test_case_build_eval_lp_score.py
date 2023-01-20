@@ -1769,7 +1769,7 @@ def print_outcomes(outcomes, log_name=None, filename = None):
 
 def print_final(sus_count, crash_count, invalid_count, first_final_i):
     outFile = open(FINAL_DIRECTORY_OUT + '/Final_count.txt', 'w')
-     outFile.write('First_final_iteration: ' + str(first_final_i) + '\n')
+    outFile.write('First_final_iteration: ' + str(first_final_i) + '\n')
     outFile.write('sus_count: ' + str(sus_count) + '\n')
     outFile.write('crash_count: ' + str(crash_count) + '\n')
     outFile.write('invalid_count: ' + str(invalid_count) + '\n')

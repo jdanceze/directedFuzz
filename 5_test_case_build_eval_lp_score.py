@@ -978,6 +978,8 @@ def create_one_test_and_run(target_function, all_functions,
     global final_sus
     global final_crash
     global final_invalid
+    global first_final
+    global first_i
 
     is_no_problemo_runs = False
     is_problem = False
@@ -1280,6 +1282,10 @@ def create_one_test_and_run(target_function, all_functions,
         else:
             outcome = 'invalid'
 
+    if (final_sus == 1 or final_crash == 1 or final_invalid == 1) and (first_final):
+        first_final = False
+        first_i = test_i
+
     if target_arg != -1:
         print('[calling add to history] ','target_function', target_function, 'target arg', target_arg, 'target inv set', target_invariant_set_for_arg[target_arg], 'outcome', outcome)
         add_to_history(target_invariant_set_for_arg[target_arg], history[target_function][target_arg], target_function, outcome)
@@ -1426,6 +1432,12 @@ def create_tests_for_the_target_functions(arguments):
 
     global final_invalid
     final_invalid = 0
+
+    global first_final
+    first_final = True
+
+    global first_i
+    first_i = 0
 
     run_outcomes = {}
     valid_mappings = {}
@@ -1623,7 +1635,7 @@ def create_tests_for_the_target_functions(arguments):
                 print('detected server down')
                 # print('total tests ran for func=', target_function, " times=", len(run_outcomes[target_function]))
                 # print('===stat===')
-                print_final(final_sus, final_crash, final_invalid)
+                print_final(final_sus, final_crash, final_invalid , first_i)
                 print_outcomes(run_outcomes[target_function])
 
                 global_threadpool_executor.submit(run_and_assign_script_server, script_server_procs, script_server_procs[port], delay=1, port = port)
@@ -1649,7 +1661,7 @@ def create_tests_for_the_target_functions(arguments):
 
                 target_function_i += 1
                 
-            print_final(final_sus, final_crash, final_invalid)
+            print_final(final_sus, final_crash, final_invalid, first_i)
             print_outcomes(run_outcomes[target_function], target_function,
                            'outcomes_' + rand_ident + '_' + target_function + '.txt')
             print('===stat===')
@@ -1755,8 +1767,9 @@ def print_outcomes(outcomes, log_name=None, filename = None):
             for k, v in result.items():
                 outfile.write(k + ':' + str(v) + '\n')
 
-def print_final(sus_count, crash_count, invalid_count):
+def print_final(sus_count, crash_count, invalid_count, first_final_i):
     outFile = open(FINAL_DIRECTORY_OUT + '/Final_count.txt', 'w')
+     outFile.write('First_final_iteration: ' + str(first_final_i) + '\n')
     outFile.write('sus_count: ' + str(sus_count) + '\n')
     outFile.write('crash_count: ' + str(crash_count) + '\n')
     outFile.write('invalid_count: ' + str(invalid_count) + '\n')

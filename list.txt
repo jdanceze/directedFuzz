@@ -55,3 +55,63 @@ FINAL_DIRECTORY_OUT = "/final_v_outer"
 python 5_test_case_build_eval_lp_valid_all.py run_0_1 0 1 | tee 01outer8000_valid_all.txt
 
 ====================================================================================================
+
+tf.raw_ops.TensorListConcat
+TARGET_API_LIST = 'TensorListConcat.txt'
+READ_DIRECTORY = "/fileout_TensorListConcat"
+TARGET_FINAL_FILE_NAME = "Final"
+FINAL_DIRECTORY_OUT = "/final_s_TensorListConcat"
+01TensorListConcat8000_score_all.txt
+
+python 5_test_case_build_eval_lp_score_all.py run_0_1 0 1 | tee 01TensorListConcat8000_score_all.txt
+
+tf.raw_ops.TensorListConcat
+TARGET_API_LIST = 'TensorListConcat.txt'
+READ_DIRECTORY = "/fileout_TensorListConcat"
+TARGET_FINAL_FILE_NAME = "Final"
+FINAL_DIRECTORY_OUT = "/final_v_TensorListConcat"
+01TensorListConcat8000_valid_all.txt
+
+python 5_test_case_build_eval_lp_valid_all.py run_0_1 0 1 | tee 01TensorListConcat8000_valid_all.txt
+
+====================================================================================================
+
+tf.raw_ops.ResizeNearestNeighborGrad
+TARGET_API_LIST = 'ResizeNearestNeighborGrad.txt'
+READ_DIRECTORY = "/fileout_ResizeNearestNeighborGrad"
+TARGET_FINAL_FILE_NAME = "Final"
+FINAL_DIRECTORY_OUT = "/final_s_ResizeNearestNeighborGrad"
+01ResizeNearestNeighborGrad8000_score_all.txt
+
+python 5_test_case_build_eval_lp_score_all.py run_0_1 0 1 | tee 01ResizeNearestNeighborGrad8000_score_all.txt
+
+tf.raw_ops.ResizeNearestNeighborGrad
+TARGET_API_LIST = 'ResizeNearestNeighborGrad.txt'
+READ_DIRECTORY = "/fileout_ResizeNearestNeighborGrad"
+TARGET_FINAL_FILE_NAME = "Final"
+FINAL_DIRECTORY_OUT = "/final_v_ResizeNearestNeighborGrad"
+01ResizeNearestNeighborGrad8000_valid_all.txt
+
+python 5_test_case_build_eval_lp_valid_all.py run_0_1 0 1 | tee 01ResizeNearestNeighborGrad8000_valid_all.txt
+
+====================================================================================================
+
+tf.keras.losses.poisson
+TARGET_API_LIST = 'poisson.txt'
+READ_DIRECTORY = "/fileout_poisson"
+TARGET_FINAL_FILE_NAME = "Final"
+FINAL_DIRECTORY_OUT = "/final_s_poisson"
+01poisson8000_score_all.txt
+
+python 5_test_case_build_eval_lp_score_all.py run_0_1 0 1 | tee 01poisson8000_score_all.txt
+
+tf.keras.losses.poisson
+TARGET_API_LIST = 'poisson.txt'
+READ_DIRECTORY = "/fileout_poisson"
+TARGET_FINAL_FILE_NAME = "Final"
+FINAL_DIRECTORY_OUT = "/final_v_poisson"
+01poisson8000_valid_all.txt
+
+python 5_test_case_build_eval_lp_valid_all.py run_0_1 0 1 | tee 01poisson8000_valid_all.txt
+
+====================================================================================================

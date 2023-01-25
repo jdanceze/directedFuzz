@@ -1,0 +1,87 @@
+[
+    {
+        "function": "tf.compat.v1.extract_volume_patches",
+        "TARGET_API_LIST": "target_ExtractVolumePatches.txt",
+        "READ_DIRECTORY": "/fileout_ExtractVolumePatches",
+        "TARGET_FINAL_FILE_NAME": "Final",
+        "FINAL_DIRECTORY_OUT": "/i_final_s_ExtractVolumePatches"
+    },
+    {
+        "function": "tf.broadcast_to",
+        "TARGET_API_LIST": "target_BroadCastTo.txt",
+        "READ_DIRECTORY": "/fileout_BroadCastTo",
+        "TARGET_FINAL_FILE_NAME": "Final",
+        "FINAL_DIRECTORY_OUT": "/i_final_s_BroadCastTo"
+    },
+    {
+        "function": "tf.experimental.numpy.outer",
+        "TARGET_API_LIST": "target_outer.txt",
+        "READ_DIRECTORY": "/fileout_outer",
+        "TARGET_FINAL_FILE_NAME": "Final",
+        "FINAL_DIRECTORY_OUT": "/i_final_s_outer"
+    },
+    {
+        "function": "tf.raw_ops.TensorListConcat",
+        "TARGET_API_LIST": "TensorListConcat.txt",
+        "READ_DIRECTORY": "/fileout_TensorListConcat",
+        "TARGET_FINAL_FILE_NAME": "Final",
+        "FINAL_DIRECTORY_OUT": "/i_final_s_TensorListConcat"
+    },
+    {
+        "function": "tf.raw_ops.ResizeNearestNeighborGrad",
+        "TARGET_API_LIST": "ResizeNearestNeighborGrad.txt",
+        "READ_DIRECTORY": "/fileout_ResizeNearestNeighborGrad",
+        "TARGET_FINAL_FILE_NAME": "Final",
+        "FINAL_DIRECTORY_OUT": "/i_final_s_ResizeNearestNeighborGrad"
+    },
+    {
+        "function": "tf.keras.losses.poisson",
+        "TARGET_API_LIST": "poisson.txt",
+        "READ_DIRECTORY": "/fileout_poisson",
+        "TARGET_FINAL_FILE_NAME": "Final",
+        "FINAL_DIRECTORY_OUT": "/i_final_s_poisson"
+    },
+    {
+        "function": "tf.raw_ops.PyFunc",
+        "TARGET_API_LIST": "PyFunc.txt",
+        "READ_DIRECTORY": "/fileout2",
+        "TARGET_FINAL_FILE_NAME": "Final",
+        "FINAL_DIRECTORY_OUT": "/i_final_s_PyFunc"
+    },
+    {
+        "function": "tf.raw_ops.CompositeTensorVariantToComponents",
+        "TARGET_API_LIST": "CompositeTensorVariantToComponents.txt",
+        "READ_DIRECTORY": "/fileout_CompositeTensorVariantToComponents",
+        "TARGET_FINAL_FILE_NAME": "Final",
+        "FINAL_DIRECTORY_OUT": "/i_final_s_CompositeTensorVariantToComponents"
+    },
+    {
+        "function": "tf.raw_ops.TensorListScatterV2",
+        "TARGET_API_LIST": "TensorListScatter.txt",
+        "READ_DIRECTORY": "/fileout_TensorListScatter",
+        "TARGET_FINAL_FILE_NAME": "Final",
+        "FINAL_DIRECTORY_OUT": "/i_final_s_TensorListScatter"
+    },
+    {
+        "function": "tf.raw_ops.Mfcc",
+        "TARGET_API_LIST": "mfcc.txt",
+        "READ_DIRECTORY": "/fileout_mfcc",
+        "TARGET_FINAL_FILE_NAME": "Final",
+        "FINAL_DIRECTORY_OUT": "/i_final_s_mfcc"
+    },
+    {
+        "function": "tf.raw_ops.TensorListResize",
+        "TARGET_API_LIST": "TensorListResize.txt",
+        "READ_DIRECTORY": "/fileout3",
+        "TARGET_FINAL_FILE_NAME": "before_forward_input",
+        "FINAL_DIRECTORY_OUT": "/i_final_s_TensorListResize"
+    },
+    {
+        "function": "tf.math.sobol_sample",
+        "TARGET_API_LIST": "SobolSample.txt",
+        "READ_DIRECTORY": "/fileout_SobolSample",
+        "TARGET_FINAL_FILE_NAME": "in_compute",
+        "FINAL_DIRECTORY_OUT": "/i_final_s_SobolSample"
+    }
+
+]

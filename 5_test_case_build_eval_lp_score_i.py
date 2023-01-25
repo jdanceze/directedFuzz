@@ -8,6 +8,7 @@ import random
 import shutil
 import socket
 import sys
+import json
 
 import time
 
@@ -26,9 +27,9 @@ last_crash_index = -1
 NUM_TESTS_PER_FUNC = 800
 
 TARGET_API_LIST = 'target_test_func.txt'
-READ_DIRECTORY = "/fileout3"
-TARGET_FINAL_FILE_NAME = "Final"
-FINAL_DIRECTORY_OUT = "/final"
+#READ_DIRECTORY = "/fileout3"
+#TARGET_FINAL_FILE_NAME = "Final"
+#FINAL_DIRECTORY_OUT = "/final"
 #VALID_DIRECTORY_OUT = "/valid"
 
 try:
@@ -1439,6 +1440,10 @@ def create_tests_for_the_target_functions(arguments):
     global first_i
     first_i = -1
 
+    global READ_DIRECTORY
+    global TARGET_FINAL_FILE_NAME
+    global FINAL_DIRECTORY_OUT
+
     run_outcomes = {}
     valid_mappings = {}
     crashes_for_target_func = {}
@@ -1534,7 +1539,18 @@ def create_tests_for_the_target_functions(arguments):
                         #if crashes_for_target_func[target_function] >= 1:
                             #target_function_i += 1
                             #continue
-
+                        
+                        #read value from json file
+                        #filename is list.json
+                        with open('list.json') as f:
+                            data = json.load(f)
+                            for i in data:
+                                clear_read_directory(i["READ_DIRECTORY"])
+                                if i["function"]+"(" == target_function:
+                                    READ_DIRECTORY = i["READ_DIRECTORY"]
+                                    TARGET_FINAL_FILE_NAME = i["TARGET_FINAL_FILE_NAME"]
+                                    FINAL_DIRECTORY_OUT = i["FINAL_DIRECTORY_OUT"]
+    
                         name = get_test_file_record_filename(target_function)
                         num_args = len(all_function_sigs[target_function].items()) if target_function in all_function_sigs else 0
                         if num_args== 0:
@@ -1777,6 +1793,10 @@ def print_final(sus_count, crash_count, invalid_count, first_final_i):
     outFile.write('crash_count: ' + str(crash_count) + '\n')
     outFile.write('invalid_count: ' + str(invalid_count) + '\n')
     outFile.close()
+
+def clear_read_directory(path):
+    for file in os.listdir(path):
+            os.remove(path+ "/" + file)
 
 main()
 

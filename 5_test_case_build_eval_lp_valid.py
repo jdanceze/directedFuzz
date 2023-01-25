@@ -1363,7 +1363,7 @@ def create_tests_for_the_target_functions(arguments):
     first_final = True
 
     global first_i
-    first_i = 0
+    first_i = -1
 
     run_outcomes = {}
     valid_mappings = {}

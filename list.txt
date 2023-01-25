@@ -135,3 +135,103 @@ FINAL_DIRECTORY_OUT = "/final_v_PyFunc"
 python 5_test_case_build_eval_lp_valid_all.py run_0_1 0 1 | tee 01PyFunc8000_valid_all.txt
 
 ====================================================================================================
+
+tf.raw_ops.CompositeTensorVariantToComponents
+TARGET_API_LIST = 'CompositeTensorVariantToComponents.txt'
+READ_DIRECTORY = "/fileout_CompositeTensorVariantToComponents"
+TARGET_FINAL_FILE_NAME = "Final"
+FINAL_DIRECTORY_OUT = "/final_s_CompositeTensorVariantToComponents"
+01CompositeTensorVariantToComponents8000_score_all.txt
+
+python 5_test_case_build_eval_lp_score_all.py run_0_1 0 1 | tee 01CompositeTensorVariantToComponents8000_score_all.txt
+
+tf.raw_ops.CompositeTensorVariantToComponents
+TARGET_API_LIST = 'CompositeTensorVariantToComponents.txt'
+READ_DIRECTORY = "/fileout_CompositeTensorVariantToComponents"
+TARGET_FINAL_FILE_NAME = "Final"
+FINAL_DIRECTORY_OUT = "/final_v_CompositeTensorVariantToComponents"
+01CompositeTensorVariantToComponents8000_valid_all.txt
+
+python 5_test_case_build_eval_lp_valid_all.py run_0_1 0 1 | tee 01CompositeTensorVariantToComponents8000_valid_all.txt
+
+====================================================================================================
+
+tf.raw_ops.TensorListScatterV2
+TARGET_API_LIST = 'TensorListScatter.txt'
+READ_DIRECTORY = "/fileout_TensorListScatter"
+TARGET_FINAL_FILE_NAME = "Final"
+FINAL_DIRECTORY_OUT = "/final_s_TensorListScatter"
+01TensorListScatter8000_score_all.txt
+
+python 5_test_case_build_eval_lp_score_all.py run_0_1 0 1 | tee 01TensorListScatter8000_score_all.txt
+
+tf.raw_ops.TensorListScatterV2
+TARGET_API_LIST = 'TensorListScatter.txt'
+READ_DIRECTORY = "/fileout_TensorListScatter"
+TARGET_FINAL_FILE_NAME = "Final"
+FINAL_DIRECTORY_OUT = "/final_v_TensorListScatter"
+01TensorListScatter8000_valid_all.txt
+
+python 5_test_case_build_eval_lp_valid_all.py run_0_1 0 1 | tee 01TensorListScatter8000_valid_all.txt
+
+====================================================================================================
+
+tf.raw_ops.Mfcc
+TARGET_API_LIST = 'mfcc.txt'
+READ_DIRECTORY = "/fileout_mfcc"
+TARGET_FINAL_FILE_NAME = "Final"
+FINAL_DIRECTORY_OUT = "/final_s_mfcc"
+01mfcc8000_score_all.txt
+
+python 5_test_case_build_eval_lp_score_all.py run_0_1 0 1 | tee 01mfcc8000_score_all.txt
+
+tf.raw_ops.Mfcc
+TARGET_API_LIST = 'mfcc.txt'
+READ_DIRECTORY = "/fileout_mfcc"
+TARGET_FINAL_FILE_NAME = "Final"
+FINAL_DIRECTORY_OUT = "/final_v_mfcc"
+01mfcc4000_valid_all.txt
+
+python 5_test_case_build_eval_lp_valid_all.py run_0_1 0 1 | tee 01mfcc4000_score_all.txt
+
+====================================================================================================
+
+tf.raw_ops.TensorListResize
+TARGET_API_LIST = 'TensorListResize.txt'
+READ_DIRECTORY = "/fileout3"
+TARGET_FINAL_FILE_NAME = "before_forward_input"
+FINAL_DIRECTORY_OUT = "/final_s_TensorListResize"
+01TensorListResize4000_score_all.txt
+
+python 5_test_case_build_eval_lp_score_all.py run_0_1 0 1 | tee 01TensorListResize4000_score_all.txt
+
+tf.raw_ops.TensorListResize
+TARGET_API_LIST = 'TensorListResize.txt'
+READ_DIRECTORY = "/fileout3"
+TARGET_FINAL_FILE_NAME = "before_forward_input"
+FINAL_DIRECTORY_OUT = "/final_v_TensorListResize"
+01TensorListResize4000_valid_all.txt
+
+python 5_test_case_build_eval_lp_valid_all.py run_0_1 0 1 | tee 01TensorListResize4000_valid_all.txt
+
+====================================================================================================
+
+tf.math.sobol_sample
+TARGET_API_LIST = 'SobolSample.txt'
+READ_DIRECTORY = "/fileout_SobolSample"
+TARGET_FINAL_FILE_NAME = "in_compute"
+FINAL_DIRECTORY_OUT = "/final_s_SobolSample"
+01SobolSample1000_score_all.txt
+
+python 5_test_case_build_eval_lp_score_all.py run_0_1 0 1 | tee 01SobolSample1000_score_all.txt
+
+tf.math.sobol_sample
+TARGET_API_LIST = 'SobolSample.txt'
+READ_DIRECTORY = "/fileout_SobolSample"
+TARGET_FINAL_FILE_NAME = "in_compute"
+FINAL_DIRECTORY_OUT = "/final_v_SobolSample"
+01SobolSample1000_valid_all.txt
+
+python 5_test_case_build_eval_lp_valid_all.py run_0_1 0 1 | tee 01SobolSample1000_valid_all.txt
+
+====================================================================================================

@@ -1600,6 +1600,9 @@ def create_tests_for_the_target_functions(arguments):
                                 found_valid_at[target_function] = test_i
                             if is_crash:
                                 raise BrokenPipeError() # lol
+
+                            if first_i >= 0:
+                                is_done = True
                         target_function_i += 1
 
                     s.sendall('done=='.encode('utf-8'))

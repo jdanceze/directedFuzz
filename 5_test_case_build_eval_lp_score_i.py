@@ -24,9 +24,9 @@ INV_EXTRACTION = 'fuzzingbook_invariant_utils.get_invariants_hold(fuzzingbook_in
 num_crashes = 0
 last_crash_index = -1
 
-NUM_TESTS_PER_FUNC = 800
+NUM_TESTS_PER_FUNC = 5
 
-TARGET_API_LIST = 'target_test_func.txt'
+TARGET_API_LIST = 'cve_list.txt'
 #READ_DIRECTORY = "/fileout3"
 #TARGET_FINAL_FILE_NAME = "Final"
 #FINAL_DIRECTORY_OUT = "/final"
@@ -1423,22 +1423,12 @@ def create_tests_for_the_target_functions(arguments):
     conn_retry_count = defaultdict(int)
 
     global score_max
-    score_max = 0
-
     global final_sus
-    final_sus = 0
-
     global final_crash
-    final_crash = 0
-
     global final_invalid
-    final_invalid = 0
-
     global first_final
-    first_final = True
-
     global first_i
-    first_i = -1
+    
 
     global READ_DIRECTORY
     global TARGET_FINAL_FILE_NAME
@@ -1534,6 +1524,12 @@ def create_tests_for_the_target_functions(arguments):
                                                                                 1), port=port)
                     # print('done  connecting to socket', time.time())
                     while target_function_i < len(target_functions_sequence):
+                        score_max = 0
+                        final_sus = 0
+                        final_crash = 0
+                        final_invalid = 0
+                        first_final = True
+                        first_i = -1
                         target_function = target_functions_sequence[target_function_i]
 
                         #if crashes_for_target_func[target_function] >= 1:

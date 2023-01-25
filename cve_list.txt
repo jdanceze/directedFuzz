@@ -1,0 +1,85 @@
+import tensorflow as tf
+tf.compat.v1.extract_volume_patches
+input:Any
+ksizes:Any
+strides:Any
+padding:Any
+name:Any
+=========
+import tensorflow as tf
+tf.broadcast_to
+input:Any
+shape:Any
+name:Any
+=========
+import tensorflow as tf
+tf.experimental.numpy.outer
+a:Any
+b:Any
+=========
+import tensorflow as tf
+tf.raw_ops.TensorListConcat
+input_handle:Any
+element_dtype:Any
+element_shape:Any
+name:Any
+=========
+import tensorflow as tf
+tf.raw_ops.ResizeNearestNeighborGrad
+grads:Any
+size:Any
+align_corners:Any
+half_pixel_centers:Any
+name:Any
+=========
+import tensorflow as tf
+tf.keras.losses.poisson
+y_true:Any
+y_pred:Any
+=========
+import tensorflow as tf
+tf.raw_ops.PyFunc
+input:Any
+token:Any
+Tout:Any
+name:Any
+=========
+import tensorflow as tf
+tf.raw_ops.CompositeTensorVariantToComponents
+encoded:Any
+metadata:Any
+Tcomponents:Any
+name:Any
+=========
+import tensorflow as tf
+tf.raw_ops.TensorListScatterV2
+tensor:Any
+indices:Any
+element_shape:Any
+num_elements:Any
+name:Any
+=========
+import tensorflow as tf
+tf.raw_ops.Mfcc
+spectrogram:Any
+sample_rate:Any
+upper_frequency_limit:Any
+lower_frequency_limit:Any
+filterbank_channel_count:Any
+dct_coefficient_count:Any
+name:Any
+=========
+import tensorflow as tf
+tf.raw_ops.TensorListResize
+input_handle:Any
+size:Any
+name:Any
+=========
+import tensorflow as tf
+tf.math.sobol_sample
+dim:Any
+num_results:Any
+skip:Any
+dtype:Any
+name:Any
+=========

@@ -40,6 +40,11 @@ with open('list.json') as f:
                 TARGET_API_LIST = i["TARGET_API_LIST"]
                 TARGET_FINAL_FILE_NAME = i["TARGET_FINAL_FILE_NAME"]
                 FINAL_DIRECTORY_OUT = i["FINAL_DIRECTORY_OUT"]
+                if not os.path.exists(READ_DIRECTORY):
+                    os.makedirs(READ_DIRECTORY)
+                if not os.path.exists(FINAL_DIRECTORY_OUT):
+                    os.makedirs(FINAL_DIRECTORY_OUT)
+                
 
 #TARGET_API_LIST = 'target_test_func.txt'
 #READ_DIRECTORY = "/fileout3"
@@ -1810,6 +1815,8 @@ def print_final(sus_count, crash_count, invalid_count, first_final_i, startT, fi
     outFile.write('invalid_count: ' + str(invalid_count) + '\n')
     outFile.close()
 
+    if not os.path.exists('/result'):
+        os.makedirs('/result')
     outFile2 = open('/result' + '/result.txt', 'a')
     outFile2.write('Start time: ' + str(startT) + '\n')
     outFile2.write('Final time: ' + str(finalT) + '\n')

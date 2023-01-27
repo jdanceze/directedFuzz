@@ -24,9 +24,21 @@ INV_EXTRACTION = 'fuzzingbook_invariant_utils.get_invariants_hold(fuzzingbook_in
 num_crashes = 0
 last_crash_index = -1
 
-NUM_TESTS_PER_FUNC = 5
+NUM_TESTS_PER_FUNC = 30
 
-TARGET_API_LIST = 'cve_list.txt'
+target_function = "tf.raw_ops.TensorListScatterV2" + "("
+
+with open('list.json') as f:
+        data = json.load(f)
+        for i in data:
+            #clear_read_directory(i["READ_DIRECTORY"])
+            if i["function"]+"(" == target_function:
+                READ_DIRECTORY = i["READ_DIRECTORY"]
+                TARGET_API_LIST = i["TARGET_API_LIST"]
+                TARGET_FINAL_FILE_NAME = i["TARGET_FINAL_FILE_NAME"]
+                FINAL_DIRECTORY_OUT = i["FINAL_DIRECTORY_OUT"]
+
+#TARGET_API_LIST = 'target_test_func.txt'
 #READ_DIRECTORY = "/fileout3"
 #TARGET_FINAL_FILE_NAME = "Final"
 #FINAL_DIRECTORY_OUT = "/final"
@@ -1283,7 +1295,12 @@ def create_one_test_and_run(target_function, all_functions,
         else:
             outcome = 'invalid'
 
-    if (final_sus == 1 or final_crash == 1 or final_invalid == 1) and (first_final):
+    #if (final_sus == 1 or final_crash == 1 or final_invalid == 1) and (first_final):
+    if (final_crash == 1) and (first_final):
+        print("First Final !!!!")
+        print("Final Sus: ", final_sus)
+        print("Final Crash: ", final_crash)
+        print("Final Invalid: ", final_invalid)
         first_final = False
         first_i = test_i
 
@@ -1331,6 +1348,7 @@ def detected_crash(test_file_name, test_i):
 
 def main():
     global global_name_to_invs
+    
     all_function_sigs, functions_to_imports, function_arg_to_index = read_API_function_sigs()
 
     crawled_function_sigs, crawled_functions_to_imports, crawled_function_arg_to_index = find_all_known_functions()
@@ -1423,16 +1441,22 @@ def create_tests_for_the_target_functions(arguments):
     conn_retry_count = defaultdict(int)
 
     global score_max
-    global final_sus
-    global final_crash
-    global final_invalid
-    global first_final
-    global first_i
-    
+    score_max = 0
 
-    global READ_DIRECTORY
-    global TARGET_FINAL_FILE_NAME
-    global FINAL_DIRECTORY_OUT
+    global final_sus
+    final_sus = 0
+
+    global final_crash
+    final_crash = 0
+
+    global final_invalid
+    final_invalid = 0
+
+    global first_final
+    first_final = True
+
+    global first_i
+    first_i = -1
 
     run_outcomes = {}
     valid_mappings = {}
@@ -1524,39 +1548,12 @@ def create_tests_for_the_target_functions(arguments):
                                                                                 1), port=port)
                     # print('done  connecting to socket', time.time())
                     while target_function_i < len(target_functions_sequence):
-                        print(f'===========================Init=================================')
                         target_function = target_functions_sequence[target_function_i]
-                        temp_i = target_function_i
-                        last_target_function = target_functions_sequence[temp_i-1]
-                        print("target_function: ", target_function)
-                        print("last target_function: ", last_target_function)
 
-                        if target_function != last_target_function:
-                            score_max = 0
-                            final_sus = 0
-                            final_crash = 0
-                            final_invalid = 0
-                            first_final = True
-                            first_i = -1
-                        else:
-                            if first_i >= 0:
-                                target_function_i+=1
-                                continue
                         #if crashes_for_target_func[target_function] >= 1:
                             #target_function_i += 1
                             #continue
-                        
-                        #read value from json file
-                        #filename is list.json
-                        with open('list.json') as f:
-                            data = json.load(f)
-                            for i in data:
-                                clear_read_directory(i["READ_DIRECTORY"])
-                                if i["function"]+"(" == target_function:
-                                    READ_DIRECTORY = i["READ_DIRECTORY"]
-                                    TARGET_FINAL_FILE_NAME = i["TARGET_FINAL_FILE_NAME"]
-                                    FINAL_DIRECTORY_OUT = i["FINAL_DIRECTORY_OUT"]
-    
+
                         name = get_test_file_record_filename(target_function)
                         num_args = len(all_function_sigs[target_function].items()) if target_function in all_function_sigs else 0
                         if num_args== 0:
@@ -1622,8 +1619,12 @@ def create_tests_for_the_target_functions(arguments):
                                 found_valid_at[target_function] = test_i
                             if is_crash:
                                 raise BrokenPipeError() # lol
-
-                        target_function_i += 1
+                        if first_i >= 0:
+                            print('set target_function_i to finnal i:', target_function_i)
+                            target_function_i = len(target_functions_sequence)
+                            #is_done = True
+                        else:
+                            target_function_i += 1
 
                     s.sendall('done=='.encode('utf-8'))
                     if target_function_i >= len(target_functions_sequence):
@@ -1797,10 +1798,6 @@ def print_final(sus_count, crash_count, invalid_count, first_final_i):
     outFile.write('crash_count: ' + str(crash_count) + '\n')
     outFile.write('invalid_count: ' + str(invalid_count) + '\n')
     outFile.close()
-
-def clear_read_directory(path):
-    for file in os.listdir(path):
-            os.remove(path+ "/" + file)
 
 main()
 

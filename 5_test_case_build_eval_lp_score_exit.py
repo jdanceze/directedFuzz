@@ -29,7 +29,7 @@ last_crash_index = -1
 
 NUM_TESTS_PER_FUNC = 8000
 
-target_function = "tf.raw_ops.CompositeTensorVariantToComponents" + "("
+target_function = "tf.raw_ops.TensorListConcat" + "("
 
 with open('list_i.json') as f:
         data = json.load(f)
@@ -1194,8 +1194,8 @@ def create_one_test_and_run(target_function, all_functions,
         
         if final:
             final_sus+=1
-            filename = FINAL_DIRECTORY_OUT + "/final_sus_" + str(test_i) + ".py"
-            shutil.copy(test_file_name, filename)
+            #filename = FINAL_DIRECTORY_OUT + "/final_sus_" + str(test_i) + ".py"
+            #shutil.copy(test_file_name, filename)
             # with open("/final/final.txt", "a") as myfile:
             #     myfile.write("\n\n# score: " + test_i)
         
@@ -1237,7 +1237,7 @@ def create_one_test_and_run(target_function, all_functions,
         
         if final:
             final_crash+=1
-            filename = FINAL_DIRECTORY_OUT + "/final_crash_" + str(test_i) + ".py"
+            filename = FINAL_DIRECTORY_OUT + "/"+ str(run_i) + "_final_crash_" + str(test_i) + ".py"
             shutil.copy(test_file_name, filename)
             # with open("/final/final.txt", "a") as myfile:
             #     myfile.write("\n\n# score: " + test_i)
@@ -1280,8 +1280,8 @@ def create_one_test_and_run(target_function, all_functions,
         
         if final:
             final_invalid+=1
-            filename = FINAL_DIRECTORY_OUT + "/final_invalid_" + str(test_i) + ".py"
-            shutil.copy(test_file_name, filename)
+            #filename = FINAL_DIRECTORY_OUT + "/final_invalid_" + str(test_i) + ".py"
+            #shutil.copy(test_file_name, filename)
             # with open("/final/final.txt", "a") as myfile:
             #     myfile.write("\n\n# score: " + test_i)
         
@@ -1813,7 +1813,7 @@ def print_outcomes(outcomes, log_name=None, filename = None):
                 outfile.write(k + ':' + str(v) + '\n')
 
 def print_final(sus_count, crash_count, invalid_count, first_final_i, startT, finalT):
-    outFile = open(FINAL_DIRECTORY_OUT + '/Final_count.txt', 'w')
+    outFile = open(FINAL_DIRECTORY_OUT + '/Final_count_'+ str(run_i) + '.txt', 'w')
     outFile.write('First_final_iteration: ' + str(first_final_i) + '\n')
     outFile.write('sus_count: ' + str(sus_count) + '\n')
     outFile.write('crash_count: ' + str(crash_count) + '\n')
@@ -1822,7 +1822,7 @@ def print_final(sus_count, crash_count, invalid_count, first_final_i, startT, fi
 
     if not os.path.exists('/result'):
         os.makedirs('/result')
-    outFile2 = open('/result' + '/result_' + run_i +'.txt', 'a')
+    outFile2 = open('/result' + '/result_' + str(run_i) +'.txt', 'a')
     outFile2.write('Start time: ' + str(startT) + '\n')
     outFile2.write('Final time: ' + str(finalT) + '\n')
     total_time = finalT - startT

@@ -4,6 +4,7 @@ import json
 with open('list.json') as f:
     data = json.load(f)
     for i in data:
+        
         READ_DIRECTORY = i["READ_DIRECTORY"]
         FINAL_DIRECTORY_OUT = i["FINAL_DIRECTORY_OUT"]
         
@@ -13,5 +14,6 @@ with open('list.json') as f:
             os.makedirs(FINAL_DIRECTORY_OUT)
 
         for file in os.listdir(i["FINAL_DIRECTORY_OUT"]):
-            print("clearing FINAL_DIRECTORY_OUT: ", i["FINAL_DIRECTORY_OUT"] + "/" + file)
-            os.remove(i["FINAL_DIRECTORY_OUT"]+ "/" + file)
+            if file.endswith(".py"):
+                print("clearing FINAL_DIRECTORY_OUT: ", i["FINAL_DIRECTORY_OUT"] + "/" + file)
+                os.remove(i["FINAL_DIRECTORY_OUT"]+ "/" + file)

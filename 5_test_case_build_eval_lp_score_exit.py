@@ -21,6 +21,9 @@ import string
 
 INV_EXTRACTION = 'fuzzingbook_invariant_utils.get_invariants_hold(fuzzingbook_invariant_utils.INVARIANT_PROPERTIES,'
 
+start_time = time.time()
+final_time = -1
+
 num_crashes = 0
 last_crash_index = -1
 
@@ -994,6 +997,9 @@ def create_one_test_and_run(target_function, all_functions,
     global first_final
     global first_i
 
+    global final_time
+    global start_time
+
     is_no_problemo_runs = False
     is_problem = False
     is_py_error = False
@@ -1297,6 +1303,7 @@ def create_one_test_and_run(target_function, all_functions,
 
     #if (final_sus == 1 or final_crash == 1 or final_invalid == 1) and (first_final):
     if (final_crash == 1) and (first_final):
+        final_time = time.time()
         print("First Final !!!!")
         print("Final Sus: ", final_sus)
         print("Final Crash: ", final_crash)
@@ -1457,6 +1464,10 @@ def create_tests_for_the_target_functions(arguments):
 
     global first_i
     first_i = -1
+
+    global final_time
+
+    global start_time
 
     run_outcomes = {}
     valid_mappings = {}
@@ -1659,7 +1670,7 @@ def create_tests_for_the_target_functions(arguments):
                 print('detected server down')
                 # print('total tests ran for func=', target_function, " times=", len(run_outcomes[target_function]))
                 # print('===stat===')
-                print_final(final_sus, final_crash, final_invalid , first_i)
+                print_final(final_sus, final_crash, final_invalid , first_i, start_time, final_time)
                 print_outcomes(run_outcomes[target_function])
 
                 global_threadpool_executor.submit(run_and_assign_script_server, script_server_procs, script_server_procs[port], delay=1, port = port)
@@ -1685,7 +1696,7 @@ def create_tests_for_the_target_functions(arguments):
 
                 target_function_i += 1
                 
-            print_final(final_sus, final_crash, final_invalid, first_i)
+            print_final(final_sus, final_crash, final_invalid, first_i, start_time, final_time)
             print_outcomes(run_outcomes[target_function], target_function,
                            'outcomes_' + rand_ident + '_' + target_function + '.txt')
             print('===stat===')
@@ -1791,7 +1802,7 @@ def print_outcomes(outcomes, log_name=None, filename = None):
             for k, v in result.items():
                 outfile.write(k + ':' + str(v) + '\n')
 
-def print_final(sus_count, crash_count, invalid_count, first_final_i):
+def print_final(sus_count, crash_count, invalid_count, first_final_i, startT, finalT):
     outFile = open(FINAL_DIRECTORY_OUT + '/Final_count.txt', 'w')
     outFile.write('First_final_iteration: ' + str(first_final_i) + '\n')
     outFile.write('sus_count: ' + str(sus_count) + '\n')
@@ -1799,10 +1810,26 @@ def print_final(sus_count, crash_count, invalid_count, first_final_i):
     outFile.write('invalid_count: ' + str(invalid_count) + '\n')
     outFile.close()
 
+    outFile2 = open('/result' + '/result.txt', 'a')
+    outFile2.write('Start time: ' + str(startT) + '\n')
+    outFile2.write('Final time: ' + str(finalT) + '\n')
+    outFile2.write('====================================''\n')
+    outFile2.close()
+
+
+def print_cache():
+    if not os.path.exists('/cache'):
+        os.makedirs('/cache')
+    print('printing cache')
+    outFile3 = open('/cache' + '/cache.txt', 'w')
+    outFile3.write('Fin')
+    outFile3.close()
+
 main()
 
 # clean
 print('killing stray processes')
+print_cache()
 print('!!!!')
 for grs in global_running_solvers:
     grs.join(timeout=1.0)

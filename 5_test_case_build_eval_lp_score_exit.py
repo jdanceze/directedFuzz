@@ -27,11 +27,11 @@ final_time = -1
 num_crashes = 0
 last_crash_index = -1
 
-NUM_TESTS_PER_FUNC = 30
+NUM_TESTS_PER_FUNC = 8000
 
-target_function = "tf.raw_ops.TensorListScatterV2" + "("
+target_function = "tf.raw_ops.CompositeTensorVariantToComponents" + "("
 
-with open('list.json') as f:
+with open('list_i.json') as f:
         data = json.load(f)
         for i in data:
             #clear_read_directory(i["READ_DIRECTORY"])
@@ -71,6 +71,11 @@ try:
     rand_ident += '_' + sys.argv[3]
 except:
     end_at = int(0)
+
+try:
+    run_i = sys.argv[4]
+except:
+    run_i = 1
 
 target_api_file = 'target_api.txt'
 
@@ -1817,9 +1822,11 @@ def print_final(sus_count, crash_count, invalid_count, first_final_i, startT, fi
 
     if not os.path.exists('/result'):
         os.makedirs('/result')
-    outFile2 = open('/result' + '/result.txt', 'a')
+    outFile2 = open('/result' + '/result_' + run_i +'.txt', 'a')
     outFile2.write('Start time: ' + str(startT) + '\n')
     outFile2.write('Final time: ' + str(finalT) + '\n')
+    total_time = finalT - startT
+    outFile2.write('Total time: ' + str(total_time) + '\n')
     outFile2.write('====================================''\n')
     outFile2.close()
 
@@ -1841,6 +1848,6 @@ print('!!!!')
 for grs in global_running_solvers:
     grs.join(timeout=1.0)
     grs.kill()
-global_threadpool_executor.shutdown(wait=False,cancel_futures=True)
+global_threadpool_executor.shutdown(wait=False)
 
 print('end')

@@ -7,4 +7,5 @@ with open('list.json') as f:
         
         for file in os.listdir(i["FINAL_DIRECTORY_OUT"]):
             print("clearing FINAL_DIRECTORY_OUT: ", i["FINAL_DIRECTORY_OUT"] + "/" + file)
-            os.remove(i["FINAL_DIRECTORY_OUT"]+ "/" + file)
+            if file.endswith(".py"):
+                os.remove(i["FINAL_DIRECTORY_OUT"]+ "/" + file)

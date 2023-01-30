@@ -1,7 +1,7 @@
 import os
 import json
 
-with open('list.json') as f:
+with open('list_valid.json') as f:
     data = json.load(f)
     for i in data:
         READ_DIRECTORY = i["READ_DIRECTORY"]

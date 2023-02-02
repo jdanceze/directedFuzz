@@ -1217,8 +1217,8 @@ def create_one_test_and_run(target_function, all_functions,
 
         if final:
             final_crash+=1
-            # filename = FINAL_DIRECTORY_OUT + "/final_crash_" + str(test_i) + ".py"
-            # shutil.copy(test_file_name, filename)
+            filename = FINAL_DIRECTORY_OUT + "/"+ str(run_i) + "_final_crash_" + str(test_i) + ".py"
+            shutil.copy(test_file_name, filename)
         
         outcome = 'crash'
         #outcome = 'invalid'
@@ -1767,3 +1767,5 @@ for grs in global_running_solvers:
 global_threadpool_executor.shutdown(wait=False)
 
 print('end')
+subprocess.call("./port.sh")
+exit()

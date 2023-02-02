@@ -7,10 +7,11 @@ do
     echo Running $i >> timeexec.txt
     start=$(date +%s)
     echo "Start: $start" >> timeexec.txt
-    timeout 8h python 5_test_case_build_eval_lp_score_exit.py run_0_1 0 1 $i
+    timeout 1h python 5_test_case_build_eval_lp_score_exit.py run_0_1 0 1 $i | tee logout_$i.log
     end=$(date +%s)
     echo "Stop $end" >> timeexec.txt
     echo "Total: $((end-start))" >> timeexec.txt
     echo "==================">> timeexec.txt
+    ./port.sh
     sleep 15
 done

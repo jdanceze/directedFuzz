@@ -31,7 +31,7 @@ NUM_TESTS_PER_FUNC = 8000
 
 target_function = "tf.raw_ops.TensorListConcat" + "("
 
-with open('list_i.json') as f:
+with open('list_score.json') as f:
         data = json.load(f)
         for i in data:
             #clear_read_directory(i["READ_DIRECTORY"])
@@ -1851,3 +1851,5 @@ for grs in global_running_solvers:
 global_threadpool_executor.shutdown(wait=False)
 
 print('end')
+subprocess.call("./port.sh")
+exit()

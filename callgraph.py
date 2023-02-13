@@ -71,8 +71,8 @@ def find_out_edges_dest_label (node, graph):
   return lable
 
 #return node label
-def get_node_label (node):
-  label = G.nodes[node].get('label', '')
+def get_node_label (node, graph):
+  label = graph.nodes[node].get('label', '')
   #remove quotes
   #label = label.replace('"', '')
   return label
@@ -101,23 +101,36 @@ print(callgraphs)
 #   G4.update(nx.DiGraph(nx.drawing.nx_pydot.read_dot(dot)))
 # nx.drawing.nx_pydot.write_dot(G4, "./cg_out/TensorListScatter3.dot")
 
-#create a new graph
-G2 = nx.DiGraph()
-first_node = "Node1"
+# #create a new graph
+# G2 = nx.DiGraph()
+# first_node = "Node1"
 
-for dest_label in find_out_edges_dest_label(first_node, G):
-  new_dest_label = '"' + dest_label + '"'
-  G2.add_edge(get_node_label(first_node), new_dest_label)
-  for dot in callgraphs:
-    G3 = nx.DiGraph(nx.drawing.nx_pydot.read_dot(dot))
-    if dest_label in G3.graph.get('name', ''):
-      print(G3.graph.get('name', ''))
-      for dest_label2 in find_out_edges_dest_label(first_node, G3):
-        new_dest_label2 = '"' + dest_label2 + '"'
-        G2.add_edge(new_dest_label, new_dest_label2)
-        
+# for dest_label in find_out_edges_dest_label(first_node, G):
+#   new_dest_label = '"' + dest_label + '"'
+#   G2.add_edge(get_node_label(first_node), new_dest_label)
+#   for dot in callgraphs:
+#     G3 = nx.DiGraph(nx.drawing.nx_pydot.read_dot(dot))
+#     if dest_label in G3.graph.get('name', ''):
+#       print(G3.graph.get('name', ''))
+#       for dest_label2 in find_out_edges_dest_label(first_node, G3):
+#         new_dest_label2 = '"' + dest_label2 + '"'
+#         G2.add_edge(new_dest_label, new_dest_label2)
+
+#nx.drawing.nx_pydot.write_dot(G2, "./cg_out/TensorListScatter2.dot")   
       
+#recursive function to add nodes and edges to graph
+GN = nx.DiGraph()
+count = 0
+def add_nodes_edges (node, GT):
+  for dest_label in find_out_edges_dest_label(node, GT):
+    new_dest_label = '"' + dest_label + '"'
+    GN.add_edge(get_node_label(node, GT), new_dest_label)
+    for dot in callgraphs:
+      GD = nx.DiGraph(nx.drawing.nx_pydot.read_dot(dot))
+      if dest_label in GD.graph.get('name', ''):
+        print(GD.graph.get('name', ''))
+        add_nodes_edges(node, GD)
+  nx.drawing.nx_pydot.write_dot(GN, "./cg_out/TensorListScatter2.dot")
 
-
-nx.drawing.nx_pydot.write_dot(G2, "./cg_out/TensorListScatter2.dot")
+add_nodes_edges("Node1", G)
 

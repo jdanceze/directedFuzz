@@ -4,16 +4,19 @@ strict digraph  {
 "tensorflow::TensorShapeBase::dim_size";
 "tensorflow::Tensor::dtype";
 "tensorflow::Tensor::flat";
+"tensorflow::Tensor::CheckTypeAndIsAligned";
+"tensorflow::Tensor::dims";
+"tensorflow::Tensor::NumElements";
 "xla::runtime::InvalidArgument";
 "tensorflow::PartialTensorShape::IsCompatibleWith";
 "tensorflow::TensorShapeUtils::IsMatrixOrHigher";
 "tensorflow::TensorShapeUtils::IsScalar";
 "tensorflow::TensorShapeUtils::IsVectorOrHigher";
 "num_elements";
-"tensorflow::Tensor::NumElements";
 "tensorflow::TensorShapeBase::RemoveDim";
 "tensorflow::Tensor::scalar";
 "tensorflow::Tensor::CheckIsAlignedAndSingleElement";
+"tensorflow::Tensor::IsAligned";
 "tensorflow::Tensor::shape";
 "tensorflow::TensorList::tensors";
 "tensorflow::TensorShapeFromTensor";
@@ -33,5 +36,10 @@ strict digraph  {
 "tensorflow::TensorListScatter::Compute" -> "tensorflow::Tensor::shape";
 "tensorflow::TensorListScatter::Compute" -> "tensorflow::TensorList::tensors";
 "tensorflow::TensorListScatter::Compute" -> "tensorflow::TensorShapeFromTensor";
+"tensorflow::Tensor::flat" -> "tensorflow::Tensor::CheckTypeAndIsAligned";
+"tensorflow::Tensor::flat" -> "tensorflow::Tensor::dims";
+"tensorflow::Tensor::flat" -> "tensorflow::Tensor::NumElements";
 "tensorflow::Tensor::scalar" -> "tensorflow::Tensor::CheckIsAlignedAndSingleElement";
+"tensorflow::Tensor::CheckIsAlignedAndSingleElement" -> "tensorflow::Tensor::IsAligned";
+"tensorflow::Tensor::CheckIsAlignedAndSingleElement" -> "tensorflow::Tensor::NumElements";
 }

@@ -1,0 +1,50 @@
+digraph "tensorflow::Tensor::flat"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="tensorflow::Tensor::flat",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Return the tensor data as an Eigen::Tensor of the data type and a specified shape."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="tensorflow::Tensor::CheckTypeAndIsAligned",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1Tensor.html#a2c84aa871baf27a67e31c2dbfd9c14a8",tooltip=" "];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="tensorflow::DataTypeString",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$namespacetensorflow.html#af4b9023ba0db842485e11083d1867916",tooltip=" "];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="tensorflow::anonymous_namespace\{types::cc\}::DataTypeStringInternal",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$namespacetensorflow_1_1anonymous__namespace_02types_8cc_03.html#ab83df47e00bcca19a9c3c353798d204b",tooltip=" "];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="absl::StrCat",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$namespaceabsl.html#a0a476102d6d5cc8187427b7105e40b8a",tooltip=" "];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="absl::Append",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$namespaceabsl.html#aaa4ac3556462448586333f19104a2d56",tooltip=" "];
+  Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="dnnl::impl::gpu::ocl::usm::memcpy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$namespacednnl_1_1impl_1_1gpu_1_1ocl_1_1usm.html#a7e60e91085b5c34b10c8b61a0997116f",tooltip=" "];
+  Node5 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="result",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$hwloc__is__thissystem_8c.html#ab482aea24d0fe3c7ab37981dcd4cdfa0",tooltip=" "];
+  Node5 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="absl::strings_internal::STLStringResizeUninitialized",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$namespaceabsl_1_1strings__internal.html#a3b42e58848e7dba9408671c18d53ea6e",tooltip=" "];
+  Node9 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="absl::strings_internal::ResizeUninitializedTraits::Resize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structabsl_1_1strings__internal_1_1ResizeUninitializedTraits.html#a81005a1ab5bffe6dd2c0a24747653aa4",tooltip=" "];
+  Node3 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="tensorflow::IsRefType",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$namespacetensorflow.html#aba230afb5e6816c5094f8993cfc10eae",tooltip=" "];
+  Node3 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="tensorflow::Tensor::dtype",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1Tensor.html#a23f706f8a02a3bc4a62d7e42c0bf484b",tooltip="Returns the data type."];
+  Node12 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="tensorflow::TensorShapeRep::data_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1TensorShapeRep.html#af72a25360e31fe2fd97befab46428925",tooltip=" "];
+  Node2 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="tensorflow::Tensor::IsAligned",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1Tensor.html#aa406a2cce450e42ac5717a746f2c612e",tooltip="Returns true iff this tensor is aligned."];
+  Node14 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="tensorflow::Tensor::NumElements",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1Tensor.html#a7a5691cf840da97c9188c4519a235ef9",tooltip="Convenience accessor for the tensor shape."];
+  Node15 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="tensorflow::TensorShapeRep::num_elements",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1TensorShapeRep.html#a849d3012b8e351b240cc004181149a1b",tooltip="Returns the number of elements in the tensor."];
+  Node15 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="tensorflow::Tensor::shape",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1Tensor.html#a5ec66ef10ce6ec4fbe012ca7380d8bf2",tooltip="Returns the shape of the tensor."];
+  Node14 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="ptr",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$xbyak__aarch64__adr_8h.html#a15858c3cd1487c6dea9c82fa1461abe4",tooltip=" "];
+  Node1 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="tensorflow::Tensor::dims",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1Tensor.html#a74c5df2835071d78de9c4ae0fc23efb6",tooltip="Convenience accessor for the tensor shape."];
+  Node19 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node20 [label="tensorflow::TensorShapeBase::dims",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1TensorShapeBase.html#a7e9b367b7c1e098335b7b95e22a46fb1",tooltip=" "];
+  Node19 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

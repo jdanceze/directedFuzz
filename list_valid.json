@@ -73,7 +73,7 @@
         "function": "tf.raw_ops.TensorListResize",
         "TARGET_API_LIST": "TensorListResize.txt",
         "READ_DIRECTORY": "/fileout3",
-        "TARGET_FINAL_FILE_NAME": "in_forward_input",
+        "TARGET_FINAL_FILE_NAME": "Final",
         "FINAL_DIRECTORY_OUT": "/i_final_v_TensorListResize"
     },
     {
@@ -82,6 +82,13 @@
         "READ_DIRECTORY": "/fileout_SobolSample",
         "TARGET_FINAL_FILE_NAME": "in_compute",
         "FINAL_DIRECTORY_OUT": "/i_final_v_SobolSample"
+    },
+    {
+        "function": "tf.raw_ops.ThreadUnsafeUnigramCandidateSampler",
+        "TARGET_API_LIST": "ThreadUnsafe.txt",
+        "READ_DIRECTORY": "/fileout_ThreadUnsafe",
+        "TARGET_FINAL_FILE_NAME": "Final",
+        "FINAL_DIRECTORY_OUT": "/i_final_v_ThreadUnsafe"
     }
 
 ]

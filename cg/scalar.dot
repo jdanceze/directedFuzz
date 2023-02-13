@@ -1,0 +1,25 @@
+digraph "tensorflow::Tensor::scalar"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="tensorflow::Tensor::scalar",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Return the Tensor data as a TensorMap of fixed size 1: TensorMap<TensorFixedSize<T,..."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="tensorflow::Tensor::CheckIsAlignedAndSingleElement",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1Tensor.html#a277fbe9e7bea1043517556c27ee6aa0a",tooltip=" "];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="tensorflow::Tensor::IsAligned",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1Tensor.html#aa406a2cce450e42ac5717a746f2c612e",tooltip="Returns true iff this tensor is aligned."];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="tensorflow::Tensor::dtype",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1Tensor.html#a23f706f8a02a3bc4a62d7e42c0bf484b",tooltip="Returns the data type."];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="tensorflow::TensorShapeRep::data_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1TensorShapeRep.html#af72a25360e31fe2fd97befab46428925",tooltip=" "];
+  Node3 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="tensorflow::Tensor::NumElements",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1Tensor.html#a7a5691cf840da97c9188c4519a235ef9",tooltip="Convenience accessor for the tensor shape."];
+  Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="tensorflow::TensorShapeRep::num_elements",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1TensorShapeRep.html#a849d3012b8e351b240cc004181149a1b",tooltip="Returns the number of elements in the tensor."];
+  Node6 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="tensorflow::Tensor::shape",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classtensorflow_1_1Tensor.html#a5ec66ef10ce6ec4fbe012ca7380d8bf2",tooltip="Returns the shape of the tensor."];
+  Node3 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="ptr",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$xbyak__aarch64__adr_8h.html#a15858c3cd1487c6dea9c82fa1461abe4",tooltip=" "];
+  Node2 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

@@ -73,7 +73,7 @@
         "function": "tf.raw_ops.TensorListResize",
         "TARGET_API_LIST": "TensorListResize.txt",
         "READ_DIRECTORY": "/fileout3",
-        "TARGET_FINAL_FILE_NAME": "before_forward_input",
+        "TARGET_FINAL_FILE_NAME": "Final",
         "FINAL_DIRECTORY_OUT": "/final_s_TensorListResize"
     },
     {

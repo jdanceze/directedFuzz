@@ -1,0 +1,24 @@
+if successful
+    outcome = "valid"
+else if crash
+    outcome = "crash"
+else
+    outcome = "invalid"
+end
+
+\begin{algorithm}
+  \caption{Skipfuzz get outcome from test case execution}
+  \begin{algorithmic}[1]
+    \Function{getOutcome}{$\vars{tc}$}
+       \State $Result \gets $execute(tc)
+    \If{$Result$ is successful}
+        \State $outcome \gets valid $
+    \ElsIf{$Result$ is crash}
+        \State $outcome \gets crash $
+    \Else
+        \State $outcome \gets invalid $
+    \EndIf
+    \Return $\vars{outcome}$
+\EndFunction
+  \end{algorithmic}
+\end{algorithm}

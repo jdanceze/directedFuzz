@@ -82,8 +82,6 @@ def get_node_label (node, graph):
   return label
 
 
-G = nx.DiGraph(nx.drawing.nx_pydot.read_dot("./cg/TensorListScatter.dot"))
-print(G)
 # for n in find_nodes ("scalar"):
 #     print(n)
 #     print(G.nodes[n].get('label', ''))
@@ -92,10 +90,6 @@ print(G)
 
 # for dest_label in find_out_edges_dest_label("Node1", G):
 #   print(dest_label)
-
-#get graph name
-print("++++++++++++++")
-print(G.graph.get('name', ''))
 
 
 #callgraphs = glob.glob("./cg/*.dot")
@@ -109,43 +103,55 @@ def process_dot(dot):
     return graph_name, dot
 
 #recursive function to add nodes and edges to graph
-count = 0
+
 def add_nodes_edges(node, GT):
+  count = 0
   for dest_label in find_out_edges_dest_label(node, GT):
     new_dest_label = '"' + dest_label + '"'
-    GN.add_edge(get_node_label(node, GT), new_dest_label)
+    if get_node_label(node, GT) == new_dest_label and count == 0:
+      GN.add_edge(get_node_label(node, GT), new_dest_label)
+      count+=1
+    else:
+      GN.add_edge(get_node_label(node, GT), new_dest_label)
 
-    if dest_label in callgraphs:
-      dot = callgraphs[dest_label]
-      GD = nx.DiGraph(nx.drawing.nx_pydot.read_dot(dot))
-      print("Joining: ", GD.graph.get('name', ''))
-      add_nodes_edges(node, GD)
-  nx.drawing.nx_pydot.write_dot(GN, "./cg_out/cg_out.dot")
+      if dest_label in callgraphs:
+        dot = callgraphs[dest_label]
+        GD = nx.DiGraph(nx.drawing.nx_pydot.read_dot(dot))
+        print("Joining: ", GD.graph.get('name', ''))
+        add_nodes_edges(node, GD)
+  nx.drawing.nx_pydot.write_dot(GN, "./cg_out/cg_out_CompositeTensorVariantToComponents.dot")
   #nx.drawing.nx_pydot.write_dot(GN, "./cg_out/cg.dot")
 
 
 if __name__ == '__main__':
+    
+    G = nx.DiGraph(nx.drawing.nx_pydot.read_dot("./cg/CompositeTensorVariantToComponents.dot"))
+    #print(G)
+    #get graph name
+    print("++++++++++++++")
+    print(G.graph.get('Reading Graph name', ''))
+
     GN = nx.DiGraph()
     #get start time
     start_time = time.time()
     
-    callgraphs = glob.glob("/Users/jdanceze/Desktop/hub/tf_callgraph/*.dot")
-    #callgraphs = glob.glob("./cg/*.dot")
-    num_processes = 8
+    # callgraphs = glob.glob("/Users/jdanceze/Desktop/hub/tf_callgraph/*.dot")
+    # #callgraphs = glob.glob("./cg/*.dot")
+    # num_processes = 8
 
-    with concurrent.futures.ProcessPoolExecutor(max_workers=num_processes) as executor:
-        result = [x for x in executor.map(process_dot, callgraphs)]
+    # with concurrent.futures.ProcessPoolExecutor(max_workers=num_processes) as executor:
+    #     result = [x for x in executor.map(process_dot, callgraphs)]
     
-    callgraphs = dict(result)
-    #save dict to json file
-    with open('callgraphs.json', 'w') as fp:
-        json.dump(callgraphs, fp)
-    add_nodes_edges("Node1", G)
-
-    # #read dict from json file
-    # with open('callgraphs.json') as json_file:
-    #     callgraphs = json.load(json_file)
+    # callgraphs = dict(result)
+    # #save dict to json file
+    # with open('./merged_cg/merged_callgraphs.json', 'w') as fp:
+    #     json.dump(callgraphs, fp)
     # add_nodes_edges("Node1", G)
+
+    #read dict from json file
+    with open('./merged_cg/merged_callgraphs.json') as json_file:
+        callgraphs = json.load(json_file)
+    add_nodes_edges("Node1", G)
 
     end_time = time.time()
     print("time: ", end_time - start_time)

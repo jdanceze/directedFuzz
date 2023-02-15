@@ -95,7 +95,10 @@ print(G.graph.get('name', ''))
 
 
 callgraphs = glob.glob("./cg/*.dot")
-print(callgraphs)
+#callgraphs = glob.glob("/Users/jdanceze/Desktop/hub/tf_callgraph/*.dot")
+#print(callgraphs)
+
+
 # G4 = nx.DiGraph()
 # for dot in callgraphs:
 #   G4.update(nx.DiGraph(nx.drawing.nx_pydot.read_dot(dot)))
@@ -130,7 +133,7 @@ def add_nodes_edges (node, GT):
       if dest_label in GD.graph.get('name', ''):
         print(GD.graph.get('name', ''))
         add_nodes_edges(node, GD)
-  nx.drawing.nx_pydot.write_dot(GN, "./cg_out/TensorListScatter2.dot")
+  nx.drawing.nx_pydot.write_dot(GN, "./cg_out/cg2.dot")
 
 add_nodes_edges("Node1", G)
 

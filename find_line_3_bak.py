@@ -13,6 +13,8 @@ elements = ['tensorflow::PyFuncOp::Compute', 'tensorflow::anonymous_namespace\\{
 scatter = ['tensorflow::TensorListScatter::Compute', 'tensorflow::Tensor::scalar', 'tensorflow::Tensor::CheckIsAlignedAndSingleElement']
 
 for element in elements:
+    element = re.sub(r'\\\{.*?\\\}', '', element)
+    element = re.sub(r'\\\}.*?\\\{', '', element)
     parts = element.split('::')
     class_name = parts[1]
     func_name = parts[2]

@@ -73,18 +73,22 @@ def distance (name):
     #return d
 
 if __name__ == '__main__':
+    CG = "./cg_out/" + "cg_out_PyFunc.dot"
+    SOURCE = "tensorflow::PyFuncOp::Compute"
+    TARGET = "tensorflow::anonymous_namespace\{py_func::cc\}::MakeArgTuple"
     targets = ["tensorflow::anonymous_namespace\{py_func::cc\}::MakeArgTuple"]
     print ("Calculating distance..")
-    G = nx.DiGraph(nx.drawing.nx_pydot.read_dot("./cg_out/cg_out_PyFunc.dot"))
+
+    G = nx.DiGraph(nx.drawing.nx_pydot.read_dot(CG))
     #print(distance("tensorflow::TensorListScatter::Compute"))
     
     # with open("./distance/distance.txt", "w") as out:
     #     distance("tensorflow::TensorListScatter::Compute")
 
-    with open("./distance/distance_pyfunc.txt", "w") as out:
-        for n in G.nodes:
-            distance(n)
+    # with open("./distance/distance_pyfunc.txt", "w") as out:
+    #     for n in G.nodes:
+    #         distance(n)
 
     #get edge from node to target
-    print("Shortest Path: ", nx.dijkstra_path(G, "tensorflow::PyFuncOp::Compute", "tensorflow::anonymous_namespace\{py_func::cc\}::MakeArgTuple"))
-    print("Shortest Path Length: ", nx.dijkstra_path_length(G, "tensorflow::PyFuncOp::Compute", "tensorflow::anonymous_namespace\{py_func::cc\}::MakeArgTuple"))
+    print("Shortest Path: ", nx.dijkstra_path(G, SOURCE, TARGET))
+    print("Shortest Path Length: ", nx.dijkstra_path_length(G, SOURCE, TARGET))

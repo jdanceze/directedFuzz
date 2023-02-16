@@ -113,19 +113,22 @@ def add_nodes_edges(node, GT):
       count+=1
     else:
       GN.add_edge(get_node_label(node, GT), new_dest_label)
+      #id dest_label contain backslash then remove it
+      if '\\' in dest_label:
+        dest_label = dest_label.replace('\\', '')
 
       if dest_label in callgraphs:
         dot = callgraphs[dest_label]
         GD = nx.DiGraph(nx.drawing.nx_pydot.read_dot(dot))
         print("Joining: ", GD.graph.get('name', ''))
         add_nodes_edges(node, GD)
-  nx.drawing.nx_pydot.write_dot(GN, "./cg_out/cg_out_CompositeTensorVariantToComponents.dot")
+  nx.drawing.nx_pydot.write_dot(GN, "./cg_out/cg_out_BroadcastTo.dot")
   #nx.drawing.nx_pydot.write_dot(GN, "./cg_out/cg.dot")
 
 
 if __name__ == '__main__':
     
-    G = nx.DiGraph(nx.drawing.nx_pydot.read_dot("./cg/CompositeTensorVariantToComponents.dot"))
+    G = nx.DiGraph(nx.drawing.nx_pydot.read_dot("./cg/BroadcastTo.dot"))
     #print(G)
     #get graph name
     print("++++++++++++++")

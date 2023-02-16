@@ -1,0 +1,3 @@
+tensorflow::PyFuncOp::Compute,3.0
+tensorflow::anonymous_namespace\{py_func::cc\}::DoCallPyFunc,2.0
+tensorflow::anonymous_namespace\{py_func::cc\}::MakeArgTuple,1.0

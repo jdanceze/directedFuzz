@@ -1,0 +1,32 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+DoCallPyFunc	./src/py_func.cc	186;"	f	namespace:tensorflow::__anon1
+ExtractTensorFromEagerTensor	./src/py_func.cc	150;"	f	namespace:tensorflow::__anon1
+GetPyTrampoline	./src/py_func.cc	57;"	f	namespace:tensorflow::__anon1
+InitializePyTrampoline	./src/py_func.cc	304;"	f	namespace:tensorflow
+IsCPUDevice	./src/py_func.cc	82;"	f	namespace:tensorflow::__anon1
+IsSingleNone	./src/py_func.cc	126;"	f	namespace:tensorflow::__anon1
+MakeArgTuple	./src/py_func.cc	88;"	f	namespace:tensorflow::__anon1
+PyCall	./src/py_func.cc	63;"	s	namespace:tensorflow::__anon1	file:
+PyFuncOp	./src/py_func.cc	314;"	c	namespace:tensorflow	file:
+PyFuncOp	./src/py_func.cc	316;"	f	class:tensorflow::PyFuncOp
+PyFuncOp	./src/py_func.cc	403;"	m	namespace:tensorflow	file:
+PyFuncOp	./src/py_func.cc	404;"	m	namespace:tensorflow	file:
+PyFuncOp	./src/py_func.cc	405;"	m	namespace:tensorflow	file:
+PyFuncOp	./src/py_func.cc	419;"	m	namespace:tensorflow	file:
+device	./src/py_func.cc	69;"	m	struct:tensorflow::__anon1::PyCall	file:
+eager	./src/py_func.cc	72;"	m	struct:tensorflow::__anon1::PyCall	file:
+eager_	./src/py_func.cc	396;"	m	class:tensorflow::PyFuncOp	file:
+eager_async	./src/py_func.cc	75;"	m	struct:tensorflow::__anon1::PyCall	file:
+eager_async_	./src/py_func.cc	398;"	m	class:tensorflow::PyFuncOp	file:
+gpu_types	./src/py_func.cc	407;"	m	namespace:tensorflow	file:
+ins	./src/py_func.cc	78;"	m	struct:tensorflow::__anon1::PyCall	file:
+mu	./src/py_func.cc	53;"	m	namespace:tensorflow::__anon1	file:
+out	./src/py_func.cc	79;"	m	struct:tensorflow::__anon1::PyCall	file:
+tensorflow	./src/py_func.cc	49;"	n	file:
+token	./src/py_func.cc	66;"	m	struct:tensorflow::__anon1::PyCall	file:
+token_	./src/py_func.cc	392;"	m	class:tensorflow::PyFuncOp	file:

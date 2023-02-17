@@ -914,10 +914,6 @@ typename TTypes<T, NDIMS>::UnalignedConstTensor Tensor::unaligned_shaped(
 
 template <typename T>
 typename TTypes<T>::Scalar Tensor::scalar() {
-
-std::ofstream MyFile_0("/fileout/0.txt");
-MyFile_0 << "sth";
-MyFile_0.close();
   static_assert(
       !std::is_same<T, std::string>::value,
       "std::string is no longer a scalar type, use tensorflow::tstring");
@@ -927,10 +923,6 @@ MyFile_0.close();
 
 template <typename T>
 typename TTypes<T>::ConstScalar Tensor::scalar() const {
-
-std::ofstream MyFile_1("/fileout/1.txt");
-MyFile_1 << "sth";
-MyFile_1.close();
   static_assert(
       !std::is_same<T, std::string>::value,
       "std::string is no longer a scalar type, use tensorflow::tstring");

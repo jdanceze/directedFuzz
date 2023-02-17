@@ -1,2 +1,3 @@
 src/tensor.h
 src/sub/list_kernels.h
+./src/py_func.cc

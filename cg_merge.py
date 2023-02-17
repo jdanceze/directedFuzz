@@ -61,15 +61,12 @@ def find_edges (node):
 def find_out_edges (node):
   return [e for e in G.out_edges(node)]
 
-#find all out going edges for node
-#keep only the destination node
+#find all out going edges for node and keep only the destination node
 def find_out_edges_dest (node):
   return [e[1] for e in G.out_edges(node)]
 
-#find all out going edges for node
-#keep only the destination node label
+#find all out going edges for node and keep only the destination node label
 def find_out_edges_dest_label (node, graph):
-  #remove quotes
   lable = [graph.nodes[e[1]].get('label', '') for e in graph.out_edges(node)]
   lable = [x.replace('"', '') for x in lable]
   return lable
@@ -77,7 +74,6 @@ def find_out_edges_dest_label (node, graph):
 #return node label
 def get_node_label (node, graph):
   label = graph.nodes[node].get('label', '')
-  #remove quotes
   #label = label.replace('"', '')
   return label
 
@@ -129,27 +125,13 @@ def add_nodes_edges(node, GT):
 if __name__ == '__main__':
     
     G = nx.DiGraph(nx.drawing.nx_pydot.read_dot("./cg/BroadcastTo.dot"))
-    #print(G)
-    #get graph name
+    print(G.graph.get('merging cg for graph name: ', ''))
     print("++++++++++++++")
-    print(G.graph.get('Reading Graph name', ''))
+    
 
     GN = nx.DiGraph()
     #get start time
     start_time = time.time()
-    
-    # callgraphs = glob.glob("/Users/jdanceze/Desktop/hub/tf_callgraph/*.dot")
-    # #callgraphs = glob.glob("./cg/*.dot")
-    # num_processes = 8
-
-    # with concurrent.futures.ProcessPoolExecutor(max_workers=num_processes) as executor:
-    #     result = [x for x in executor.map(process_dot, callgraphs)]
-    
-    # callgraphs = dict(result)
-    # #save dict to json file
-    # with open('./merged_cg/merged_callgraphs.json', 'w') as fp:
-    #     json.dump(callgraphs, fp)
-    # add_nodes_edges("Node1", G)
 
     #read dict from json file
     with open('./merged_cg/merged_callgraphs.json') as json_file:

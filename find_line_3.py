@@ -16,8 +16,8 @@ for root, dirs, files in os.walk(src_dir):
         if file.endswith('.cc') or file.endswith('.h'):
             cpp_files.append(os.path.join(root, file))
 
-pyfunc = ['tensorflow::PyFuncOp::Compute', 'tensorflow::anonymous_namespace\\{py_func::cc\\}::DoCallPyFunc', 'tensorflow::anonymous_namespace\\{py_func::cc\\}::MakeArgTuple']
-elements = ['tensorflow::TensorListScatter::Compute', 'tensorflow::Tensor::scalar', 'tensorflow::Tensor::CheckIsAlignedAndSingleElement']
+elements = ['tensorflow::PyFuncOp::Compute', 'tensorflow::anonymous_namespace\\{py_func::cc\\}::DoCallPyFunc', 'tensorflow::anonymous_namespace\\{py_func::cc\\}::MakeArgTuple']
+scatter = ['tensorflow::TensorListScatter::Compute', 'tensorflow::Tensor::scalar', 'tensorflow::Tensor::CheckIsAlignedAndSingleElement']
 
 for element in elements:
     element = re.sub(r'\\\{.*?\\\}', '', element)

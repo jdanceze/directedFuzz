@@ -895,10 +895,6 @@ class TensorListScatter : public OpKernel {
   TensorListScatter(OpKernelConstruction* c) : OpKernel(c) {}
 
   void Compute(OpKernelContext* c) override {
-
-std::ofstream MyFile_2("/fileout/2.txt");
-MyFile_2 << "sth";
-MyFile_2.close();
     Tensor* output_tensor;
     AllocatorAttributes attr;
     attr.set_on_host(true);

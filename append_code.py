@@ -25,7 +25,7 @@ def increment_loc(list):
     return(list)
          
 
-#åfilename = 'src/sub/list_kernels.h'
+#filename = 'src/sub/list_kernels.h'
 target_line_number = 897
 
 target_lines = {
@@ -53,3 +53,6 @@ for file in target_lines:
             print(line_num)
             append_code_to_file(file, line_num, code_chunk)
 
+with open('modified_file.txt', 'w') as f:
+    for item in backed_up_files:
+        f.write(str(item) + '\n')

@@ -12,5 +12,7 @@ import tensorflow as tf
 
 value = tf.constant(shape=[2, 1024, 1024, 1024], value=False)
 
+tf.raw_ops.TensorListScatterV2()
+
 tf.experimental.numpy.outer(a=6,b=value)
 tf.keras.losses.poisson

@@ -1,0 +1,11 @@
+REGISTER_KERNEL_BUILDER(Name("GenerateBoundingBoxProposalsOPd")
+                            .Device(tensorflow::DEVICE_GPU)
+                            .HostMemory("nms_threshold")
+                            .HostMemory("min_size")
+                            .HostMemory("pre_nms_topn"),
+                        tensorflow::GenerateBoundingBoxProposals);
+  REGISTER_KERNEL_BUILDER(Name("TensorListConcat")                         \
+                              .TypeConstraint<T>("element_dtype")          \
+                              .Device(DEVICE_CPU),                         \
+                          TensorListConcat<CPUDevice, T>)                  \
+

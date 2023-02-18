@@ -9,3 +9,5 @@ REGISTER_KERNEL_BUILDER(Name("GenerateBoundingBoxProposalsOPd")
                               .Device(DEVICE_CPU),                         \
                           TensorListConcat<CPUDevice, T>)                  \
 
+  #define REGISTER_CPU(type)REGISTER_KERNEL_BUILDER(Name("Roll")\.Device(DEVICE_CPU)\.TypeConstraint<type>("T")\.TypeConstraint<int32>("Tshift")\.TypeConstraint<int32>("Taxis")\.HostMemory("shift")\.HostMemory("axis"),RollOp<CPUDevice, type, int32, int32>) \
+REGISTER_KERNEL_BUILDER(Name("Roll")\.Device(DEVICE_GPU)\.TypeConstraint<type>("T")\.TypeConstraint<int64_t>("Tshift")\.TypeConstraint<int32>("Taxis")\.HostMemory("shift")\.HostMemory("axis"),RollOp<GPUDevice>)

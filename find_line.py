@@ -1,6 +1,7 @@
 import os
 import glob
 import re
+import ast
 
 
 # func_name = "CheckIsAlignedAndSingleElement"
@@ -19,7 +20,15 @@ for root, dirs, files in os.walk(src_dir):
 
 test = ['tensorflow::PyFuncOp::Compute', 'tensorflow::anonymous_namespace\\{py_func::cc\\}::DoCallPyFunc', 'tensorflow::anonymous_namespace\\{py_func::cc\\}::MakeArgTuple']
 scatter = ['tensorflow::TensorListScatter::Compute', 'tensorflow::Tensor::scalar', 'tensorflow::Tensor::CheckIsAlignedAndSingleElement']
-elements = ['tensorflow::FractionalMaxPoolOp::Compute', 'tensorflow::GeneratePoolingSequence', 'tensorflow::GeneratePoolingSequencePseudoRandom', 'tsl::random::SimplePhilox::RandDouble']
+#elements = ['tensorflow::FractionalMaxPoolOp::Compute', 'tensorflow::GeneratePoolingSequence', 'tensorflow::GeneratePoolingSequencePseudoRandom', 'tsl::random::SimplePhilox::RandDouble']
+
+#get list of elements from file
+
+with open("./temp/shortest_path.txt", 'r') as f:
+    content = f.read()
+
+elements = ast.literal_eval(content)
+print(elements)
 
 target_loc_dict = {}
 

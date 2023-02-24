@@ -44,35 +44,6 @@ def find_nodes (name):
     #get node id
     return [n for n, d in G.nodes(data=True) if n_name == n]
 
-def distance (name):
-  distance = -1
-  for n in find_nodes (name):
-    #print("node: ", n)
-    d = 0.0
-    i = 0
-    for t in targets:
-        #print("t: ", t)
-        try:
-            shortest = nx.dijkstra_path_length(G, n, t)
-            print("n>>> " + n + " t>>> " + t)
-            print("shortest: ", shortest)
-            d += 1.0 / (1.0 + shortest)
-            i += 1
-            print("d: ", d)
-        except nx.NetworkXNoPath:
-            pass
-
-    if d != 0 and (distance == -1 or distance > i / d) :
-        distance = i / d
-        print("distance: ", distance)
-
-  if distance != -1:
-    out.write (name)
-    out.write (",")
-    out.write (str (distance))
-    out.write ("\n")
-    #return d
-
 def get_target_namespace(target_path):
   with open(target_path) as f:
     return f.readline()
@@ -88,15 +59,10 @@ if __name__ == '__main__':
     print ("Calculating distance..")
 
     G = nx.DiGraph(nx.drawing.nx_pydot.read_dot(CG))
-    #print(distance("tensorflow::TensorListScatter::Compute"))
-    
-    # with open("./distance/distance.txt", "w") as out:
-    #     distance("tensorflow::TensorListScatter::Compute")
 
-    # with open("./distance/distance_pyfunc.txt", "w") as out:
-    #     for n in G.nodes:
-    #         distance(n)
-
-    #get edge from node to target
-    print("Shortest Path: ", nx.dijkstra_path(G, SOURCE, TARGET))
+    shortest_path = nx.dijkstra_path(G, SOURCE, TARGET)
+    print("Shortest Path: ", shortest_path)
     print("Shortest Path Length: ", nx.dijkstra_path_length(G, SOURCE, TARGET))
+    #write to file
+    with open("./temp/shortest_path.txt", "w") as f:
+        f.write(str(shortest_path))

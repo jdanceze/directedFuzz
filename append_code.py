@@ -71,13 +71,31 @@ target_line_number = 897
 #     'src/fractional_pool_common.cc': [100, 20]
 # }
 
-#load dictionary from file the elements are seperated by new line
 target_lines = {}
 with open('./temp/target_loc_dict.txt') as f:
     target_lines = eval(f.read())
 
+#get target function location from file
+with open('./temp/target_function_loc.txt') as f:
+    target_line_number = f.read()
+    if target_line_number != '':
+        target_function_file_name = target_line_number.split(':')[0]
+        target_function_line_number = int(target_line_number.split(':')[1])
+        print("Final Target Function at")
+        print("file_name: ", target_function_file_name)
+        print("line_number: ", target_function_line_number)
+    else:
+        print("No Final Target Function location")
+        exit()
+
 code_chunk = '''
 std::ofstream MyFile_{I}("/fileout/{I}.txt");
+MyFile_{I} << "sth";
+MyFile_{I}.close();
+'''
+
+final_code_chunk = '''
+std::ofstream MyFile_{I}("/fileout/Final.txt");
 MyFile_{I} << "sth";
 MyFile_{I}.close();
 '''
@@ -96,14 +114,21 @@ for file in target_lines:
 
         target_line_list = target_lines.get(file)
         target_line_list.sort()
-        print(target_line_list)
+        print("original line list: ",target_line_list)
         new_line_list = check_if_line_in_list(file, target_line_list)
         new_line_list.sort()
         print("new line list: ", new_line_list)
         increment_loc(new_line_list)
+        print("after increment line list: ", new_line_list)
+        change_dict = dict(zip(target_line_list, new_line_list))
+        print("change_dict: ", change_dict)
         for line_num in new_line_list:
             print(line_num)
-            append_code_to_file(file, line_num, code_chunk)
+            if file == target_function_file_name and line_num == change_dict.get(target_function_line_number):
+                print("target_line_number: ", line_num)
+                append_code_to_file(file, line_num, final_code_chunk)
+            else:
+                append_code_to_file(file, line_num, code_chunk)
 
 for file in target_lines:
     append_header_to_file(file, 0, header_chunk)

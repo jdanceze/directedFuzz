@@ -1,1 +1,1 @@
-['tensorflow::FractionalMaxPoolOp::Compute', 'tensorflow::GeneratePoolingSequence', 'tensorflow::GeneratePoolingSequencePseudoRandom', 'tsl::random::SimplePhilox::RandDouble']
+['tensorflow::FractionalMaxPoolOp::Compute', 'tensorflow::GeneratePoolingSequence', 'tensorflow::GeneratePoolingSequencePseudoRandom']

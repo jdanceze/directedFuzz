@@ -32,7 +32,13 @@ print(elements)
 
 target_loc_dict = {}
 
+target_function_flag = False
+target_function_loc = None
+
 for element in elements:
+    #if elemtent is a last element
+    if element == elements[-1]:
+        target_function_flag = True
     element = re.sub(r'\\\{.*?\\\}', '', element)
     element = re.sub(r'\\\}.*?\\\{', '', element)
     parts = element.split('::')
@@ -76,14 +82,13 @@ for element in elements:
                 for function_match in function_matches:
                     line_number = contents.count('\n', 0, class_match.start() + function_match.start()) + 1
                     print("  Function found in file {} on line {}: {}".format(file, line_number, function_match.group()))
-                    #add file and line number to dictionary
-                    #file is key, line number is value
-                    #the value is a list of line numbers
                     if file not in target_loc_dict:
                         target_loc_dict[file] = []
                         target_loc_dict[file].append(line_number)
                     else:
                         target_loc_dict[file].append(line_number)
+                    if target_function_flag:
+                        target_function_loc = file + ":" + str(line_number)
                     found = True
                     if func_name == "Compute":
                         break
@@ -100,6 +105,8 @@ for element in elements:
                     target_loc_dict[file].append(line_number)
                 else:
                     target_loc_dict[file].append(line_number)
+                if target_function_flag:
+                    target_function_loc = file + ":" + str(line_number)
         
         # if not found:
         #     print("if not found")
@@ -115,3 +122,7 @@ print(target_loc_dict)
 #writing dictionary to file
 with open('./temp/target_loc_dict.txt', 'w') as f:
     f.write(str(target_loc_dict))
+    
+if target_function_loc is not None:
+    with open('./temp/target_function_loc.txt', 'w') as f:
+        f.write(target_function_loc)

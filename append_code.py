@@ -1,6 +1,7 @@
 import os
 import shutil
 
+
 global i
 i = 0
 backed_up_files = []
@@ -12,27 +13,6 @@ def append_code_to_file(filename, target_line_number, code):
     with open(filename, 'r') as file:
         lines = file.readlines()
     print("target_line: ", lines[target_line_number])
-    lines.insert(target_line_number, code.format(I=i))
-
-    with open(filename, 'w') as file:
-        file.writelines(lines)
-    i+=1
-
-def append_code_to_file_new(filename, target_line_number, code):
-    global i
-
-    with open(filename, 'r') as file:
-        lines = file.readlines()
-
-    #if target line not contain { then find the next line that contains { and insert code there
-    if '{' not in lines[target_line_number]:
-        print("target_line_number: ", target_line_number)
-        print("target_line: ", lines[target_line_number])
-        for line in lines[target_line_number:]:
-            if '{' in line:
-                target_line_number = lines.index(line)
-                print("New target_line_number: ", target_line_number)
-                break
     lines.insert(target_line_number, code.format(I=i))
 
     with open(filename, 'w') as file:
@@ -80,16 +60,21 @@ def increment_loc(list):
 #filename = 'src/sub/list_kernels.h'
 target_line_number = 897
 
-target_lines = {
-    'src/tensor.h': [916, 925],
-    'src/sub/list_kernels.h': [897],
-    './src/py_func.cc': [326, 186, 88]
-}
+# target_lines = {
+#     'src/tensor.h': [916, 925],
+#     'src/sub/list_kernels.h': [897],
+#     './src/py_func.cc': [326, 186, 88]
+# }
 
 # target_lines = {
 #     'src/fractional_max_pool_op.cc': [71],
 #     'src/fractional_pool_common.cc': [100, 20]
 # }
+
+#load dictionary from file the elements are seperated by new line
+target_lines = {}
+with open('./temp/target_loc_dict.txt') as f:
+    target_lines = eval(f.read())
 
 code_chunk = '''
 std::ofstream MyFile_{I}("/fileout/{I}.txt");
@@ -120,8 +105,8 @@ for file in target_lines:
             print(line_num)
             append_code_to_file(file, line_num, code_chunk)
 
-# for file in target_lines:
-#     append_header_to_file(file, 0, header_chunk)
+for file in target_lines:
+    append_header_to_file(file, 0, header_chunk)
 
 with open('modified_file.txt', 'w') as f:
     for item in backed_up_files:

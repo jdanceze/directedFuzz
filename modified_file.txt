@@ -1,3 +1,2 @@
-src/tensor.h
-src/sub/list_kernels.h
-./src/py_func.cc
+./src/fractional_max_pool_op.cc
+./src/fractional_pool_common.cc

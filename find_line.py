@@ -9,8 +9,8 @@ import re
 # os.chdir('./src')
 # cpp_files = glob.glob('*')
 
-#src_dir = './src'
-src_dir = "/Users/jdanceze/Desktop/hub/tensorflow/"
+src_dir = './src'
+#src_dir = "/Users/jdanceze/Desktop/hub/tensorflow/"
 cpp_files = []
 for root, dirs, files in os.walk(src_dir):
     for file in files:
@@ -20,6 +20,8 @@ for root, dirs, files in os.walk(src_dir):
 test = ['tensorflow::PyFuncOp::Compute', 'tensorflow::anonymous_namespace\\{py_func::cc\\}::DoCallPyFunc', 'tensorflow::anonymous_namespace\\{py_func::cc\\}::MakeArgTuple']
 scatter = ['tensorflow::TensorListScatter::Compute', 'tensorflow::Tensor::scalar', 'tensorflow::Tensor::CheckIsAlignedAndSingleElement']
 elements = ['tensorflow::FractionalMaxPoolOp::Compute', 'tensorflow::GeneratePoolingSequence', 'tensorflow::GeneratePoolingSequencePseudoRandom', 'tsl::random::SimplePhilox::RandDouble']
+
+target_loc_dict = {}
 
 for element in elements:
     element = re.sub(r'\\\{.*?\\\}', '', element)
@@ -65,6 +67,14 @@ for element in elements:
                 for function_match in function_matches:
                     line_number = contents.count('\n', 0, class_match.start() + function_match.start()) + 1
                     print("  Function found in file {} on line {}: {}".format(file, line_number, function_match.group()))
+                    #add file and line number to dictionary
+                    #file is key, line number is value
+                    #the value is a list of line numbers
+                    if file not in target_loc_dict:
+                        target_loc_dict[file] = []
+                        target_loc_dict[file].append(line_number)
+                    else:
+                        target_loc_dict[file].append(line_number)
                     found = True
                     if func_name == "Compute":
                         break
@@ -76,6 +86,11 @@ for element in elements:
             for function_match in function_matches:
                 line_number = contents.count('\n', 0, function_match.start()) + 1
                 print("  Function found in file {} on line {}: {}".format(file, line_number, function_match.group()))
+                if file not in target_loc_dict:
+                    target_loc_dict[file] = []
+                    target_loc_dict[file].append(line_number)
+                else:
+                    target_loc_dict[file].append(line_number)
         
         # if not found:
         #     print("if not found")
@@ -86,3 +101,8 @@ for element in elements:
         #         line_number = contents.count('\n', 0, function_match.start()) + 1
         #         #print("not found")
         #         print("  Function found on line {}: {}".format(line_number, function_match.group()))
+    
+print(target_loc_dict)
+#writing dictionary to file
+with open('./temp/target_loc_dict.txt', 'w') as f:
+    f.write(str(target_loc_dict))

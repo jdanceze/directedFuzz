@@ -3,6 +3,7 @@ import collections
 import functools
 import networkx as nx
 
+
 class memoize:
   # From https://github.com/S2E/s2e-env/blob/master/s2e_env/utils/memoize.py
 
@@ -72,11 +73,18 @@ def distance (name):
     out.write ("\n")
     #return d
 
+def get_target_namespace(target_path):
+  with open(target_path) as f:
+    return f.readline()
+
 if __name__ == '__main__':
-    CG = "./cg_out/" + "cg_out_PyFunc.dot"
-    SOURCE = "tensorflow::PyFuncOp::Compute"
-    TARGET = "tensorflow::anonymous_namespace\{py_func::cc\}::MakeArgTuple"
-    targets = ["tensorflow::anonymous_namespace\{py_func::cc\}::MakeArgTuple"]
+    
+    
+    #SOURCE = "tensorflow::TensorListScatter::Compute"
+    SOURCE = get_target_namespace("./temp/target_kernel_class.txt")
+    TARGET = "tsl::random::SimplePhilox::RandDouble"
+    CG = "./temp/cg_out/" + SOURCE + ".dot"
+    #targets = ["tensorflow::anonymous_namespace\{py_func::cc\}::MakeArgTuple"]
     print ("Calculating distance..")
 
     G = nx.DiGraph(nx.drawing.nx_pydot.read_dot(CG))

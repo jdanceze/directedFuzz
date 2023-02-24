@@ -100,7 +100,7 @@ def process_dot(dot):
 
 #recursive function to add nodes and edges to graph
 
-def add_nodes_edges(node, GT):
+def add_nodes_edges(node, GT, name):
   count = 0
   for dest_label in find_out_edges_dest_label(node, GT):
     new_dest_label = '"' + dest_label + '"'
@@ -117,28 +117,36 @@ def add_nodes_edges(node, GT):
         dot = callgraphs[dest_label]
         GD = nx.DiGraph(nx.drawing.nx_pydot.read_dot(dot))
         print("Joining: ", GD.graph.get('name', ''))
-        add_nodes_edges(node, GD)
-  nx.drawing.nx_pydot.write_dot(GN, "./cg_out/cg_out_BroadcastTo.dot")
+        add_nodes_edges(node, GD, name)
+  nx.drawing.nx_pydot.write_dot(GN, "./temp/cg_out/" + name + ".dot")
   #nx.drawing.nx_pydot.write_dot(GN, "./cg_out/cg.dot")
 
 
+def get_target_namespace(target_path):
+  with open(target_path) as f:
+    return f.readline()
+
+  
+
 if __name__ == '__main__':
     
-    G = nx.DiGraph(nx.drawing.nx_pydot.read_dot("./cg/BroadcastTo.dot"))
-    print(G.graph.get('merging cg for graph name: ', ''))
-    print("++++++++++++++")
-    
-
-    GN = nx.DiGraph()
-    #get start time
-    start_time = time.time()
-
-    #read dict from json file
     with open('./merged_cg/merged_callgraphs.json') as json_file:
         callgraphs = json.load(json_file)
-    add_nodes_edges("Node1", G)
+    
+    target_namespace = get_target_namespace("./temp/target_kernel_class.txt")
+    print("Target Namespace: ", target_namespace)
+    print("Target Initial Graph file: ",callgraphs[target_namespace])
+
+    G = nx.DiGraph(nx.drawing.nx_pydot.read_dot(callgraphs[target_namespace]))
+    print(G.graph.get('merging cg for graph name: ', ''))
+    print("++++++++++++++")
+
+    GN = nx.DiGraph()
+    start_time = time.time()
+    
+    add_nodes_edges("Node1", G, target_namespace)
 
     end_time = time.time()
     print("time: ", end_time - start_time)
-    #print(callgraphs)
+
 

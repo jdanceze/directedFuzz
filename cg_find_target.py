@@ -1,7 +1,7 @@
 import os
 import re
 
-function_interface = "tf.raw_ops.UnsortedSegmentProd"
+function_interface = "tf.raw_ops.FractionalMaxPool"
 function_interface = function_interface.split('.', 1)[1]
 #print(function_interface)
 function_interface = "tf_export(" + '"' + function_interface + '"' + ")"
@@ -12,6 +12,7 @@ src_path = "/Users/jdanceze/Desktop/hub/tensorflow/"
 target_file = None
 target_register_op = None
 target_class = False
+target_kernel = None
 
 def get_alphanumeric(string):
     result = ''
@@ -115,5 +116,11 @@ if target_register_op is not None:
                             #print("Line number: ", line_number + 1)
                             #print("Line: ", line)
                             print(f"\nArgument for function {function_name_to_search}: {match[1]}")
+                            print("Target: ", "tensorflow::" + match[1] + "::Compute")
+                            target_kernel = match[1]
                             break
-
+            if target_class:
+                #write to file
+                with open("./temp/target_kernel_class.txt", "w") as f:
+                    f.write("tensorflow::" + target_kernel + "::Compute")
+                break

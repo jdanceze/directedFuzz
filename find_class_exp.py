@@ -14,11 +14,13 @@ with open('found_class.txt', 'r') as f:
     lines = f.readlines()
 global i
 i=0
+class_list = set()
 for line in lines:
     parts = line.strip().split(',')
     filename = parts[0]
     function_name = parts[1]
     class_name = parts[2]
+    
     #print(f"Filename: {filename}, Function name: {function_name}, Class name: {class_name}")
 
     with open(filename, 'r') as f:
@@ -38,9 +40,12 @@ for line in lines:
 
         if class_matches is not None:
             print("Found class")
+            class_list.add(class_name)
+            #found = True
             i+=1
         else:
-            with open('class_not_found.txt', 'a') as f:
+            with open('class_not_found_2.txt', 'a') as f:
                 f.write(f"{filename},{class_name}\n")
-print(i)
+
+print(len(class_list))
 

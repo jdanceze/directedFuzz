@@ -101,10 +101,12 @@ if __name__ == '__main__':
     time_skipfuzz_go_concat = [70,71,72,71,71,71,72,72,73,71,72,88,71,71,71,72,71,71,72,71]
     time_skipfuzz_concat = [71,72,72,70,70,72,74,70,70,72,71,72,92,72,72,73,72,70,71,70]
     time_skipfuzz_go_ninv_concat = [71,72,71,72,69,70,71,69,73,72,70,71,70,70,70,68,69,70,73,72]
+    time_skipfuzz_go_ns_concat = [72, 70, 70, 69, 70, 69, 71, 70, 71, 71, 73, 70, 71, 72, 70, 87, 69, 71, 73, 71]
 
     time_skipfuzz_go_extract = [130,83,3600,100,3600,3600,79,3600,3600,3600,112,3600,75,153,102,3600,3600,3600,77,108]
     time_skipfuzz_extract = [3600,162,3600,207,176,102,94,3600,72,83,87,132,187,152,3600,100,141,3600,3600,72]
     time_skipfuzz_go_ninv_extract = [174,106,136,112,3600,132,102,81,73,114,93,214,98,90,3600,83,81,121,107,206]
+    time_skipfuzz_go_ns_extract = [3600, 243, 162, 177, 87, 107, 135, 92, 125, 127, 149, 81, 146, 87, 3600, 179, 124, 110, 179, 76]
 
     time_skipfuzz_go_sobol = [75,89,74,79,70,74,76,74,75,75,74,77,77,73,76,80,74,83,83,72]
     time_skipfuzz_sobol = [79,80,75,74,83,79,84,90,76,80,81,78,81,80,76,78,85,76,80,84]
@@ -113,10 +115,12 @@ if __name__ == '__main__':
     time_skipfuzz_go_composite = [76,74,71,73,74,90,71,72,72,73,72,72,74,72,71,72,72,72,72,71]
     time_skipfuzz_composite = [72,80,74,98,71,77,89,94,77,68,69,77,74,75,86,76,69,73,71,91]
     time_skipfuzz_go_ninv_composite = [80,74,75,72,73,71,71,73,72,73,77,72,73,72,71,72,75,73,73,72]
+    time_skipfuzz_go_ns_composite = [76, 73, 73, 78, 74, 75, 75, 73, 73, 71, 80, 96, 72, 90, 76, 80, 75, 77, 72, 73]
 
     time_skipfuzz_go_pyfunc = [3600,103,103,3600,78,101,79,89,86,3600,78,3600,3600,96,93,3600,89,3600,3600,3600]
     time_skipfuzz_pyfunc = [220,98,181,185,181,103,124,110,73,77,104,212,208,328,84,3600,193,167,317,157]
     time_skipfuzz_go_ninv_pyfunc = [110,139,110,82,161,80,110,107,85,91,118,78,120,193,3600,93,161,87,139,87]
+    time_skipfuzz_go_ns_pyfunc= [82, 84, 73, 145, 74, 140, 154, 193, 171, 78, 108, 77, 130, 118, 147, 162, 261, 187, 109, 97]
 
     time_skipfuzz_go_outer = [108,86,103,84,101,114,103,111,74,90,90,90,91,90,71,92,71,91,72,88]
     time_skipfuzz_outer = [92,72,96,90,89,90,90,90,70,90,88,89,73,89,90,88,70,89,93,90]
@@ -124,6 +128,7 @@ if __name__ == '__main__':
 
     time_skipfuzz_poisson = [1058,3600,3600,1663,3600,3600,1127,1177,320,932,3600,3600,1361,1199,1372,482,3600,3600,3600,3600]
     time_skipfuzz_go_ninv_poisson = [998,332,3600,3600,3600,3600,3600,3600,3600,986,3600,3600,3600,3600,3600,3600,3600,3600,1342,3600]
+    time_skipfuzz_go_ns_poission = [877, 3600, 3600, 3600, 3600, 3600, 3600, 3600, 3600, 3600, 863, 3600, 265, 3600, 3600, 1248, 3600, 3600, 3600, 3600]
 
     time_skipfuzz_broadcast = [3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600]
     time_skipfuzz_go_ninv_broadcast = [3600,3600,373,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600,3600]
@@ -137,19 +142,19 @@ if __name__ == '__main__':
     estimate_time_scatter, magnitude_time_scatter = VD_A(time_skipfuzz_go_ninv_scatter, time_skipfuzz_scatter)
     print("A12-time Scatter: ", 1 - estimate_time_scatter)
 
-    estimate_time_Concat, magnitude_time_Concat = VD_A(time_skipfuzz_go_ninv_concat, time_skipfuzz_concat)
+    estimate_time_Concat, magnitude_time_Concat = VD_A(time_skipfuzz_go_ns_concat, time_skipfuzz_concat)
     print("A12-time Concat: ", 1 - estimate_time_Concat)
 
-    estimate_time_extract, magnitude_time_extract = VD_A(time_skipfuzz_go_ninv_extract, time_skipfuzz_extract)
+    estimate_time_extract, magnitude_time_extract = VD_A(time_skipfuzz_go_ns_extract, time_skipfuzz_extract)
     print("A12-time extract: ", 1 - estimate_time_extract)
 
     estimate_time_sobol, magnitude_time_sobol = VD_A(time_skipfuzz_go_ninv_sobol, time_skipfuzz_sobol)
     print("A12-time sobol: ", 1 - estimate_time_sobol)
 
-    estimate_time_composite, magnitude_time_composite = VD_A(time_skipfuzz_go_ninv_composite, time_skipfuzz_composite)
+    estimate_time_composite, magnitude_time_composite = VD_A(time_skipfuzz_go_ns_composite, time_skipfuzz_composite)
     print("A12-time composite: ", 1 - estimate_time_composite)
 
-    estimate_time_pyfunc, magnitude_time_pyfunc = VD_A(time_skipfuzz_go_ninv_pyfunc, time_skipfuzz_pyfunc)
+    estimate_time_pyfunc, magnitude_time_pyfunc = VD_A(time_skipfuzz_go_ns_pyfunc, time_skipfuzz_pyfunc)
     print("A12-time pyfunc: ", 1 - estimate_time_pyfunc)
 
     estimate_time_outer, magnitude_time_outer = VD_A(time_skipfuzz_go_outer, time_skipfuzz_outer)
@@ -165,11 +170,11 @@ if __name__ == '__main__':
     print("A12-time tensor list resize: ", 1 - estimate_time_tensorlistresize)
 
     print("scatter: ",ss.mannwhitneyu(x = time_skipfuzz_go_ninv_scatter, y = time_skipfuzz_scatter, alternative='greater'))
-    print("Concat: ",ss.mannwhitneyu(x = time_skipfuzz_go_ninv_concat, y = time_skipfuzz_concat, alternative='less'))
-    print("extract: ",ss.mannwhitneyu(x = time_skipfuzz_go_ninv_extract, y = time_skipfuzz_extract, alternative='less'))
+    print("Concat: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_concat, y = time_skipfuzz_concat, alternative='less'))
+    print("extract: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_extract, y = time_skipfuzz_extract, alternative='less'))
     print("sobol: ",ss.mannwhitneyu(x = time_skipfuzz_go_ninv_sobol, y = time_skipfuzz_sobol, alternative='less'))
-    print("composite: ",ss.mannwhitneyu(x = time_skipfuzz_go_ninv_composite, y = time_skipfuzz_composite, alternative='less'))
-    print("pyfunc: ",ss.mannwhitneyu(x = time_skipfuzz_go_ninv_pyfunc, y = time_skipfuzz_pyfunc, alternative='less'))
+    print("composite: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_composite, y = time_skipfuzz_composite, alternative='less'))
+    print("pyfunc: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_pyfunc, y = time_skipfuzz_pyfunc, alternative='less'))
     print("outer: ",ss.mannwhitneyu(x = time_skipfuzz_go_outer, y = time_skipfuzz_outer, alternative='less'))
     print("poisson: ",ss.mannwhitneyu(x = time_skipfuzz_go_ninv_poisson, y = time_skipfuzz_poisson, alternative='greater'))
     print("broadcast: ",ss.mannwhitneyu(x = time_skipfuzz_go_ninv_broadcast, y = time_skipfuzz_broadcast, alternative='less'))

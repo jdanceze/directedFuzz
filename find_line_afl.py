@@ -10,13 +10,14 @@ import json
 # os.chdir('./src')
 # cpp_files = glob.glob('*')
 
-src_dir = './src'
-#src_dir = "/Users/jdanceze/Desktop/hub/tensorflow/"
+#src_dir = './src'
+src_dir = "/Users/jdanceze/Desktop/hub/tensorflow_test/"
 cpp_files = []
 for root, dirs, files in os.walk(src_dir):
     for file in files:
-        if file.endswith('.cc') or file.endswith('.h'):
-            cpp_files.append(os.path.join(root, file))
+        if '_test' not in file:
+            if file.endswith('.cc') or file.endswith('.h'):
+                cpp_files.append(os.path.join(root, file))
 
 test = ['tensorflow::PyFuncOp::Compute', 'tensorflow::anonymous_namespace\\{py_func::cc\\}::DoCallPyFunc', 'tensorflow::anonymous_namespace\\{py_func::cc\\}::MakeArgTuple']
 scatter = ['tensorflow::TensorListScatter::Compute', 'tensorflow::Tensor::scalar', 'tensorflow::Tensor::CheckIsAlignedAndSingleElement']
@@ -26,7 +27,7 @@ maxpool = ['tensorflow::FractionalMaxPoolOp::Compute', 'tensorflow::GeneratePool
 elements = []
 scores = []
 
-with open("./distance/distance_Scatter_2.txt", 'r') as f:
+with open("./distance/distance.txt", 'r') as f:
     for line in f:
         parts = line.strip().split(',')
         element = parts[0]

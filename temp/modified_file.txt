@@ -1,3 +1,0 @@
-./src/sub/list_kernels.h
-./src/tensor.h
-./src/tensor.cc

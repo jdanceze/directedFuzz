@@ -1,7 +1,7 @@
-tensorflow::TensorListScatter::Compute,2.0
-tensorflow::Tensor::flat,2.0
-tensorflow::Tensor::CheckTypeAndIsAligned,3.0
-tensorflow::Tensor::IsAligned,2.0
-tensorflow::Tensor::NumElements,1.0
-tensorflow::Tensor::scalar,3.0
-tensorflow::Tensor::CheckIsAlignedAndSingleElement,2.0
+tensorflow::TensorListScatter::Compute,1.0
+tensorflow::Tensor::flat,1.0
+tensorflow::Tensor::CheckTypeAndIsAligned,2.0
+tensorflow::Tensor::IsAligned,1.0
+tensorflow::Tensor::NumElements,0.0
+tensorflow::Tensor::scalar,2.0
+tensorflow::Tensor::CheckIsAlignedAndSingleElement,1.0

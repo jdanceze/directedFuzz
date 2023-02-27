@@ -95,7 +95,7 @@ if __name__ == '__main__':
     # with open("./distance/distance_Scatter.txt", "w") as out:
     #     distance("tensorflow::TensorListScatter::Compute")
 
-    with open("./distance/distance_Scatter_2.txt", "w") as out:
+    with open("./distance/distance.txt", "w") as out:
         for n in G.nodes:
             distance(n)
 

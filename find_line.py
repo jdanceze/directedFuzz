@@ -58,7 +58,7 @@ for element in elements:
         found = False
         if func_name == "Compute":
             #class_pattern = r'\b(class|struct|namespace)\s+' + class_name + r'\b'
-            class_pattern = r'\b(class|struct|namespace)\s+' + class_name
+            class_pattern = r'\b(class|struct|namespace)\s+' + class_name + r'\s'
         else:
             #class_pattern = r'\b(class|struct|namespace)\s+' + class_name + r'\s*\{'
             class_pattern = r'\b(class|struct|namespace)\s+' + class_name
@@ -76,7 +76,7 @@ for element in elements:
                 #print("Class found in file {} on line {}: {}".format(file, contents.count('\n', 0, class_match.start()) + 1, class_match.group()))
 
                 #function_pattern = r'\b' + func_name + r'\b\s*\([^)]*\)\s*(override)?\s*{'
-                function_pattern = r'\b' + func_name + r'\b\s*\([^)]*\)\s*(?:const|\S*)\s*{'
+                function_pattern = r'(?::|\s+)' + func_name + r'\b\s*\([^)]*\)\s*(?:const|\S*)\s*{'
                 function_matches = re.finditer(function_pattern, contents[class_match.start():])
 
                 for function_match in function_matches:
@@ -94,7 +94,7 @@ for element in elements:
                         break
         else:
             #print("else")
-            function_pattern = r'\b' + func_name + r'\b\s*\([^)]*\)\s*(?:const|\S*)\s*{'
+            function_pattern = r'(?::|\s+)' + func_name + r'\b\s*\([^)]*\)\s*(?:const|\S*)\s*{'
             function_matches = re.finditer(function_pattern, contents)
 
             for function_match in function_matches:

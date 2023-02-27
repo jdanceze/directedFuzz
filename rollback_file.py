@@ -1,6 +1,6 @@
 import os
 
-with open('modified_file.txt', 'r') as f:
+with open('./temp/modified_file.txt', 'r') as f:
     files = f.readlines()
     for file in files:
         print(file.strip())

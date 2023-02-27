@@ -1,2 +1,0 @@
-./src/fractional_max_pool_op.cc
-./src/fractional_pool_common.cc

@@ -133,6 +133,6 @@ for file in target_lines:
 for file in target_lines:
     append_header_to_file(file, 0, header_chunk)
 
-with open('modified_file.txt', 'w') as f:
+with open('./temp/modified_file.txt', 'w') as f:
     for item in backed_up_files:
         f.write(str(item) + '\n')

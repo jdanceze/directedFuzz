@@ -98,6 +98,9 @@ if __name__ == '__main__':
     time_skipfuzz_scatter = [176,182,172,179,176,172,171,172,168,179,177,172,174,173,172,182,179,174,174,175]
     time_skipfuzz_go_ninv_scatter = [167,171,172,172,181,175,172,171,173,173,181,181,173,172,170,172,179,173,181,175]
     time_skipfuzz_go_ns_scatter = [201, 173, 185, 174, 173, 175, 175, 172, 174, 176, 174, 178, 177, 174, 172, 185, 175, 172, 173, 171]
+    time_skipfuzz_go_nd_scatter =[177, 179, 172, 173, 174, 178, 178, 173, 172, 177, 172, 174, 172, 176, 174, 172, 185, 180, 178, 185]
+    time_skipfuzz_go_bb_ninv_scatter = [172, 176, 172, 174, 175, 173, 173, 176, 175, 173, 173, 173, 174, 172, 176, 181, 174, 177, 174, 176]
+    time_skipfuzz_go_bb_ns_scatter = [173, 172, 172, 171, 174, 173, 180, 173, 175, 172, 168, 172, 172, 173, 177, 173, 173, 171, 177, 175]
 
     time_skipfuzz_go_concat = [70,71,72,71,71,71,72,72,73,71,72,88,71,71,71,72,71,71,72,71]
     time_skipfuzz_concat = [71,72,72,70,70,72,74,70,70,72,71,72,92,72,72,73,72,70,71,70]
@@ -125,7 +128,10 @@ if __name__ == '__main__':
     time_skipfuzz_go_ninv_pyfunc = [110,139,110,82,161,80,110,107,85,91,118,78,120,193,3600,93,161,87,139,87]
     time_skipfuzz_go_ninv_pyfun_2 = [171, 109, 272, 143, 76, 259, 140, 117, 96, 90, 99, 157, 154, 215, 208, 111, 83, 128, 236, 132]
     time_skipfuzz_go_ns_pyfunc= [82, 84, 73, 145, 74, 140, 154, 193, 171, 78, 108, 77, 130, 118, 147, 162, 261, 187, 109, 97]
-
+    time_skipfuzz_go_bb_max_pyfunc = [84, 146, 78, 129, 98, 158, 125, 109, 99, 87, 295, 305, 107, 263, 158, 137, 107, 219, 91, 109]
+    time_skipfuzz_go_nd_pyfunc= [190, 105, 103, 98, 250, 144, 88, 96, 219, 160, 129, 231, 134, 122, 156, 160, 85, 78, 3600, 78]
+    time_skipfuzz_go_bb_maxall_pyfunc = [106, 81, 3600, 89, 97, 3600, 3600, 82, 93, 76, 140, 93, 94, 3600, 3600, 3600, 168, 109, 109, 3600]
+    time_skipfuzz_go_bb_ns_pyfunc = [80, 146, 143, 97, 102, 101, 85, 81, 138, 84, 82, 72, 114, 104, 100, 73, 77, 117, 118, 86]
 
     time_skipfuzz_go_outer = [108,86,103,84,101,114,103,111,74,90,90,90,91,90,71,92,71,91,72,88]
     time_skipfuzz_outer = [92,72,96,90,89,90,90,90,70,90,88,89,73,89,90,88,70,89,93,90]
@@ -143,10 +149,22 @@ if __name__ == '__main__':
     time_skipfuzz_go_ninv_tensorlistresize = [71, 70, 74, 72, 72, 72, 74, 72, 75, 73, 72, 72, 70, 72, 69, 73, 70, 72, 74, 69]
     time_skipfuzz_go_ns_tensorlistresize = [80, 73, 77, 78, 74, 72, 78, 76, 75, 79, 77, 73, 80, 76, 75, 77, 74, 75, 81, 78]
 
+    time_skipfuzz_UnsortedSegmentJoin = [78, 82, 84, 81, 93, 79, 92, 86, 77, 140, 76, 82, 76, 87, 78, 82, 73, 89, 80, 70]
+    time_skipfuzz_go_bb_ns_UnsortedSegmentJoin = [74, 88, 78, 78, 90, 82, 76, 79, 93, 93, 80, 75, 78, 78, 82, 91, 93, 90, 89, 78]
+    time_skipfuzz_go_bb_max_UnsortedSegmentJoin = [81, 96, 94, 87, 74, 82, 83, 76, 88, 76, 77, 84, 92, 80, 92, 72, 91, 89, 82, 88]
+
+    time_skipfuzz_EmptyTensorList = [70, 70, 109, 71, 145, 69, 69, 129, 3600, 91, 71, 120, 123, 72, 76, 73, 74, 79, 74, 131]
+    time_skipfuzz_go_bb_ns_EmptyTensorList = [130, 79, 91, 74, 73, 73, 72, 75, 71, 111, 136, 129, 73, 72, 108, 71, 144, 72, 70, 70]
+    time_skipfuzz_go_bb_max_EmptyTensorList = [88, 110, 71, 71, 75, 71, 71, 118, 122, 87, 71, 90, 70, 72, 128, 200, 69, 72, 126, 72]
+
+    time_skipfuzz_SparseMatrixNNZ = [87, 76, 72, 75, 79, 94, 77, 80, 93, 75, 78, 82, 74, 91, 74, 72, 74, 90, 98, 74]
+    time_skipfuzz_go_bb_ns_SparseMatrixNNZ = [94, 76, 85, 73, 74, 79, 73, 71, 75, 85, 90, 74, 78, 77, 80, 71, 79, 71, 74, 71]
+    time_skipfuzz_go_bb_max_SparseMatrixNNZ = [98, 83, 83, 71, 72, 75, 110, 78, 73, 71, 73, 73, 98, 80, 71, 84, 76, 73, 76, 78]
+
     # estimate_i, magnitude_i = VD_A(i_skipfuzz_go, i_skipfuzz)
     # print("A12-i: ", 1 - estimate_i)
     
-    estimate_time_scatter, magnitude_time_scatter = VD_A(time_skipfuzz_go_ns_scatter, time_skipfuzz_scatter)
+    estimate_time_scatter, magnitude_time_scatter = VD_A(time_skipfuzz_go_bb_ns_scatter, time_skipfuzz_scatter)
     print("A12-time Scatter: ", 1 - estimate_time_scatter)
 
     estimate_time_Concat, magnitude_time_Concat = VD_A(time_skipfuzz_go_ns_concat, time_skipfuzz_concat)
@@ -161,7 +179,7 @@ if __name__ == '__main__':
     estimate_time_composite, magnitude_time_composite = VD_A(time_skipfuzz_go_ns_composite, time_skipfuzz_composite)
     print("A12-time composite: ", 1 - estimate_time_composite)
 
-    estimate_time_pyfunc, magnitude_time_pyfunc = VD_A(time_skipfuzz_go_ns_pyfunc, time_skipfuzz_pyfunc_2)
+    estimate_time_pyfunc, magnitude_time_pyfunc = VD_A(time_skipfuzz_go_bb_ns_pyfunc, time_skipfuzz_pyfunc)
     print("A12-time pyfunc: ", 1 - estimate_time_pyfunc)
 
     estimate_time_outer, magnitude_time_outer = VD_A(time_skipfuzz_go_ns_outer, time_skipfuzz_outer)
@@ -176,13 +194,28 @@ if __name__ == '__main__':
     estimate_time_tensorlistresize, magnitude_time_tensorlistresize = VD_A(time_skipfuzz_go_ns_tensorlistresize, time_skipfuzz_tensorlistresize)
     print("A12-time tensor list resize: ", 1 - estimate_time_tensorlistresize)
 
-    print("scatter: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_scatter, y = time_skipfuzz_scatter, alternative='greater'))
+    estimate_time_UnsortedSegmentJoin, magnitude_time_UnsortedSegmentJoin= VD_A(time_skipfuzz_go_bb_max_UnsortedSegmentJoin, time_skipfuzz_UnsortedSegmentJoin)
+    print("A12-time UnsortedSegmentJoin: ", 1 - estimate_time_UnsortedSegmentJoin)
+
+    estimate_time_EmptyTensorList, magnitude_time_EmptyTensorList= VD_A(time_skipfuzz_go_bb_ns_EmptyTensorList, time_skipfuzz_EmptyTensorList)
+    print("A12-time EmptyTensorList: ", 1 - estimate_time_EmptyTensorList)
+
+    estimate_time_SparseMatrixNNZ, magnitude_time_SparseMatrixNNZ= VD_A(time_skipfuzz_go_bb_max_SparseMatrixNNZ, time_skipfuzz_SparseMatrixNNZ)
+    print("A12-time SparseMatrixNNZ: ", 1 - estimate_time_SparseMatrixNNZ)
+
+    print("scatter: ",ss.mannwhitneyu(x = time_skipfuzz_go_bb_ns_scatter, y = time_skipfuzz_scatter, alternative='less'))
     print("Concat: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_concat, y = time_skipfuzz_concat, alternative='less'))
     print("extract: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_extract, y = time_skipfuzz_extract, alternative='less'))
     print("sobol: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_sobol, y = time_skipfuzz_sobol, alternative='less'))
     print("composite: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_composite, y = time_skipfuzz_composite, alternative='less'))
-    print("pyfunc: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_pyfunc, y = time_skipfuzz_pyfunc_2, alternative='less'))
+    print("pyfunc: ",ss.mannwhitneyu(x = time_skipfuzz_go_bb_ns_pyfunc, y = time_skipfuzz_pyfunc, alternative='less'))
     print("outer: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_outer, y = time_skipfuzz_outer, alternative='less'))
     print("poisson: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_poission, y = time_skipfuzz_poisson, alternative='greater'))
     print("broadcast: ",ss.mannwhitneyu(x = time_skipfuzz_go_ninv_broadcast, y = time_skipfuzz_broadcast, alternative='less'))
     print("tensor list resize: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_tensorlistresize, y = time_skipfuzz_tensorlistresize, alternative='less'))
+    print("tensor UnsortedSegmentJoin: ",ss.mannwhitneyu(x = time_skipfuzz_go_bb_max_UnsortedSegmentJoin, y = time_skipfuzz_UnsortedSegmentJoin, alternative='less'))
+    print("tensor EmptyTensorList: ",ss.mannwhitneyu(x = time_skipfuzz_go_bb_ns_EmptyTensorList, y = time_skipfuzz_EmptyTensorList, alternative='less'))
+    print("tensor SparseMatrixNNZ: ",ss.mannwhitneyu(x = time_skipfuzz_go_bb_max_SparseMatrixNNZ, y = time_skipfuzz_SparseMatrixNNZ, alternative='less'))
+
+    print("New: ", np.mean(time_skipfuzz_go_bb_max_SparseMatrixNNZ))
+    print("ori: ", np.mean(time_skipfuzz_SparseMatrixNNZ))

@@ -125,7 +125,13 @@ code_chunk_blank = '''
 
 '''
 
-code_chunk_backslash = '''
+code_chunk_blank_backslash = '''\\
+\\
+\\
+\\
+'''
+
+code_chunk_backslash = '''\\
 std::ofstream MyFile_{I}("/fileout/{S}.txt"); \\
 MyFile_{I} << "sth"; \\
 MyFile_{I}.close(); \\

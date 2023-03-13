@@ -1,0 +1,8 @@
+/tensorflow_src/tensorflow/core/kernels/unsorted_segment_join_op.cc
+/tensorflow_src/tensorflow/core/framework/tensor_shape.cc
+/tensorflow_src/tensorflow/core/kernels/list_kernels.cc
+/tensorflow_src/tensorflow/core/framework/tensor_shape.h
+/tensorflow_src/tensorflow/core/kernels/sparse/nnz_op.cc
+/tensorflow_src/tensorflow/core/kernels/sparse/sparse_matrix.h
+/tensorflow_src/tensorflow/core/framework/tensor.h
+/tensorflow_src/tensorflow/core/framework/tensor.cc

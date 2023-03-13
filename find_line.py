@@ -10,8 +10,9 @@ import ast
 # os.chdir('./src')
 # cpp_files = glob.glob('*')
 
-src_dir = './src'
+#src_dir = './src'
 #src_dir = "/Users/jdanceze/Desktop/hub/tensorflow/"
+src_dir = "/Users/jdanceze/Desktop/hub/tensorflow_test/"
 cpp_files = []
 for root, dirs, files in os.walk(src_dir):
     for file in files:

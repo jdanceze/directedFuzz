@@ -51,9 +51,9 @@ def get_target_namespace(target_path):
 if __name__ == '__main__':
     
     
-    #SOURCE = "tensorflow::TensorListScatter::Compute"
-    SOURCE = get_target_namespace("./temp/target_kernel_class.txt")
-    TARGET = "tsl::random::SimplePhilox::RandDouble"
+    SOURCE = "tensorflow::UnsortedSegmentJoinOp::Compute"
+    #SOURCE = get_target_namespace("./temp/target_kernel_class.txt")
+    TARGET = "tensorflow::TensorShapeBase::AddDim"
     CG = "./temp/cg_out/" + SOURCE + ".dot"
     #targets = ["tensorflow::anonymous_namespace\{py_func::cc\}::MakeArgTuple"]
     print ("Calculating distance..")

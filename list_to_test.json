@@ -1,0 +1,31 @@
+[
+    {
+        "function": "tf.strings.unsorted_segment_join",
+        "TARGET_API_LIST": "target_UnsortedSegmentJoin.txt",
+        "READ_DIRECTORY": "/fileout_UnsortedSegmentJoin",
+        "TARGET_FINAL_FILE_NAME": "17",
+        "FINAL_DIRECTORY_OUT": "/i_final_sbb_UnsortedSegmentJoin"
+    },
+    {
+        "function": "tf.raw_ops.EmptyTensorList",
+        "TARGET_API_LIST": "target_EmptyTensorList.txt",
+        "READ_DIRECTORY": "/fileout_EmptyTensorList",
+        "TARGET_FINAL_FILE_NAME": "7",
+        "FINAL_DIRECTORY_OUT": "/i_final_sbb_EmptyTensorList"
+    },
+    {
+        "function": "tf.raw_ops.SparseMatrixNNZ",
+        "TARGET_API_LIST": "target_SparseMatrixNNZ.txt",
+        "READ_DIRECTORY": "/fileout_SparseMatrixNNZ",
+        "TARGET_FINAL_FILE_NAME": "6",
+        "FINAL_DIRECTORY_OUT": "/i_final_sbb_SparseMatrixNNZ"
+    },
+    {
+        "function": "tf.raw_ops.SpaceToBatchND",
+        "TARGET_API_LIST": "target_SpaceToBatchND.txt",
+        "READ_DIRECTORY": "/fileout_SpaceToBatchND",
+        "TARGET_FINAL_FILE_NAME": "18",
+        "FINAL_DIRECTORY_OUT": "/i_final_sbb_SpaceToBatchND"
+    }
+
+]

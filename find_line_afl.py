@@ -17,7 +17,9 @@ for root, dirs, files in os.walk(src_dir):
     for file in files:
         if '_test' not in file:
             if file.endswith('.cc') or file.endswith('.h'):
-                cpp_files.append(os.path.join(root, file))
+                full_path = os.path.join(root, file)
+                if not "/tensorflow/lite/" in full_path:
+                    cpp_files.append(full_path)
 
 test = ['tensorflow::PyFuncOp::Compute', 'tensorflow::anonymous_namespace\\{py_func::cc\\}::DoCallPyFunc', 'tensorflow::anonymous_namespace\\{py_func::cc\\}::MakeArgTuple']
 scatter = ['tensorflow::TensorListScatter::Compute', 'tensorflow::Tensor::scalar', 'tensorflow::Tensor::CheckIsAlignedAndSingleElement']

@@ -86,7 +86,7 @@ if __name__ == '__main__':
     #TARGET = "tensorflow::Variant::get"
     #CG = "./temp/cg_out/" + SOURCE + ".dot"
     CG = "./cg_out/cg_out_TensorListScatter.dot"
-    targets = ["tensorflow::Tensor::NumElements"]
+    targets = ["tensorflow::Tensor::CheckIsAlignedAndSingleElement"]
     print ("Calculating distance..")
 
     G = nx.DiGraph(nx.drawing.nx_pydot.read_dot(CG))

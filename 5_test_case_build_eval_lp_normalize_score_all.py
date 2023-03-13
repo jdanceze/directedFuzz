@@ -27,11 +27,11 @@ final_time = -1
 num_crashes = 0
 last_crash_index = -1
 
-NUM_TESTS_PER_FUNC = 8000
+NUM_TESTS_PER_FUNC = 100000
 
-target_function = "tf.raw_ops.TensorListConcat" + "("
+target_function = "tf.raw_ops.PyFunc" + "("
 
-with open('list_valid.json') as f:
+with open('list_ns.json') as f:
         data = json.load(f)
         for i in data:
             #clear_read_directory(i["READ_DIRECTORY"])
@@ -1001,6 +1001,7 @@ def create_one_test_and_run(target_function, all_functions,
 
     global num_crashes
     global score_max
+    global score_min
     global final_sus
     global final_crash
     global final_invalid
@@ -1182,60 +1183,181 @@ def create_one_test_and_run(target_function, all_functions,
                 print('unknown', 'data=', data[:200])
 
     if is_no_problemo_runs:
+        # count the number of txt file in the output folder
+        score = 0
         final = False
         for file in os.listdir(READ_DIRECTORY):
+            if file.endswith(".txt"):
+                score+=1
             if file.endswith(".txt") and file.startswith(TARGET_FINAL_FILE_NAME):
                 final = True
-            os.remove(READ_DIRECTORY+ "/" +file)
-
+            os.remove(READ_DIRECTORY+ "/" + file)
+        
         if final:
             final_sus+=1
-            # filename = FINAL_DIRECTORY_OUT + "/final_sus_" + str(test_i) + ".py"
-            # shutil.copy(test_file_name, filename)
+            #filename = FINAL_DIRECTORY_OUT + "/final_sus_" + str(test_i) + ".py"
+            #shutil.copy(test_file_name, filename)
+            # with open("/final/final.txt", "a") as myfile:
+            #     myfile.write("\n\n# score: " + test_i)
         
-        outcome = 'valid'
+        print("score: ",score)
+        if score > 0:
+            if score_max <= 0:
+                score_max = score
+                score_min = score
+            if score > score_max:
+                score_max = score
+            if score < score_min:
+                score_min = score
+        print("score_max: ",score_max)
+        print("score_min: ",score_min)
+        if score > 0:
+            normalized_s = 1
+            if (score_max != score_min):
+                normalized_s = (score - score_min) / (score_max - score_min)
+        else:
+            normalized_s = 0
+        print("normalized_s: ",normalized_s)
 
-        if len(valid_mapping) == 0:
-            for key, val in target_invariant_set_for_arg.items():
-                valid_mapping[key] = val
+        if(normalized_s >= 0.5):
+            outcome = 'valid'
 
-        if target_arg == -1:
-            for key in target_invariant_set_for_arg.keys():
-                # seed history with the valid call.
-                print('[calling add to history] ', 'target_function', target_function , 'key(for target arg=-1)', key, 'target inv set',
-                       target_invariant_set_for_arg[key], 'outcome', outcome)
-                add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
-                               target_function, outcome)
-                add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
-                               target_function, outcome)
+            #valid_filename = VALID_DIRECTORY_OUT + "/valid_sus_" + str(test_i) + ".py"
+            #shutil.copy(test_file_name, valid_filename)
+
+            if len(valid_mapping) == 0:
+                for key, val in target_invariant_set_for_arg.items():
+                    valid_mapping[key] = val
+
+            if target_arg == -1:
+                for key in target_invariant_set_for_arg.keys():
+                    # seed history with the valid call.
+                    print('[calling add to history] ', 'target_function', target_function , 'key(for target arg=-1)', key, 'target inv set',
+                            target_invariant_set_for_arg[key], 'outcome', outcome)
+                    add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
+                            target_function, outcome)
+                    add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
+                            target_function, outcome)
+        else:
+            outcome = 'invalid'
+            
     elif is_crash:
+        score = 0
         final = False
         for file in os.listdir(READ_DIRECTORY):
+            if file.endswith(".txt"):
+                score+=1
             if file.endswith(".txt") and file.startswith(TARGET_FINAL_FILE_NAME):
                 final = True
-            os.remove(READ_DIRECTORY+ "/" +file)
-
+            os.remove(READ_DIRECTORY+ "/" + file)
+        
         if final:
             final_crash+=1
             filename = FINAL_DIRECTORY_OUT + "/"+ str(run_i) + "_final_crash_" + str(test_i) + ".py"
             shutil.copy(test_file_name, filename)
+            # with open("/final/final.txt", "a") as myfile:
+            #     myfile.write("\n\n# score: " + test_i)
         
-        outcome = 'crash'
+        print("score: ",score)
+        if score > 0:
+            if score_max <= 0:
+                score_max = score
+                score_min = score
+            if score > score_max:
+                score_max = score
+            if score < score_min:
+                score_min = score
+        print("score_max: ",score_max)
+        print("score_min: ",score_min)
+        if score > 0:
+            normalized_s = 1
+            if (score_max != score_min):
+                normalized_s = (score - score_min) / (score_max - score_min)
+        else:
+            normalized_s = 0
+        print("normalized_s: ",normalized_s)
+
+        if(normalized_s >= 0.5):
+            outcome = 'valid'
+
+            #valid_filename = VALID_DIRECTORY_OUT + "/valid_crash_" + str(test_i) + ".py"
+            #shutil.copy(test_file_name, valid_filename)
+
+            if len(valid_mapping) == 0:
+                for key, val in target_invariant_set_for_arg.items():
+                    valid_mapping[key] = val
+
+            if target_arg == -1:
+                for key in target_invariant_set_for_arg.keys():
+                    # seed history with the valid call.
+                    print('[calling add to history] ', 'target_function', target_function , 'key(for target arg=-1)', key, 'target inv set',
+                            target_invariant_set_for_arg[key], 'outcome', outcome)
+                    add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
+                            target_function, outcome)
+                    add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
+                            target_function, outcome)
+        else:
+            outcome = 'crash'
         #outcome = 'invalid'
     else:
+        score = 0
         final = False
         for file in os.listdir(READ_DIRECTORY):
+            #if file.endswith(".txt"):
+                #score+=1
             if file.endswith(".txt") and file.startswith(TARGET_FINAL_FILE_NAME):
                 final = True
-            os.remove(READ_DIRECTORY+ "/" +file)
-
+            os.remove(READ_DIRECTORY+ "/" + file)
+        
         if final:
             final_invalid+=1
-            # filename = FINAL_DIRECTORY_OUT + "/final_invalid_" + str(test_i) + ".py"
-            # shutil.copy(test_file_name, filename)
-        outcome = 'invalid'
+            #filename = FINAL_DIRECTORY_OUT + "/final_invalid_" + str(test_i) + ".py"
+            #shutil.copy(test_file_name, filename)
+            # with open("/final/final.txt", "a") as myfile:
+            #     myfile.write("\n\n# score: " + test_i)
+        
+        print("score: ",score)
+        if score > 0:
+            if score_max <= 0:
+                score_max = score
+                score_min = score
+            if score > score_max:
+                score_max = score
+            if score < score_min:
+                score_min = score
+        print("score_max: ",score_max)
+        print("score_min: ",score_min)
+        if score > 0:
+            normalized_s = 1
+            if (score_max != score_min):
+                normalized_s = (score - score_min) / (score_max - score_min)
+        else:
+            normalized_s = 0
+        print("normalized_s: ",normalized_s)
 
-    # if (final_sus == 1 or final_crash == 1 or final_invalid == 1) and (first_final):
+        if(normalized_s >= 0.5):
+            outcome = 'valid'
+
+            #valid_filename = VALID_DIRECTORY_OUT + "/valid_crash_" + str(test_i) + ".py"
+            #shutil.copy(test_file_name, valid_filename)
+
+            if len(valid_mapping) == 0:
+                for key, val in target_invariant_set_for_arg.items():
+                    valid_mapping[key] = val
+
+            if target_arg == -1:
+                for key in target_invariant_set_for_arg.keys():
+                    # seed history with the valid call.
+                    print('[calling add to history] ', 'target_function', target_function , 'key(for target arg=-1)', key, 'target inv set',
+                            target_invariant_set_for_arg[key], 'outcome', outcome)
+                    add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
+                            target_function, outcome)
+                    add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
+                            target_function, outcome)
+        else:
+            outcome = 'invalid'
+
+    #if (final_sus == 1 or final_crash == 1 or final_invalid == 1) and (first_final):
     if (final_crash == 1) and (first_final):
         final_time = time.time()
         print("First Final !!!!")
@@ -1244,8 +1366,6 @@ def create_one_test_and_run(target_function, all_functions,
         print("Final Invalid: ", final_invalid)
         first_final = False
         first_i = test_i
-
-
 
     if target_arg != -1:
         print('[calling add to history] ','target_function', target_function, 'target arg', target_arg, 'target inv set', target_invariant_set_for_arg[target_arg], 'outcome', outcome)
@@ -1291,6 +1411,7 @@ def detected_crash(test_file_name, test_i):
 
 def main():
     global global_name_to_invs
+    
     all_function_sigs, functions_to_imports, function_arg_to_index = read_API_function_sigs()
 
     crawled_function_sigs, crawled_functions_to_imports, crawled_function_arg_to_index = find_all_known_functions()
@@ -1383,7 +1504,10 @@ def create_tests_for_the_target_functions(arguments):
     conn_retry_count = defaultdict(int)
 
     global score_max
-    score_max = 0
+    score_max = -1
+
+    global score_min
+    score_min = -1
 
     global final_sus
     final_sus = 0
@@ -1403,9 +1527,6 @@ def create_tests_for_the_target_functions(arguments):
     global final_time
 
     global start_time
-
-    global crazy_count
-    crazy_count = 0
 
     run_outcomes = {}
     valid_mappings = {}
@@ -1608,7 +1729,7 @@ def create_tests_for_the_target_functions(arguments):
                 print('detected server down')
                 # print('total tests ran for func=', target_function, " times=", len(run_outcomes[target_function]))
                 # print('===stat===')
-                print_final(final_sus, final_crash, final_invalid, first_i, start_time, final_time)
+                print_final(final_sus, final_crash, final_invalid , first_i, start_time, final_time)
                 print_outcomes(run_outcomes[target_function])
 
                 global_threadpool_executor.submit(run_and_assign_script_server, script_server_procs, script_server_procs[port], delay=1, port = port)
@@ -1633,11 +1754,7 @@ def create_tests_for_the_target_functions(arguments):
                 print('swapped to port=', port)
 
                 target_function_i += 1
-                crazy_count += 1
-                if crazy_count > 10:
-                    print('too many crazy exceptions, exiting')
-                    exit()
-
+                
             print_final(final_sus, final_crash, final_invalid, first_i, start_time, final_time)
             print_outcomes(run_outcomes[target_function], target_function,
                            'outcomes_' + rand_ident + '_' + target_function + '.txt')
@@ -1763,10 +1880,19 @@ def print_final(sus_count, crash_count, invalid_count, first_final_i, startT, fi
     outFile2.close()
 
 
+def print_cache():
+    if not os.path.exists('/cache'):
+        os.makedirs('/cache')
+    print('printing cache')
+    outFile3 = open('/cache' + '/cache.txt', 'w')
+    outFile3.write('Fin')
+    outFile3.close()
+
 main()
 
 # clean
 print('killing stray processes')
+print_cache()
 print('!!!!')
 for grs in global_running_solvers:
     grs.join(timeout=1.0)

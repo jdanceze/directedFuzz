@@ -27,11 +27,11 @@ final_time = -1
 num_crashes = 0
 last_crash_index = -1
 
-NUM_TESTS_PER_FUNC = 8000
+NUM_TESTS_PER_FUNC = 10
 
-target_function = "tf.raw_ops.TensorListConcat" + "("
+target_function = "tf.raw_ops.PyFunc" + "("
 
-with open('list_valid.json') as f:
+with open('one_list.json') as f:
         data = json.load(f)
         for i in data:
             #clear_read_directory(i["READ_DIRECTORY"])
@@ -201,15 +201,19 @@ def execute_clingo(lp_filename, time_limit, history, inferred_queue, solution_qu
                   total_explained, total_invalid_matched)
     return to_run, targets, total_explained, total_invalid_matched
 
+def select_way_from_type(type_ways):
+    None
+
 
 def create_one_call(API_name, functions_to_sigs,
-                    target_invariant_set_for_arg, invariant_sets, values_store_by_id,
+                    target_invariant_set_for_arg, target_type_for_arg, invariant_sets, values_store_by_id, values_store_by_type,
                     required_imports,
                     valid_mapping,
                     test_num):
     num_arguments = len(functions_to_sigs[API_name].keys())
     argument_keys = functions_to_sigs[API_name].keys()
 
+    type_mismatch = False
     argument_values = []
     selected_way_ids = []
     arg_id_to_constraints = {}
@@ -227,11 +231,21 @@ def create_one_call(API_name, functions_to_sigs,
                 if arg_id in valid_mapping:
                     previously_valid_invariant_set = invariant_sets[valid_mapping[arg_id]]
                     selected_way_ids[arg_id] = select_way_from_invset(API_name, arg_id, previously_valid_invariant_set)
+                    # print("Target typeeeeeeeee: ", target_type_for_arg[arg_id])
+                    # if target_type_for_arg[arg_id] != 'NOTFOUND' and target_type_for_arg[arg_id] != 'ANY':
+                    #     type_ways = values_store_by_type[target_type_for_arg[arg_id]]
+                    #     if "(" + "'" + str(selected_way_ids[arg_id]) + "'" not in str(type_ways):
+                    #         type_mismatch = True
                     argument_values[arg_id] = values_store_by_id[str(selected_way_ids[arg_id])]
                 else:
                     # pick random
                     rand_invariant_set = random.choice(invariant_sets)
                     selected_way_ids[arg_id] = select_way_from_invset(API_name, arg_id,rand_invariant_set)
+                    # print("Target typeeeeeeeee: ", target_type_for_arg[arg_id])
+                    # if target_type_for_arg[arg_id] != 'NOTFOUND' and target_type_for_arg[arg_id] != 'ANY':
+                    #     type_ways = values_store_by_type[target_type_for_arg[arg_id]]
+                    #     if "(" + "'" + str(selected_way_ids[arg_id]) + "'" not in str(type_ways):
+                    #         type_mismatch = True
                     argument_values[arg_id] = values_store_by_id[str(selected_way_ids[arg_id])]
                     print('choosing a random input (due to uninitialized valid_mapping) arg_id=', arg_id)
                 # selected_way_ids[arg_id] = random.sample(list(values_store_by_id.keys()), 1)[0]
@@ -261,6 +275,12 @@ def create_one_call(API_name, functions_to_sigs,
             if len(matching_ways_id) == 0:
                 rand_invariant_set = random.choice([inv_set_i for inv_set_i in  range(len(invariant_sets))])
                 selected_way_ids[arg_id] = select_way_from_invset(API_name, arg_id,invariant_sets[rand_invariant_set])
+                print("Target typeeeeeeeee: ", target_type_for_arg[arg_id])
+                if target_type_for_arg[arg_id] != 'NOTFOUND' and target_type_for_arg[arg_id] != 'ANY':
+                    type_ways = values_store_by_type[target_type_for_arg[arg_id]]
+                    if "(" + "'" + str(selected_way_ids[arg_id]) + "'" not in str(type_ways):
+                            print("missmatch: ", str(selected_way_ids[arg_id]))
+                            type_mismatch = True
                 argument_values[arg_id] = values_store_by_id[str(selected_way_ids[arg_id])]
 
                 print('choosing a random input (due to inability to find matching value) arg_id=', arg_id, 'val=', argument_values[arg_id])
@@ -293,6 +313,12 @@ def create_one_call(API_name, functions_to_sigs,
 
                 else:
                     selected_way_ids[arg_id] = sampled_matching_way
+                    print("Target typeeeeeeeee: ", target_type_for_arg[arg_id])
+                    if target_type_for_arg[arg_id] != 'NOTFOUND' and target_type_for_arg[arg_id] != 'ANY':
+                        type_ways = values_store_by_type[target_type_for_arg[arg_id]]
+                        if "(" + "'" + str(selected_way_ids[arg_id]) + "'" not in str(type_ways):
+                            print("missmatch: ", str(selected_way_ids[arg_id]))
+                            type_mismatch = True
                     argument_values[arg_id] = values_store_by_id[str(sampled_matching_way)]
                     #print(argument_values[arg_id])
             except Exception as e:
@@ -300,6 +326,12 @@ def create_one_call(API_name, functions_to_sigs,
                 # pick random
                 rand_invariant_set = random.choice(invariant_sets)
                 selected_way_ids[arg_id] = select_way_from_invset(API_name, arg_id, rand_invariant_set)
+                print("Target typeeeeeeeee: ", target_type_for_arg[arg_id])
+                if target_type_for_arg[arg_id] != 'NOTFOUND' and target_type_for_arg[arg_id] != 'ANY':
+                    type_ways = values_store_by_type[target_type_for_arg[arg_id]]
+                    if "(" + "'" + str(selected_way_ids[arg_id]) + "'" not in str(type_ways):
+                        print("missmatch: ", str(selected_way_ids[arg_id]))
+                        type_mismatch = True
                 argument_values[arg_id] = values_store_by_id[str(selected_way_ids[arg_id])]
                 print('choosing a random input (due to uninitialized valid_mapping) arg_id=', arg_id)
 
@@ -378,7 +410,7 @@ def create_one_call(API_name, functions_to_sigs,
         print('=======================')
         print('[created] ', full_code)
         print('=====[end created]=====')
-    return True, selected_way_ids, test_file_name, full_code, full_imports
+    return True, selected_way_ids, test_file_name, full_code, full_imports, type_mismatch
 
 
 def select_way_from_invset(API_name, arg_id, invset):
@@ -576,7 +608,7 @@ def get_rules(target_function, functions_to_sigs, target_arg,
 
     # pick something from invariant_sets
     target_invariant_set_for_arg = {}
-
+    target_type_for_arg = {}
 
     if target_arg == -1:
         for arg_num in range(len(functions_to_sigs[target_function].keys()) - 1):
@@ -649,63 +681,116 @@ def get_rules(target_function, functions_to_sigs, target_arg,
             for i in range(num_arguments):
                 print(f'argument {i} : {list(functions_to_sigs[target_function].keys())[i]}')
                 if random.choice([True, False]):
-                    if(list(functions_to_sigs[target_function].keys())[i]=='output_encoding'):
+                    if(list(functions_to_sigs[target_function].keys())[i]=='token'):
                         print("output_encodinggggggg")
                         #target_invariant_set_for_arg[i] = 9919999999
                         target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
-                    elif(list(functions_to_sigs[target_function].keys())[i]=='errors'):
+                        target_type_for_arg[i] = 'str'
+                    elif(list(functions_to_sigs[target_function].keys())[i]=='Tout'):
                         print("errorsssssssssss")
                         #target_invariant_set_for_arg[i] = 9929999999
                         target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
+                        target_type_for_arg[i] = 'list'
+                    elif(list(functions_to_sigs[target_function].keys())[i]=='input'):
+                        print("errorsssssssssss")
+                        #target_invariant_set_for_arg[i] = 9939999999
+                        target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
+                        target_type_for_arg[i] = 'Tensor'
+                    elif(list(functions_to_sigs[target_function].keys())[i]=='name'):
+                        print("errorsssssssssss")
+                        #target_invariant_set_for_arg[i] = 9949999999
+                        target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
+                        target_type_for_arg[i] = 'ANY'
                     else:    
                         target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
+                        target_type_for_arg[i] = 'NOTFOUND'
                 else:
                     arg_name = list(functions_to_sigs[target_function].keys())[i]
                     print('checking arg name ', arg_name)
                     if arg_name in global_name_to_invs:
                         print('found arg name var')
-                        target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
+                        if(list(functions_to_sigs[target_function].keys())[i]=='token'):
+                            target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
+                            target_type_for_arg[i] = 'str'
+                        elif(list(functions_to_sigs[target_function].keys())[i]=='Tout'):
+                            target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
+                            target_type_for_arg[i] = 'list'
+                        elif(list(functions_to_sigs[target_function].keys())[i]=='input'):
+                            target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
+                            target_type_for_arg[i] = 'Tensor'
+                        elif(list(functions_to_sigs[target_function].keys())[i]=='name'):
+                            target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
+                            target_type_for_arg[i] = 'ANY'
+                        else:
+                            target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
+                            target_type_for_arg[i] = 'NOTFOUND'
 
             print('[get_rules]', target_function, target_arg, ' initial sweep. choices are ', target_invariant_set_for_arg)
 
             random_or_solved_choices[target_arg].append('random')
-        return target_invariant_set_for_arg
+        return target_invariant_set_for_arg, target_type_for_arg
     elif global_running_mode[target_function][target_arg] == 1: # valid mode
         print('pick known targets', time.time())
         print('[get_rules]' ,target_function, target_arg, ' pick from valid targets')
         targets = global_known_targets[target_function][target_arg]
         rand_target = random.choice(tuple(targets))
         random_or_solved_choices[target_arg].append('target')
-        if(list(functions_to_sigs[target_function].keys())[target_arg]=='output_encoding'):
+        if(list(functions_to_sigs[target_function].keys())[target_arg]=='token'):
             print("output_encodinggggggg")
             #target_invariant_set_for_arg[target_arg] = 9919999999
             target_invariant_set_for_arg[target_arg] = int(rand_target)
-        elif(list(functions_to_sigs[target_function].keys())[target_arg]=='errors'):
+            target_type_for_arg[i] = 'str'
+        elif(list(functions_to_sigs[target_function].keys())[target_arg]=='Tout'):
             print("errorsssssssssss")
             #target_invariant_set_for_arg[target_arg] = 9929999999
-            target_invariant_set_for_arg[target_arg] = int(rand_target)   
+            target_invariant_set_for_arg[target_arg] = int(rand_target)
+            target_type_for_arg[i] = 'list'
+        elif(list(functions_to_sigs[target_function].keys())[target_arg]=='input'):
+            print("errorsssssssssss")
+            #target_invariant_set_for_arg[target_arg] = 9939999999
+            target_invariant_set_for_arg[target_arg] = int(rand_target)
+            target_type_for_arg[i] = 'Tensor'
+        elif(list(functions_to_sigs[target_function].keys())[target_arg]=='name'):
+            print("errorsssssssssss")
+            #target_invariant_set_for_arg[target_arg] = 9939999999
+            target_invariant_set_for_arg[target_arg] = int(rand_target)
+            target_type_for_arg[i] = 'ANY'
         else:                
             target_invariant_set_for_arg[target_arg] = int(rand_target)
+            target_type_for_arg[i] = 'NOTFOUND'
 
-        return target_invariant_set_for_arg
+        return target_invariant_set_for_arg, target_type_for_arg
     else:
         if solution_queue[target_arg].qsize() is None or solution_queue[target_arg].qsize() == 0:
             print('pick perturb', time.time())
             print('[get_rules]', target_function, target_arg, 'mode:', global_running_mode[target_function][target_arg], ' perturb as [clingo] solution queue size is 0')
             selected_invset = random.choice(undominated_invariant_sets)
-            if(list(functions_to_sigs[target_function].keys())[target_arg]=='output_encoding'):
+            if(list(functions_to_sigs[target_function].keys())[target_arg]=='token'):
                 print("output_encodinggggggg")
                 #target_invariant_set_for_arg[target_arg] = 9919999999
                 target_invariant_set_for_arg[target_arg] = selected_invset
-            elif(list(functions_to_sigs[target_function].keys())[target_arg]=='errors'):
+                target_type_for_arg[i] = 'str'
+            elif(list(functions_to_sigs[target_function].keys())[target_arg]=='Tout'):
                 print("errorsssssssssss")
                 #target_invariant_set_for_arg[target_arg] = 9929999999
-                target_invariant_set_for_arg[target_arg] = selected_invset   
+                target_invariant_set_for_arg[target_arg] = selected_invset
+                target_type_for_arg[i] = 'list'
+            elif(list(functions_to_sigs[target_function].keys())[target_arg]=='input'):
+                print("errorsssssssssss")
+                #target_invariant_set_for_arg[target_arg] = 9939999999
+                target_invariant_set_for_arg[target_arg] = selected_invset
+                target_type_for_arg[i] = 'Tensor'
+            elif(list(functions_to_sigs[target_function].keys())[target_arg]=='name'):
+                print("errorsssssssssss")
+                #target_invariant_set_for_arg[target_arg] = 9939999999
+                target_invariant_set_for_arg[target_arg] = selected_invset
+                target_type_for_arg[i] = 'ANY'
             else: 
                 target_invariant_set_for_arg[target_arg] = selected_invset
+                target_type_for_arg[i] = 'NOTFOUND'
 
             random_or_solved_choices[target_arg].append('perturb')
-            return target_invariant_set_for_arg
+            return target_invariant_set_for_arg, target_type_for_arg
         else:
             print('pick from solution queue', time.time())
             print('[get_rules]', target_function, target_arg, 'mode:', global_running_mode[target_function][target_arg], ' pick from [clingo] solution queue. qsize=', solution_queue[target_arg].qsize())
@@ -730,19 +815,32 @@ def get_rules(target_function, functions_to_sigs, target_arg,
                 for token in one_invset.split('_'):
                     invset = token
 
-                if(list(functions_to_sigs[target_function].keys())[target_arg]=='output_encoding'):
+                if(list(functions_to_sigs[target_function].keys())[target_arg]=='token'):
                     print("output_encodinggggggg")
                     #target_invariant_set_for_arg[target_arg] = 9919999999
                     target_invariant_set_for_arg[target_arg] = int(invset)
-                elif(list(functions_to_sigs[target_function].keys())[target_arg]=='errors'):
+                    target_type_for_arg[i] = 'str'
+                elif(list(functions_to_sigs[target_function].keys())[target_arg]=='Tout'):
                     print("errorsssssssssss")
                     #target_invariant_set_for_arg[target_arg] = 9929999999
-                    target_invariant_set_for_arg[target_arg] = int(invset)   
+                    target_invariant_set_for_arg[target_arg] = int(invset)
+                    target_type_for_arg[i] = 'list'
+                elif(list(functions_to_sigs[target_function].keys())[target_arg]=='input'):
+                    print("errorsssssssssss")
+                    #target_invariant_set_for_arg[target_arg] = 9939999999
+                    target_invariant_set_for_arg[target_arg] = int(invset)
+                    target_type_for_arg[i] = 'Tensor'
+                elif(list(functions_to_sigs[target_function].keys())[target_arg]=='name'):
+                    print("errorsssssssssss")
+                    #target_invariant_set_for_arg[target_arg] = 9939999999
+                    target_invariant_set_for_arg[target_arg] = int(invset)
+                    target_type_for_arg[i] = 'ANY'
                 else: 
                     target_invariant_set_for_arg[target_arg] = int(invset)
+                    target_type_for_arg[i] = 'NOTFOUND'
             random_or_solved_choices[target_arg].append('solution')
 
-            return target_invariant_set_for_arg
+            return target_invariant_set_for_arg, target_type_for_arg
 
 
 def run_clingo_solver_if_running_low(already_started, history, inferred_queue, solution_queue, target_arg, target_function, manager_history_cache):
@@ -820,7 +918,8 @@ def read_typedb_cached_file_with_id():
                             # if the `way` does not include any function call or attribtue access and not a primitive type, it's likely to be bogus
                             if '(' in way or '.' in way or matched_type in ['float', 'bytes', 'int', 'uint8', 'uint32',
                                                                             'uint64', 'set', 'tuple', 'int32', 'int8',
-                                                                            'float64', 'float32', 'bool', 'bool_']:
+                                                                            'float64', 'float32', 'bool', 'bool_', 'Tensor', 'str', 'list', 'EagerTensor', 'RaggedTensor', 'RaggedTensorDynamicShape',
+                                                                            'RaggedTensorValue']:
 
                                 # the last '')'' can be removed since it matches INV_EXTRACTION's opening bracket
                                 if way.strip().endswith(')'):
@@ -992,7 +1091,7 @@ def create_one_test_and_run(target_function, all_functions,
                             history,
                             random_or_solved_choices,
                             seeds,
-                            values_store_by_id, functions_to_imports,
+                            values_store_by_id, values_store_by_type, functions_to_imports,
                             s, valid_mapping,
                             manager_history_cache,
                             all_outfile,
@@ -1033,7 +1132,7 @@ def create_one_test_and_run(target_function, all_functions,
     #print(f'manager_history_cache: {manager_history_cache}')
     print(f'already_ran: {already_ran}')
 
-    target_invariant_set_for_arg = get_rules(target_function, all_function_sigs, target_arg,
+    target_invariant_set_for_arg, target_type_for_arg = get_rules(target_function, all_function_sigs, target_arg,
                                              solution_queue[target_function], inferred_queue[target_function],
                                              already_started[target_function],
                                              seeds,
@@ -1042,11 +1141,12 @@ def create_one_test_and_run(target_function, all_functions,
                                              generate_random, manager_history_cache, already_ran)
 
     print(f'return target_invariant_set_for_arg: {target_invariant_set_for_arg}')
+    print(f'return target_type_for_arg: {target_type_for_arg}')
     print(f'========================================================================')
-    succeeded, selected_way_ids, test_file_name, full_code, full_imports = create_one_call(
+    succeeded, selected_way_ids, test_file_name, full_code, full_imports, type_mismatch = create_one_call(
         target_function, all_function_sigs,
-        target_invariant_set_for_arg, invariant_sets,
-        values_store_by_id,
+        target_invariant_set_for_arg, target_type_for_arg, invariant_sets,
+        values_store_by_id, values_store_by_type,
         functions_to_imports[target_function],
         valid_mapping,
         test_i)
@@ -1059,215 +1159,219 @@ def create_one_test_and_run(target_function, all_functions,
     # if target_function not in func_to_already_checked_invs:
     #     func_to_already_checked_invs[target_function] = set()
 
-    data = ''
+    if not type_mismatch:
+        data = ''
 
-    all_outfile.write(full_imports)
+        all_outfile.write(full_imports)
 
-    try:
-        print('[test builder] sending ', test_file_name)
-        # print('sending', time.time())
-        s.sendall(test_file_name.encode('utf-8'))
-        s.sendall('=='.encode('utf-8'))
-        start_time = time.time()
-        # print('receiving', start_time)
-        while data is None or not data.endswith('rann'):
-            s.settimeout(15)
-            data_raw = s.recv(1024)
-            try:
-                data += data_raw.decode('utf-8')
-            except Exception as e:
-                print('receiving: exception caught', end_time)
-                print('exception caught while decoding data from the script-server', e)
-                pass
-            end_time = time.time()
-            time_elapsed = (end_time - start_time)
-
-            # if len(data) < 200:
-            #     print('[test builder] after receiving, current message:', data, 'recv len', len(data_raw))
-            # else:
-            #     print('[test builder] after receiving, current message too long,  recv len', len(data_raw))
-            # print('randstr', ''.join(random.choices(string.ascii_uppercase + string.digits, k=3)), time_elapsed)
-
-            if time_elapsed > 15:
-                print('too much time elapsed, but has data_raw=', data_raw)
-            if time_elapsed > 15 and len(data_raw) == 0:
-                print('receiving: too much time elapsed', end_time)
-                print('too much time elasped', time_elapsed)
-                data = 'Server down!'
-                break
-        # print('received', end_time)
-    except ConnectionRefusedError as e:
-        print('run-script server down!')
-        print(e)
-        raise e
-    except ConnectionResetError as e:
-        data = 'Server down!'
-        print('run-script server is down. Exception:')
-        print(e)
-    except socket.timeout as e:
-        #detected_crash(test_file_name, test_i)
-        print('timeout detected?')
-        print('exception = ', e)
-        raise e
-    except BrokenPipeError as e:
-
-        detected_crash(test_file_name, test_i)
-        print('crash detected?')
-        print('exception = ', e)
-        raise e
-
-    print("[test builder] Received", data)
-
-    # print('write', time.time())
-    all_outfile.write(full_code)
-
-    data = data.split('rann')[0]
-
-    if len(data) > 0:
         try:
-            coverage_num = int(data.split('===')[1].strip())
-            data = data.split('===')[0].strip()
+            print('[test builder] sending ', test_file_name)
+            # print('sending', time.time())
+            s.sendall(test_file_name.encode('utf-8'))
+            s.sendall('=='.encode('utf-8'))
+            start_time = time.time()
+            # print('receiving', start_time)
+            while data is None or not data.endswith('rann'):
+                s.settimeout(15)
+                data_raw = s.recv(1024)
+                try:
+                    data += data_raw.decode('utf-8')
+                except Exception as e:
+                    print('receiving: exception caught', end_time)
+                    print('exception caught while decoding data from the script-server', e)
+                    pass
+                end_time = time.time()
+                time_elapsed = (end_time - start_time)
+
+                # if len(data) < 200:
+                #     print('[test builder] after receiving, current message:', data, 'recv len', len(data_raw))
+                # else:
+                #     print('[test builder] after receiving, current message too long,  recv len', len(data_raw))
+                # print('randstr', ''.join(random.choices(string.ascii_uppercase + string.digits, k=3)), time_elapsed)
+
+                if time_elapsed > 15:
+                    print('too much time elapsed, but has data_raw=', data_raw)
+                if time_elapsed > 15 and len(data_raw) == 0:
+                    print('receiving: too much time elapsed', end_time)
+                    print('too much time elasped', time_elapsed)
+                    data = 'Server down!'
+                    break
+            # print('received', end_time)
+        except ConnectionRefusedError as e:
+            print('run-script server down!')
+            print(e)
+            raise e
+        except ConnectionResetError as e:
+            data = 'Server down!'
+            print('run-script server is down. Exception:')
+            print(e)
+        except socket.timeout as e:
+            #detected_crash(test_file_name, test_i)
+            print('timeout detected?')
+            print('exception = ', e)
+            raise e
+        except BrokenPipeError as e:
+
+            detected_crash(test_file_name, test_i)
+            print('crash detected?')
+            print('exception = ', e)
+            raise e
+
+        print("[test builder] Received", data)
+
+        # print('write', time.time())
+        all_outfile.write(full_code)
+
+        data = data.split('rann')[0]
+
+        if len(data) > 0:
             try:
-                data =int(data)
-            except:
-                pass
+                coverage_num = int(data.split('===')[1].strip())
+                data = data.split('===')[0].strip()
+                try:
+                    data =int(data)
+                except:
+                    pass
 
-            # print('current cov', coverage_num)
+                # print('current cov', coverage_num)
 
-            all_outfile.write('\n\n')
-            all_outfile.write("# data=" + str(data).replace('\n', '\n#') + '\n')
-            all_outfile.write('# coverage: ' + str(coverage_num) + '\n')
-            all_outfile.write('# made by: ' + str(random_or_solved_choices[target_function][target_arg][-1]) + '\n')
-            all_outfile.write('\n\n')
+                all_outfile.write('\n\n')
+                all_outfile.write("# data=" + str(data).replace('\n', '\n#') + '\n')
+                all_outfile.write('# coverage: ' + str(coverage_num) + '\n')
+                all_outfile.write('# made by: ' + str(random_or_solved_choices[target_function][target_arg][-1]) + '\n')
+                all_outfile.write('\n\n')
 
-            if coverage_num > previous_coverage[target_function]:
-                previous_coverage[target_function] = coverage_num
-                seeds[target_function].append(target_invariant_set_for_arg.copy())
-                seeds[target_function] = seeds[target_function][-5:]
+                if coverage_num > previous_coverage[target_function]:
+                    previous_coverage[target_function] = coverage_num
+                    seeds[target_function].append(target_invariant_set_for_arg.copy())
+                    seeds[target_function] = seeds[target_function][-5:]
 
-        except Exception as e:
-            print('caught e while trying to parse coverage', e)
+            except Exception as e:
+                print('caught e while trying to parse coverage', e)
 
-    if data != 0 and 'NameError' in data:
-        copied_fn = 'problem_test_' + str(test_i) + '.py'
-        # print('copying to ', copied_fn)
-        # shutil.copy(test_file_name, copied_fn)
-        is_problem = True
+        if data != 0 and 'NameError' in data:
+            copied_fn = 'problem_test_' + str(test_i) + '.py'
+            # print('copying to ', copied_fn)
+            # shutil.copy(test_file_name, copied_fn)
+            is_problem = True
 
-    elif data != 0 and data == 'Server down!':
-        detected_crash(test_file_name, test_i)
-        if num_crashes >= 50000:
-            return None
-        else:
-            pass
-            #run_script_server()
-        print("set is_crash to True")
-        is_crash = True
-
-    else:
-        if data == 0:
-            print('successful run')
-            is_no_problemo_runs = True
-        else:
-            if data != 0 and 'Error:' in data:
-                is_py_error = True
-                # try:
-                #     error_description = get_error_description(data)
-                #     error_outcome_identifier = ','.join(error_description)
-                # except Exception as e:
-                #     print('found err', e, 'from', data)
-                #     # raise Exception('err on ' + data)
-
+        elif data != 0 and data == 'Server down!':
+            detected_crash(test_file_name, test_i)
+            if num_crashes >= 50000:
+                return None
             else:
-                print('unknown', 'data=', data[:200])
+                pass
+                #run_script_server()
+            print("set is_crash to True")
+            is_crash = True
 
-    if is_no_problemo_runs:
-        final = False
-        for file in os.listdir(READ_DIRECTORY):
-            if file.endswith(".txt") and file.startswith(TARGET_FINAL_FILE_NAME):
-                final = True
-            os.remove(READ_DIRECTORY+ "/" +file)
+        else:
+            if data == 0:
+                print('successful run')
+                is_no_problemo_runs = True
+            else:
+                if data != 0 and 'Error:' in data:
+                    is_py_error = True
+                    # try:
+                    #     error_description = get_error_description(data)
+                    #     error_outcome_identifier = ','.join(error_description)
+                    # except Exception as e:
+                    #     print('found err', e, 'from', data)
+                    #     # raise Exception('err on ' + data)
 
-        if final:
-            final_sus+=1
-            # filename = FINAL_DIRECTORY_OUT + "/final_sus_" + str(test_i) + ".py"
-            # shutil.copy(test_file_name, filename)
-        
-        outcome = 'valid'
+                else:
+                    print('unknown', 'data=', data[:200])
 
-        if len(valid_mapping) == 0:
-            for key, val in target_invariant_set_for_arg.items():
-                valid_mapping[key] = val
+        if is_no_problemo_runs:
+            final = False
+            for file in os.listdir(READ_DIRECTORY):
+                if file.endswith(".txt") and file.startswith(TARGET_FINAL_FILE_NAME):
+                    final = True
+                os.remove(READ_DIRECTORY+ "/" +file)
 
-        if target_arg == -1:
-            for key in target_invariant_set_for_arg.keys():
-                # seed history with the valid call.
-                print('[calling add to history] ', 'target_function', target_function , 'key(for target arg=-1)', key, 'target inv set',
-                       target_invariant_set_for_arg[key], 'outcome', outcome)
-                add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
-                               target_function, outcome)
-                add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
-                               target_function, outcome)
-    elif is_crash:
-        final = False
-        for file in os.listdir(READ_DIRECTORY):
-            if file.endswith(".txt") and file.startswith(TARGET_FINAL_FILE_NAME):
-                final = True
-            os.remove(READ_DIRECTORY+ "/" +file)
+            if final:
+                final_sus+=1
+                # filename = FINAL_DIRECTORY_OUT + "/final_sus_" + str(test_i) + ".py"
+                # shutil.copy(test_file_name, filename)
+            
+            outcome = 'valid'
 
-        if final:
-            final_crash+=1
-            filename = FINAL_DIRECTORY_OUT + "/"+ str(run_i) + "_final_crash_" + str(test_i) + ".py"
-            shutil.copy(test_file_name, filename)
-        
-        outcome = 'crash'
-        #outcome = 'invalid'
+            if len(valid_mapping) == 0:
+                for key, val in target_invariant_set_for_arg.items():
+                    valid_mapping[key] = val
+
+            if target_arg == -1:
+                for key in target_invariant_set_for_arg.keys():
+                    # seed history with the valid call.
+                    print('[calling add to history] ', 'target_function', target_function , 'key(for target arg=-1)', key, 'target inv set',
+                        target_invariant_set_for_arg[key], 'outcome', outcome)
+                    add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
+                                target_function, outcome)
+                    add_to_history(target_invariant_set_for_arg[key], history[target_function][key],
+                                target_function, outcome)
+        elif is_crash:
+            final = False
+            for file in os.listdir(READ_DIRECTORY):
+                if file.endswith(".txt") and file.startswith(TARGET_FINAL_FILE_NAME):
+                    final = True
+                os.remove(READ_DIRECTORY+ "/" +file)
+
+            if final:
+                final_crash+=1
+                filename = FINAL_DIRECTORY_OUT + "/"+ str(run_i) + "_final_crash_" + str(test_i) + ".py"
+                shutil.copy(test_file_name, filename)
+            
+            outcome = 'crash'
+            #outcome = 'invalid'
+        else:
+            final = False
+            for file in os.listdir(READ_DIRECTORY):
+                if file.endswith(".txt") and file.startswith(TARGET_FINAL_FILE_NAME):
+                    final = True
+                os.remove(READ_DIRECTORY+ "/" +file)
+
+            if final:
+                final_invalid+=1
+                # filename = FINAL_DIRECTORY_OUT + "/final_invalid_" + str(test_i) + ".py"
+                # shutil.copy(test_file_name, filename)
+            outcome = 'invalid'
+
+        # if (final_sus == 1 or final_crash == 1 or final_invalid == 1) and (first_final):
+        if (final_crash == 1) and (first_final):
+            final_time = time.time()
+            print("First Final !!!!")
+            print("Final Sus: ", final_sus)
+            print("Final Crash: ", final_crash)
+            print("Final Invalid: ", final_invalid)
+            first_final = False
+            first_i = test_i
+
+
+
+        if target_arg != -1:
+            print('[calling add to history] ','target_function', target_function, 'target arg', target_arg, 'target inv set', target_invariant_set_for_arg[target_arg], 'outcome', outcome)
+            add_to_history(target_invariant_set_for_arg[target_arg], history[target_function][target_arg], target_function, outcome)
+
+            random_or_solved_choices[target_function][target_arg][-1] = random_or_solved_choices[target_function][target_arg][-1] + "_" + outcome
+
+            # debugging
+
+            if random_or_solved_choices[target_function][target_arg][-1] == 'target_invalid':
+                shutil.copy(test_file_name, 'debug_' + rand_ident + '_invalid_' + target_function + '_' + str(target_arg) + '.py')
+            elif random_or_solved_choices[target_function][target_arg][-1] == 'target_valid':
+                shutil.copy(test_file_name, 'debug_' + rand_ident + '_valid_' + target_function + '_' + str(target_arg) + '.py')
+
+        if is_crash:
+            shutil.copy(test_file_name,
+                        'ran_tests/' + 'test_' + target_function + '_' + str(test_i) + '_' + outcome[:30] + '.py')
+
+        os.remove(test_file_name)
+
+        # print('return created_one', time.time())
+        return is_crash, is_no_problemo_runs, is_problem, is_py_error, is_crash, outcome
     else:
-        final = False
-        for file in os.listdir(READ_DIRECTORY):
-            if file.endswith(".txt") and file.startswith(TARGET_FINAL_FILE_NAME):
-                final = True
-            os.remove(READ_DIRECTORY+ "/" +file)
-
-        if final:
-            final_invalid+=1
-            # filename = FINAL_DIRECTORY_OUT + "/final_invalid_" + str(test_i) + ".py"
-            # shutil.copy(test_file_name, filename)
-        outcome = 'invalid'
-
-    # if (final_sus == 1 or final_crash == 1 or final_invalid == 1) and (first_final):
-    if (final_crash == 1) and (first_final):
-        final_time = time.time()
-        print("First Final !!!!")
-        print("Final Sus: ", final_sus)
-        print("Final Crash: ", final_crash)
-        print("Final Invalid: ", final_invalid)
-        first_final = False
-        first_i = test_i
-
-
-
-    if target_arg != -1:
-        print('[calling add to history] ','target_function', target_function, 'target arg', target_arg, 'target inv set', target_invariant_set_for_arg[target_arg], 'outcome', outcome)
-        add_to_history(target_invariant_set_for_arg[target_arg], history[target_function][target_arg], target_function, outcome)
-
-        random_or_solved_choices[target_function][target_arg][-1] = random_or_solved_choices[target_function][target_arg][-1] + "_" + outcome
-
-        # debugging
-
-        if random_or_solved_choices[target_function][target_arg][-1] == 'target_invalid':
-            shutil.copy(test_file_name, 'debug_' + rand_ident + '_invalid_' + target_function + '_' + str(target_arg) + '.py')
-        elif random_or_solved_choices[target_function][target_arg][-1] == 'target_valid':
-            shutil.copy(test_file_name, 'debug_' + rand_ident + '_valid_' + target_function + '_' + str(target_arg) + '.py')
-
-    if is_crash:
-        shutil.copy(test_file_name,
-                    'ran_tests/' + 'test_' + target_function + '_' + str(test_i) + '_' + outcome[:30] + '.py')
-
-    os.remove(test_file_name)
-
-    # print('return created_one', time.time())
-    return is_crash, is_no_problemo_runs, is_problem, is_py_error, is_crash, outcome
+        print('no test created')
+        return False, False, False, False, False, 'invalid'
 
 def detected_crash(test_file_name, test_i):
     global num_crashes
@@ -1553,7 +1657,7 @@ def create_tests_for_the_target_functions(arguments):
                                 history,
                                 random_or_solved_choices,
                                 seeds,
-                                values_store_by_id, functions_to_imports,
+                                values_store_by_id, values_store_by_type, functions_to_imports,
                                 s, valid_mapping,
                                 manager_history_cache,
                                 all_outfile,

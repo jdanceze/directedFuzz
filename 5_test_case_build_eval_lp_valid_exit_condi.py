@@ -226,6 +226,7 @@ def create_one_call(API_name, functions_to_sigs,
     if len(arg_id_to_constraints) > 0:
 
         for arg_id, constraints in arg_id_to_constraints.items():
+            type_match = False
             outflag = 0
             if arg_id not in target_invariant_set_for_arg or target_invariant_set_for_arg[arg_id] == -1:
                 if arg_id in valid_mapping:
@@ -276,11 +277,21 @@ def create_one_call(API_name, functions_to_sigs,
                 rand_invariant_set = random.choice([inv_set_i for inv_set_i in  range(len(invariant_sets))])
                 selected_way_ids[arg_id] = select_way_from_invset(API_name, arg_id,invariant_sets[rand_invariant_set])
                 print("Target typeeeeeeeee: ", target_type_for_arg[arg_id])
-                if target_type_for_arg[arg_id] != 'NOTFOUND' and target_type_for_arg[arg_id] != 'ANY':
-                    type_ways = values_store_by_type[target_type_for_arg[arg_id]]
-                    if "(" + "'" + str(selected_way_ids[arg_id]) + "'" not in str(type_ways):
-                            print("missmatch: ", str(selected_way_ids[arg_id]))
-                            type_mismatch = True
+                type_list_for_arg = target_type_for_arg[arg_id]
+                if 'NOTFOUND' not in type_list_for_arg and 'ANY' not in type_list_for_arg:
+                    for i in type_list_for_arg:
+                        type_ways = values_store_by_type[i]
+                        if "(" + "'" + str(selected_way_ids[arg_id]) + "'" in str(type_ways):
+                            print("match: ", str(selected_way_ids[arg_id]))
+                            type_match = True
+                            #type_mismatch = True
+                    # type_ways = values_store_by_type[type_list_for_arg[i]]
+                    # if "(" + "'" + str(selected_way_ids[arg_id]) + "'" not in str(type_ways):
+                    #         print("missmatch: ", str(selected_way_ids[arg_id]))
+                    #         type_mismatch = True
+                    if type_match == False:
+                        print("missmatch: ", str(selected_way_ids[arg_id]))
+                        type_mismatch = True
                 argument_values[arg_id] = values_store_by_id[str(selected_way_ids[arg_id])]
 
                 print('choosing a random input (due to inability to find matching value) arg_id=', arg_id, 'val=', argument_values[arg_id])
@@ -314,9 +325,20 @@ def create_one_call(API_name, functions_to_sigs,
                 else:
                     selected_way_ids[arg_id] = sampled_matching_way
                     print("Target typeeeeeeeee: ", target_type_for_arg[arg_id])
-                    if target_type_for_arg[arg_id] != 'NOTFOUND' and target_type_for_arg[arg_id] != 'ANY':
-                        type_ways = values_store_by_type[target_type_for_arg[arg_id]]
-                        if "(" + "'" + str(selected_way_ids[arg_id]) + "'" not in str(type_ways):
+                    type_list_for_arg = target_type_for_arg[arg_id]
+                    if 'NOTFOUND' not in type_list_for_arg and 'ANY' not in type_list_for_arg:
+                        for i in type_list_for_arg:
+                            type_ways = values_store_by_type[i]
+                            if "(" + "'" + str(selected_way_ids[arg_id]) + "'" in str(type_ways):
+                                type_match = True
+                                print("match: ", str(selected_way_ids[arg_id]))
+                                #type_mismatch = True
+                    # if target_type_for_arg[arg_id] != 'NOTFOUND' and target_type_for_arg[arg_id] != 'ANY':
+                    #     type_ways = values_store_by_type[target_type_for_arg[arg_id]]
+                    #     if "(" + "'" + str(selected_way_ids[arg_id]) + "'" not in str(type_ways):
+                    #         print("missmatch: ", str(selected_way_ids[arg_id]))
+                    #         type_mismatch = True
+                        if type_match == False:
                             print("missmatch: ", str(selected_way_ids[arg_id]))
                             type_mismatch = True
                     argument_values[arg_id] = values_store_by_id[str(sampled_matching_way)]
@@ -327,9 +349,20 @@ def create_one_call(API_name, functions_to_sigs,
                 rand_invariant_set = random.choice(invariant_sets)
                 selected_way_ids[arg_id] = select_way_from_invset(API_name, arg_id, rand_invariant_set)
                 print("Target typeeeeeeeee: ", target_type_for_arg[arg_id])
-                if target_type_for_arg[arg_id] != 'NOTFOUND' and target_type_for_arg[arg_id] != 'ANY':
-                    type_ways = values_store_by_type[target_type_for_arg[arg_id]]
-                    if "(" + "'" + str(selected_way_ids[arg_id]) + "'" not in str(type_ways):
+                type_list_for_arg = target_type_for_arg[arg_id]
+                if 'NOTFOUND' not in type_list_for_arg and 'ANY' not in type_list_for_arg:
+                    for i in type_list_for_arg:
+                        type_ways = values_store_by_type[i]
+                        if "(" + "'" + str(selected_way_ids[arg_id]) + "'" in str(type_ways):
+                            print("match: ", str(selected_way_ids[arg_id]))
+                            type_match = True
+                            #type_mismatch = True
+                # if target_type_for_arg[arg_id] != 'NOTFOUND' and target_type_for_arg[arg_id] != 'ANY':
+                #     type_ways = values_store_by_type[target_type_for_arg[arg_id]]
+                #     if "(" + "'" + str(selected_way_ids[arg_id]) + "'" not in str(type_ways):
+                #         print("missmatch: ", str(selected_way_ids[arg_id]))
+                #         type_mismatch = True
+                    if type_match == False:
                         print("missmatch: ", str(selected_way_ids[arg_id]))
                         type_mismatch = True
                 argument_values[arg_id] = values_store_by_id[str(selected_way_ids[arg_id])]
@@ -685,25 +718,26 @@ def get_rules(target_function, functions_to_sigs, target_arg,
                         print("output_encodinggggggg")
                         #target_invariant_set_for_arg[i] = 9919999999
                         target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
-                        target_type_for_arg[i] = 'str'
+                        target_type_for_arg[i] = ('str', 'bytes')
                     elif(list(functions_to_sigs[target_function].keys())[i]=='Tout'):
                         print("errorsssssssssss")
                         #target_invariant_set_for_arg[i] = 9929999999
                         target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
-                        target_type_for_arg[i] = 'list'
+                        target_type_for_arg[i] = ('list', 'tuple')
                     elif(list(functions_to_sigs[target_function].keys())[i]=='input'):
                         print("errorsssssssssss")
                         #target_invariant_set_for_arg[i] = 9939999999
                         target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
-                        target_type_for_arg[i] = 'Tensor'
+                        #target_type_for_arg[i] = ('Tensor','EagerTensor', 'RaggedTensor', 'RaggedTensorDynamicShape')
+                        target_type_for_arg[i] = ('ANY')
                     elif(list(functions_to_sigs[target_function].keys())[i]=='name'):
                         print("errorsssssssssss")
                         #target_invariant_set_for_arg[i] = 9949999999
                         target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
-                        target_type_for_arg[i] = 'ANY'
+                        target_type_for_arg[i] = ('ANY')
                     else:    
                         target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
-                        target_type_for_arg[i] = 'NOTFOUND'
+                        target_type_for_arg[i] = ('NOTFOUND')
                 else:
                     arg_name = list(functions_to_sigs[target_function].keys())[i]
                     print('checking arg name ', arg_name)
@@ -711,19 +745,19 @@ def get_rules(target_function, functions_to_sigs, target_arg,
                         print('found arg name var')
                         if(list(functions_to_sigs[target_function].keys())[i]=='token'):
                             target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
-                            target_type_for_arg[i] = 'str'
+                            target_type_for_arg[i] = ('str', 'bytes')
                         elif(list(functions_to_sigs[target_function].keys())[i]=='Tout'):
                             target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
-                            target_type_for_arg[i] = 'list'
+                            target_type_for_arg[i] = ('list', 'tuple')
                         elif(list(functions_to_sigs[target_function].keys())[i]=='input'):
                             target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
-                            target_type_for_arg[i] = 'Tensor'
+                            target_type_for_arg[i] = ('ANY')
                         elif(list(functions_to_sigs[target_function].keys())[i]=='name'):
                             target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
-                            target_type_for_arg[i] = 'ANY'
+                            target_type_for_arg[i] = ('ANY')
                         else:
                             target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
-                            target_type_for_arg[i] = 'NOTFOUND'
+                            target_type_for_arg[i] = ('NOTFOUND')
 
             print('[get_rules]', target_function, target_arg, ' initial sweep. choices are ', target_invariant_set_for_arg)
 
@@ -739,17 +773,17 @@ def get_rules(target_function, functions_to_sigs, target_arg,
             print("output_encodinggggggg")
             #target_invariant_set_for_arg[target_arg] = 9919999999
             target_invariant_set_for_arg[target_arg] = int(rand_target)
-            target_type_for_arg[i] = 'str'
+            target_type_for_arg[i] = ('str', 'bytes')
         elif(list(functions_to_sigs[target_function].keys())[target_arg]=='Tout'):
             print("errorsssssssssss")
             #target_invariant_set_for_arg[target_arg] = 9929999999
             target_invariant_set_for_arg[target_arg] = int(rand_target)
-            target_type_for_arg[i] = 'list'
+            target_type_for_arg[i] = ('list', 'tuple')
         elif(list(functions_to_sigs[target_function].keys())[target_arg]=='input'):
             print("errorsssssssssss")
             #target_invariant_set_for_arg[target_arg] = 9939999999
             target_invariant_set_for_arg[target_arg] = int(rand_target)
-            target_type_for_arg[i] = 'Tensor'
+            target_type_for_arg[i] = ('ANY')
         elif(list(functions_to_sigs[target_function].keys())[target_arg]=='name'):
             print("errorsssssssssss")
             #target_invariant_set_for_arg[target_arg] = 9939999999
@@ -757,7 +791,7 @@ def get_rules(target_function, functions_to_sigs, target_arg,
             target_type_for_arg[i] = 'ANY'
         else:                
             target_invariant_set_for_arg[target_arg] = int(rand_target)
-            target_type_for_arg[i] = 'NOTFOUND'
+            target_type_for_arg[i] = ('NOTFOUND')
 
         return target_invariant_set_for_arg, target_type_for_arg
     else:
@@ -769,25 +803,25 @@ def get_rules(target_function, functions_to_sigs, target_arg,
                 print("output_encodinggggggg")
                 #target_invariant_set_for_arg[target_arg] = 9919999999
                 target_invariant_set_for_arg[target_arg] = selected_invset
-                target_type_for_arg[i] = 'str'
+                target_type_for_arg[i] = ('str', 'bytes')
             elif(list(functions_to_sigs[target_function].keys())[target_arg]=='Tout'):
                 print("errorsssssssssss")
                 #target_invariant_set_for_arg[target_arg] = 9929999999
                 target_invariant_set_for_arg[target_arg] = selected_invset
-                target_type_for_arg[i] = 'list'
+                target_type_for_arg[i] = ('list', 'tuple')
             elif(list(functions_to_sigs[target_function].keys())[target_arg]=='input'):
                 print("errorsssssssssss")
                 #target_invariant_set_for_arg[target_arg] = 9939999999
                 target_invariant_set_for_arg[target_arg] = selected_invset
-                target_type_for_arg[i] = 'Tensor'
+                target_type_for_arg[i] = ('ANY')
             elif(list(functions_to_sigs[target_function].keys())[target_arg]=='name'):
                 print("errorsssssssssss")
                 #target_invariant_set_for_arg[target_arg] = 9939999999
                 target_invariant_set_for_arg[target_arg] = selected_invset
-                target_type_for_arg[i] = 'ANY'
+                target_type_for_arg[i] = ('ANY')
             else: 
                 target_invariant_set_for_arg[target_arg] = selected_invset
-                target_type_for_arg[i] = 'NOTFOUND'
+                target_type_for_arg[i] = ('NOTFOUND')
 
             random_or_solved_choices[target_arg].append('perturb')
             return target_invariant_set_for_arg, target_type_for_arg
@@ -819,25 +853,25 @@ def get_rules(target_function, functions_to_sigs, target_arg,
                     print("output_encodinggggggg")
                     #target_invariant_set_for_arg[target_arg] = 9919999999
                     target_invariant_set_for_arg[target_arg] = int(invset)
-                    target_type_for_arg[i] = 'str'
+                    target_type_for_arg[i] = ('str', 'bytes')
                 elif(list(functions_to_sigs[target_function].keys())[target_arg]=='Tout'):
                     print("errorsssssssssss")
                     #target_invariant_set_for_arg[target_arg] = 9929999999
                     target_invariant_set_for_arg[target_arg] = int(invset)
-                    target_type_for_arg[i] = 'list'
+                    target_type_for_arg[i] = ('list', 'tuple')
                 elif(list(functions_to_sigs[target_function].keys())[target_arg]=='input'):
                     print("errorsssssssssss")
                     #target_invariant_set_for_arg[target_arg] = 9939999999
                     target_invariant_set_for_arg[target_arg] = int(invset)
-                    target_type_for_arg[i] = 'Tensor'
+                    target_type_for_arg[i] = ('ANY')
                 elif(list(functions_to_sigs[target_function].keys())[target_arg]=='name'):
                     print("errorsssssssssss")
                     #target_invariant_set_for_arg[target_arg] = 9939999999
                     target_invariant_set_for_arg[target_arg] = int(invset)
-                    target_type_for_arg[i] = 'ANY'
+                    target_type_for_arg[i] = ('ANY')
                 else: 
                     target_invariant_set_for_arg[target_arg] = int(invset)
-                    target_type_for_arg[i] = 'NOTFOUND'
+                    target_type_for_arg[i] = ('NOTFOUND')
             random_or_solved_choices[target_arg].append('solution')
 
             return target_invariant_set_for_arg, target_type_for_arg

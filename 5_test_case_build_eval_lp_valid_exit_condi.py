@@ -27,7 +27,7 @@ final_time = -1
 num_crashes = 0
 last_crash_index = -1
 
-NUM_TESTS_PER_FUNC = 10
+NUM_TESTS_PER_FUNC = 150000
 
 target_function = "tf.raw_ops.PyFunc" + "("
 
@@ -206,7 +206,7 @@ def select_way_from_type(type_ways):
 
 
 def create_one_call(API_name, functions_to_sigs,
-                    target_invariant_set_for_arg, target_type_for_arg, invariant_sets, values_store_by_id, values_store_by_type,
+                    target_invariant_set_for_arg, target_type_for_arg, invariant_sets, values_store_by_id, values_store_by_type, type_dict,
                     required_imports,
                     valid_mapping,
                     test_num):
@@ -280,15 +280,10 @@ def create_one_call(API_name, functions_to_sigs,
                 type_list_for_arg = target_type_for_arg[arg_id]
                 if 'NOTFOUND' not in type_list_for_arg and 'ANY' not in type_list_for_arg:
                     for i in type_list_for_arg:
-                        type_ways = values_store_by_type[i]
-                        if "(" + "'" + str(selected_way_ids[arg_id]) + "'" in str(type_ways):
+                        #type_ways = values_store_by_type[i]
+                        if type_dict[str(selected_way_ids[arg_id])] == i:
                             print("match: ", str(selected_way_ids[arg_id]))
                             type_match = True
-                            #type_mismatch = True
-                    # type_ways = values_store_by_type[type_list_for_arg[i]]
-                    # if "(" + "'" + str(selected_way_ids[arg_id]) + "'" not in str(type_ways):
-                    #         print("missmatch: ", str(selected_way_ids[arg_id]))
-                    #         type_mismatch = True
                     if type_match == False:
                         print("missmatch: ", str(selected_way_ids[arg_id]))
                         type_mismatch = True
@@ -328,16 +323,11 @@ def create_one_call(API_name, functions_to_sigs,
                     type_list_for_arg = target_type_for_arg[arg_id]
                     if 'NOTFOUND' not in type_list_for_arg and 'ANY' not in type_list_for_arg:
                         for i in type_list_for_arg:
-                            type_ways = values_store_by_type[i]
-                            if "(" + "'" + str(selected_way_ids[arg_id]) + "'" in str(type_ways):
+                            #type_ways = values_store_by_type[i]
+                            if type_dict[str(selected_way_ids[arg_id])] == i:
                                 type_match = True
                                 print("match: ", str(selected_way_ids[arg_id]))
                                 #type_mismatch = True
-                    # if target_type_for_arg[arg_id] != 'NOTFOUND' and target_type_for_arg[arg_id] != 'ANY':
-                    #     type_ways = values_store_by_type[target_type_for_arg[arg_id]]
-                    #     if "(" + "'" + str(selected_way_ids[arg_id]) + "'" not in str(type_ways):
-                    #         print("missmatch: ", str(selected_way_ids[arg_id]))
-                    #         type_mismatch = True
                         if type_match == False:
                             print("missmatch: ", str(selected_way_ids[arg_id]))
                             type_mismatch = True
@@ -352,8 +342,8 @@ def create_one_call(API_name, functions_to_sigs,
                 type_list_for_arg = target_type_for_arg[arg_id]
                 if 'NOTFOUND' not in type_list_for_arg and 'ANY' not in type_list_for_arg:
                     for i in type_list_for_arg:
-                        type_ways = values_store_by_type[i]
-                        if "(" + "'" + str(selected_way_ids[arg_id]) + "'" in str(type_ways):
+                        #type_ways = values_store_by_type[i]
+                        if type_dict[str(selected_way_ids[arg_id])] == i:
                             print("match: ", str(selected_way_ids[arg_id]))
                             type_match = True
                             #type_mismatch = True
@@ -723,7 +713,7 @@ def get_rules(target_function, functions_to_sigs, target_arg,
                         print("errorsssssssssss")
                         #target_invariant_set_for_arg[i] = 9929999999
                         target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
-                        target_type_for_arg[i] = ('list', 'tuple')
+                        target_type_for_arg[i] = ('list', 'tuple', 'ndarray')
                     elif(list(functions_to_sigs[target_function].keys())[i]=='input'):
                         print("errorsssssssssss")
                         #target_invariant_set_for_arg[i] = 9939999999
@@ -748,7 +738,7 @@ def get_rules(target_function, functions_to_sigs, target_arg,
                             target_type_for_arg[i] = ('str', 'bytes')
                         elif(list(functions_to_sigs[target_function].keys())[i]=='Tout'):
                             target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
-                            target_type_for_arg[i] = ('list', 'tuple')
+                            target_type_for_arg[i] = ('list', 'tuple', 'ndarray')
                         elif(list(functions_to_sigs[target_function].keys())[i]=='input'):
                             target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
                             target_type_for_arg[i] = ('ANY')
@@ -778,7 +768,7 @@ def get_rules(target_function, functions_to_sigs, target_arg,
             print("errorsssssssssss")
             #target_invariant_set_for_arg[target_arg] = 9929999999
             target_invariant_set_for_arg[target_arg] = int(rand_target)
-            target_type_for_arg[i] = ('list', 'tuple')
+            target_type_for_arg[i] = ('list', 'tuple', 'ndarray')
         elif(list(functions_to_sigs[target_function].keys())[target_arg]=='input'):
             print("errorsssssssssss")
             #target_invariant_set_for_arg[target_arg] = 9939999999
@@ -788,7 +778,7 @@ def get_rules(target_function, functions_to_sigs, target_arg,
             print("errorsssssssssss")
             #target_invariant_set_for_arg[target_arg] = 9939999999
             target_invariant_set_for_arg[target_arg] = int(rand_target)
-            target_type_for_arg[i] = 'ANY'
+            target_type_for_arg[i] = ('ANY')
         else:                
             target_invariant_set_for_arg[target_arg] = int(rand_target)
             target_type_for_arg[i] = ('NOTFOUND')
@@ -808,7 +798,7 @@ def get_rules(target_function, functions_to_sigs, target_arg,
                 print("errorsssssssssss")
                 #target_invariant_set_for_arg[target_arg] = 9929999999
                 target_invariant_set_for_arg[target_arg] = selected_invset
-                target_type_for_arg[i] = ('list', 'tuple')
+                target_type_for_arg[i] = ('list', 'tuple', 'ndarray')
             elif(list(functions_to_sigs[target_function].keys())[target_arg]=='input'):
                 print("errorsssssssssss")
                 #target_invariant_set_for_arg[target_arg] = 9939999999
@@ -858,7 +848,7 @@ def get_rules(target_function, functions_to_sigs, target_arg,
                     print("errorsssssssssss")
                     #target_invariant_set_for_arg[target_arg] = 9929999999
                     target_invariant_set_for_arg[target_arg] = int(invset)
-                    target_type_for_arg[i] = ('list', 'tuple')
+                    target_type_for_arg[i] = ('list', 'tuple', 'ndarray')
                 elif(list(functions_to_sigs[target_function].keys())[target_arg]=='input'):
                     print("errorsssssssssss")
                     #target_invariant_set_for_arg[target_arg] = 9939999999
@@ -952,7 +942,7 @@ def read_typedb_cached_file_with_id():
                         if len(way.strip()) > 0:
                             # if the `way` does not include any function call or attribtue access and not a primitive type, it's likely to be bogus
                             if '(' in way or '.' in way or matched_type in ['float', 'bytes', 'int', 'uint8', 'uint32',
-                                                                            'uint64', 'set', 'tuple', 'int32', 'int8',
+                                                                            'uint64', 'set', 'tuple', 'int32', 'int8', 'ndarray',
                                                                             'float64', 'float32', 'bool', 'bool_', 'Tensor', 'str', 'list', 'EagerTensor', 'RaggedTensor', 'RaggedTensorDynamicShape',
                                                                             'RaggedTensorValue']:
 
@@ -1128,7 +1118,7 @@ def create_one_test_and_run(target_function, all_functions,
                             history,
                             random_or_solved_choices,
                             seeds,
-                            values_store_by_id, values_store_by_type, functions_to_imports,
+                            values_store_by_id, values_store_by_type, type_dict, functions_to_imports,
                             s, valid_mapping,
                             manager_history_cache,
                             all_outfile,
@@ -1183,7 +1173,7 @@ def create_one_test_and_run(target_function, all_functions,
     succeeded, selected_way_ids, test_file_name, full_code, full_imports, type_mismatch = create_one_call(
         target_function, all_function_sigs,
         target_invariant_set_for_arg, target_type_for_arg, invariant_sets,
-        values_store_by_id, values_store_by_type,
+        values_store_by_id, values_store_by_type, type_dict,
         functions_to_imports[target_function],
         valid_mapping,
         test_i)
@@ -1491,7 +1481,7 @@ def main():
         create_tests_for_the_target_functions((all_function_sigs, all_functions, func_to_already_checked_invs,
                                  function_arg_to_index, functions_to_imports, invariant_sets, undominated_invariant_sets,
                                  selected_target_functions, usable_types, values_store_by_id,
-                                 values_store_by_type))
+                                 values_store_by_type, type_dict))
     except KeyboardInterrupt:
         pass
     except Exception as e:
@@ -1506,7 +1496,7 @@ def main():
 def create_tests_for_the_target_functions(arguments):
     all_function_sigs, all_functions, func_to_already_checked_invs, \
     function_arg_to_index, functions_to_imports, invariant_sets, undominated_invariant_sets, \
-    target_functions, usable_types, values_store_by_id, values_store_by_type = arguments
+    target_functions, usable_types, values_store_by_id, values_store_by_type, type_dict = arguments
 
     HOST = "127.0.0.1"
     PORT1 = 65433
@@ -1694,7 +1684,7 @@ def create_tests_for_the_target_functions(arguments):
                                 history,
                                 random_or_solved_choices,
                                 seeds,
-                                values_store_by_id, values_store_by_type, functions_to_imports,
+                                values_store_by_id, values_store_by_type, type_dict, functions_to_imports,
                                 s, valid_mapping,
                                 manager_history_cache,
                                 all_outfile,

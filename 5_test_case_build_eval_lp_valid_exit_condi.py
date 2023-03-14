@@ -905,6 +905,7 @@ def run_clingo_solver_if_running_low(already_started, history, inferred_queue, s
 def read_typedb_cached_file_with_id():
     values_store_by_id = {}
     values_store_by_type = {}
+    type_dict = {}
 
     for f in os.listdir(rootdir):
         if '.typedb' not in f:
@@ -966,9 +967,11 @@ def read_typedb_cached_file_with_id():
                                 if "NoneType" in f:
                                     ways.append((way_id, "None", invariants))
                                     values_store_by_id[way_id] = "None"
+                                    type_dict[way_id] = matched_type
                                 else:
                                     ways.append((way_id, way, invariants))
                                     values_store_by_id[way_id] = way
+                                    type_dict[way_id] = matched_type
 
                     way = ''
                     way_id = None
@@ -976,7 +979,7 @@ def read_typedb_cached_file_with_id():
 
         values_store_by_type[matched_type] = ways
 
-    return values_store_by_id, values_store_by_type
+    return values_store_by_id, values_store_by_type, type_dict
 
 
 def find_all_known_types():
@@ -1350,10 +1353,10 @@ def create_one_test_and_run(target_function, all_functions,
                     final = True
                 os.remove(READ_DIRECTORY+ "/" +file)
 
-            if final:
-                final_crash+=1
-                filename = FINAL_DIRECTORY_OUT + "/"+ str(run_i) + "_final_crash_" + str(test_i) + ".py"
-                shutil.copy(test_file_name, filename)
+            #if final:
+            final_crash+=1
+            filename = FINAL_DIRECTORY_OUT + "/"+ str(run_i) + "_final_crash_" + str(test_i) + ".py"
+            shutil.copy(test_file_name, filename)
             
             outcome = 'crash'
             #outcome = 'invalid'
@@ -1448,7 +1451,7 @@ def main():
     global_name_to_invs = find_function_seeds(invariant_sets)
 
     print('reading usable values')
-    values_store_by_id, values_store_by_type = read_typedb_cached_file_with_id()
+    values_store_by_id, values_store_by_type, type_dict = read_typedb_cached_file_with_id()
 
     all_types = find_all_known_types()
     usable_types = set()

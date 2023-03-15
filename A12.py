@@ -111,6 +111,8 @@ if __name__ == '__main__':
     time_skipfuzz_extract = [3600,162,3600,207,176,102,94,3600,72,83,87,132,187,152,3600,100,141,3600,3600,72]
     time_skipfuzz_go_ninv_extract = [174,106,136,112,3600,132,102,81,73,114,93,214,98,90,3600,83,81,121,107,206]
     time_skipfuzz_go_ns_extract = [3600, 243, 162, 177, 87, 107, 135, 92, 125, 127, 149, 81, 146, 87, 3600, 179, 124, 110, 179, 76]
+    time_skipfuzz_extract_149 = [69, 67, 68, 68, 68, 68, 67, 67, 68, 67, 69, 67, 68, 68, 68, 67, 69, 70, 67, 67]
+    time_skipfuzz_extract_pycond_149 = [1800, 72, 1171, 552, 744, 1800, 740, 739, 1800, 1484, 1234, 1800, 1800, 1800, 441, 1800, 1800, 1800, 1800, 1800]
 
     time_skipfuzz_go_sobol = [75,89,74,79,70,74,76,74,75,75,74,77,77,73,76,80,74,83,83,72]
     time_skipfuzz_sobol = [79,80,75,74,83,79,84,90,76,80,81,78,81,80,76,78,85,76,80,84]
@@ -163,6 +165,9 @@ if __name__ == '__main__':
     time_skipfuzz_go_bb_ns_SparseMatrixNNZ = [94, 76, 85, 73, 74, 79, 73, 71, 75, 85, 90, 74, 78, 77, 80, 71, 79, 71, 74, 71]
     time_skipfuzz_go_bb_max_SparseMatrixNNZ = [98, 83, 83, 71, 72, 75, 110, 78, 73, 71, 73, 73, 98, 80, 71, 84, 76, 73, 76, 78]
 
+    time_skipfuzz_Unbatch = [160, 600, 600, 600, 600, 121, 395, 68, 422, 504, 145, 161, 600, 600, 257, 115, 89, 240, 309, 361]
+    time_skipfuzz_Unbatch_pycond = [600, 600, 600, 600, 600, 600, 376, 600, 600, 398, 600, 600, 600, 600, 105, 103, 374, 600, 600, 600]
+
     # estimate_i, magnitude_i = VD_A(i_skipfuzz_go, i_skipfuzz)
     # print("A12-i: ", 1 - estimate_i)
     
@@ -172,7 +177,7 @@ if __name__ == '__main__':
     estimate_time_Concat, magnitude_time_Concat = VD_A(time_skipfuzz_go_ns_concat, time_skipfuzz_concat)
     print("A12-time Concat: ", 1 - estimate_time_Concat)
 
-    estimate_time_extract, magnitude_time_extract = VD_A(time_skipfuzz_go_ns_extract, time_skipfuzz_extract)
+    estimate_time_extract, magnitude_time_extract = VD_A(time_skipfuzz_extract_pycond_149, time_skipfuzz_extract_149)
     print("A12-time extract: ", 1 - estimate_time_extract)
 
     estimate_time_sobol, magnitude_time_sobol = VD_A(time_skipfuzz_go_ns_sobol, time_skipfuzz_sobol)
@@ -205,9 +210,12 @@ if __name__ == '__main__':
     estimate_time_SparseMatrixNNZ, magnitude_time_SparseMatrixNNZ= VD_A(time_skipfuzz_go_bb_max_SparseMatrixNNZ, time_skipfuzz_SparseMatrixNNZ)
     print("A12-time SparseMatrixNNZ: ", 1 - estimate_time_SparseMatrixNNZ)
 
+    estimate_time_Unbatch, magnitude_time_Unbatch= VD_A(time_skipfuzz_Unbatch_pycond, time_skipfuzz_Unbatch)
+    print("A12-time Unbatch: ", 1 - estimate_time_Unbatch)
+
     print("scatter: ",ss.mannwhitneyu(x = time_skipfuzz_go_bb_ns_scatter, y = time_skipfuzz_scatter, alternative='less'))
     print("Concat: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_concat, y = time_skipfuzz_concat, alternative='less'))
-    print("extract: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_extract, y = time_skipfuzz_extract, alternative='less'))
+    print("extract: ",ss.mannwhitneyu(x = time_skipfuzz_extract_pycond_149, y = time_skipfuzz_extract_149, alternative='greater'))
     print("sobol: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_sobol, y = time_skipfuzz_sobol, alternative='less'))
     print("composite: ",ss.mannwhitneyu(x = time_skipfuzz_composite_pycond, y = time_skipfuzz_composite, alternative='less'))
     print("pyfunc: ",ss.mannwhitneyu(x = time_skipfuzz_pyfunc_pycond, y = time_skipfuzz_pyfunc, alternative='less'))
@@ -218,6 +226,7 @@ if __name__ == '__main__':
     print("tensor UnsortedSegmentJoin: ",ss.mannwhitneyu(x = time_skipfuzz_go_bb_max_UnsortedSegmentJoin, y = time_skipfuzz_UnsortedSegmentJoin, alternative='less'))
     print("tensor EmptyTensorList: ",ss.mannwhitneyu(x = time_skipfuzz_go_bb_ns_EmptyTensorList, y = time_skipfuzz_EmptyTensorList, alternative='less'))
     print("tensor SparseMatrixNNZ: ",ss.mannwhitneyu(x = time_skipfuzz_go_bb_max_SparseMatrixNNZ, y = time_skipfuzz_SparseMatrixNNZ, alternative='less'))
+    print("tensor Unbatch: ",ss.mannwhitneyu(x = time_skipfuzz_Unbatch_pycond, y = time_skipfuzz_Unbatch, alternative='greater'))
 
-    print("New: ", np.mean(time_skipfuzz_composite_pycond))
-    print("ori: ", np.mean(time_skipfuzz_composite))
+    print("New: ", np.mean(time_skipfuzz_Unbatch_pycond))
+    print("ori: ", np.mean(time_skipfuzz_Unbatch))

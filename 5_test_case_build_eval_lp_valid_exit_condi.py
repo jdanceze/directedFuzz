@@ -622,6 +622,65 @@ def add_to_queues(history, inferred_queue, solution_queue, target_arg, target_fu
             print('failed to write to solution queue')
 
 
+def type_finder_1(functions_to_sigs, target_function, undominated_invariant_sets, index):
+    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int'), 'memory_limit': ('int'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+    
+    if (list(functions_to_sigs[target_function].keys())[index] in spec_type_for_arguement):
+        target_invariant_set_for_arg = random.choice(undominated_invariant_sets)
+        target_type_for_arg = spec_type_for_arguement[list(functions_to_sigs[target_function].keys())[index]]
+    else:
+        target_invariant_set_for_arg = random.choice(undominated_invariant_sets)
+        target_type_for_arg = ('ANY')
+    
+    return target_invariant_set_for_arg, target_type_for_arg
+
+def type_finder_2(functions_to_sigs, target_function, global_name_to_invs, arg_name, index):
+    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int'), 'memory_limit': ('int'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+    
+    if (list(functions_to_sigs[target_function].keys())[index] in spec_type_for_arguement):
+        target_invariant_set_for_arg = random.choice(global_name_to_invs[arg_name])
+        target_type_for_arg = spec_type_for_arguement[list(functions_to_sigs[target_function].keys())[index]]
+    else:
+        target_invariant_set_for_arg = random.choice(global_name_to_invs[arg_name])
+        target_type_for_arg = ('ANY')
+
+    return target_invariant_set_for_arg, target_type_for_arg
+
+def type_finder_3(functions_to_sigs, target_function, rand_target, target_arg):
+    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int'), 'memory_limit': ('int'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+    
+    if (list(functions_to_sigs[target_function].keys())[target_arg] in spec_type_for_arguement):
+        target_invariant_set_for_arg = int(rand_target)
+        target_type_for_arg = spec_type_for_arguement[list(functions_to_sigs[target_function].keys())[target_arg]]
+    else:
+        target_invariant_set_for_arg = int(rand_target)
+        target_type_for_arg = ('ANY')
+    return target_invariant_set_for_arg, target_type_for_arg
+
+
+def type_finder_4(functions_to_sigs, target_function, target_arg, selected_invset):
+    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int'), 'memory_limit': ('int'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+    
+    if (list(functions_to_sigs[target_function].keys())[target_arg] in spec_type_for_arguement):
+        target_invariant_set_for_arg = selected_invset
+        target_type_for_arg = spec_type_for_arguement[list(functions_to_sigs[target_function].keys())[target_arg]]
+    else:
+        target_invariant_set_for_arg = selected_invset
+        target_type_for_arg = ('ANY')
+
+    return target_invariant_set_for_arg, target_type_for_arg
+
+def type_finder_5(functions_to_sigs, target_function, target_arg, invset):
+    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int'), 'memory_limit': ('int'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+    
+    if (list(functions_to_sigs[target_function].keys())[target_arg] in spec_type_for_arguement):
+        target_invariant_set_for_arg = int(invset)
+        target_type_for_arg = spec_type_for_arguement[list(functions_to_sigs[target_function].keys())[target_arg]]
+    else:
+        target_invariant_set_for_arg = int(invset)
+        target_type_for_arg = ('ANY')
+    return target_invariant_set_for_arg, target_type_for_arg
+
 #get input categories for each argument in target function
 def get_rules(target_function, functions_to_sigs, target_arg,
               solution_queue,inferred_queue,  already_started,
@@ -704,50 +763,53 @@ def get_rules(target_function, functions_to_sigs, target_arg,
             for i in range(num_arguments):
                 print(f'argument {i} : {list(functions_to_sigs[target_function].keys())[i]}')
                 if random.choice([True, False]):
-                    if(list(functions_to_sigs[target_function].keys())[i]=='token'):
-                        print("output_encodinggggggg")
-                        #target_invariant_set_for_arg[i] = 9919999999
-                        target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
-                        target_type_for_arg[i] = ('str', 'bytes')
-                    elif(list(functions_to_sigs[target_function].keys())[i]=='Tout'):
-                        print("errorsssssssssss")
-                        #target_invariant_set_for_arg[i] = 9929999999
-                        target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
-                        target_type_for_arg[i] = ('list', 'tuple', 'ndarray')
-                    elif(list(functions_to_sigs[target_function].keys())[i]=='input'):
-                        print("errorsssssssssss")
-                        #target_invariant_set_for_arg[i] = 9939999999
-                        target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
-                        #target_type_for_arg[i] = ('Tensor','EagerTensor', 'RaggedTensor', 'RaggedTensorDynamicShape')
-                        target_type_for_arg[i] = ('ANY')
-                    elif(list(functions_to_sigs[target_function].keys())[i]=='name'):
-                        print("errorsssssssssss")
-                        #target_invariant_set_for_arg[i] = 9949999999
-                        target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
-                        target_type_for_arg[i] = ('ANY')
-                    else:    
-                        target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
-                        target_type_for_arg[i] = ('NOTFOUND')
+                    # if(list(functions_to_sigs[target_function].keys())[i]=='dtypes'):
+                    #     print("output_encodinggggggg")
+                    #     #target_invariant_set_for_arg[i] = 9919999999
+                    #     target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
+                    #     target_type_for_arg[i] = ('list', 'tuple', 'ndarray')
+                    # elif(list(functions_to_sigs[target_function].keys())[i]=='capacity' or list(functions_to_sigs[target_function].keys())[i]=='memory_limit'):
+                    #     print("errorsssssssssss")
+                    #     #target_invariant_set_for_arg[i] = 9929999999
+                    #     target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
+                    #     target_type_for_arg[i] = ('int')
+                    # elif(list(functions_to_sigs[target_function].keys())[i]=='container' or list(functions_to_sigs[target_function].keys())[i]=='shared_name'):
+                    #     print("errorsssssssssss")
+                    #     #target_invariant_set_for_arg[i] = 9939999999
+                    #     target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
+                    #     #target_type_for_arg[i] = ('Tensor','EagerTensor', 'RaggedTensor', 'RaggedTensorDynamicShape')
+                    #     target_type_for_arg[i] = ('str', 'bytes')
+                    # elif(list(functions_to_sigs[target_function].keys())[i]=='name'):
+                    #     print("errorsssssssssss")
+                    #     #target_invariant_set_for_arg[i] = 9949999999
+                    #     target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
+                    #     target_type_for_arg[i] = ('ANY')
+                    # else:    
+                    #     target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
+                    #     target_type_for_arg[i] = ('NOTFOUND')
+
+                    target_invariant_set_for_arg[i], target_type_for_arg[i] = type_finder_1(functions_to_sigs, target_function, undominated_invariant_sets, i)
                 else:
                     arg_name = list(functions_to_sigs[target_function].keys())[i]
                     print('checking arg name ', arg_name)
                     if arg_name in global_name_to_invs:
                         print('found arg name var')
-                        if(list(functions_to_sigs[target_function].keys())[i]=='token'):
-                            target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
-                            target_type_for_arg[i] = ('str', 'bytes')
-                        elif(list(functions_to_sigs[target_function].keys())[i]=='Tout'):
-                            target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
-                            target_type_for_arg[i] = ('list', 'tuple', 'ndarray')
-                        elif(list(functions_to_sigs[target_function].keys())[i]=='input'):
-                            target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
-                            target_type_for_arg[i] = ('ANY')
-                        elif(list(functions_to_sigs[target_function].keys())[i]=='name'):
-                            target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
-                            target_type_for_arg[i] = ('ANY')
-                        else:
-                            target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
-                            target_type_for_arg[i] = ('NOTFOUND')
+                        # if(list(functions_to_sigs[target_function].keys())[i]=='token'):
+                        #     target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
+                        #     target_type_for_arg[i] = ('str', 'bytes')
+                        # elif(list(functions_to_sigs[target_function].keys())[i]=='Tout'):
+                        #     target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
+                        #     target_type_for_arg[i] = ('list', 'tuple', 'ndarray')
+                        # elif(list(functions_to_sigs[target_function].keys())[i]=='input'):
+                        #     target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
+                        #     target_type_for_arg[i] = ('ANY')
+                        # elif(list(functions_to_sigs[target_function].keys())[i]=='name'):
+                        #     target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
+                        #     target_type_for_arg[i] = ('ANY')
+                        # else:
+                        #     target_invariant_set_for_arg[i] = random.choice(global_name_to_invs[arg_name])
+                        #     target_type_for_arg[i] = ('NOTFOUND')
+                        target_invariant_set_for_arg[i], target_type_for_arg[i]  = type_finder_2(functions_to_sigs, target_function, global_name_to_invs, arg_name, i)
 
             print('[get_rules]', target_function, target_arg, ' initial sweep. choices are ', target_invariant_set_for_arg)
 
@@ -759,29 +821,31 @@ def get_rules(target_function, functions_to_sigs, target_arg,
         targets = global_known_targets[target_function][target_arg]
         rand_target = random.choice(tuple(targets))
         random_or_solved_choices[target_arg].append('target')
-        if(list(functions_to_sigs[target_function].keys())[target_arg]=='token'):
-            print("output_encodinggggggg")
-            #target_invariant_set_for_arg[target_arg] = 9919999999
-            target_invariant_set_for_arg[target_arg] = int(rand_target)
-            target_type_for_arg[i] = ('str', 'bytes')
-        elif(list(functions_to_sigs[target_function].keys())[target_arg]=='Tout'):
-            print("errorsssssssssss")
-            #target_invariant_set_for_arg[target_arg] = 9929999999
-            target_invariant_set_for_arg[target_arg] = int(rand_target)
-            target_type_for_arg[i] = ('list', 'tuple', 'ndarray')
-        elif(list(functions_to_sigs[target_function].keys())[target_arg]=='input'):
-            print("errorsssssssssss")
-            #target_invariant_set_for_arg[target_arg] = 9939999999
-            target_invariant_set_for_arg[target_arg] = int(rand_target)
-            target_type_for_arg[i] = ('ANY')
-        elif(list(functions_to_sigs[target_function].keys())[target_arg]=='name'):
-            print("errorsssssssssss")
-            #target_invariant_set_for_arg[target_arg] = 9939999999
-            target_invariant_set_for_arg[target_arg] = int(rand_target)
-            target_type_for_arg[i] = ('ANY')
-        else:                
-            target_invariant_set_for_arg[target_arg] = int(rand_target)
-            target_type_for_arg[i] = ('NOTFOUND')
+        # if(list(functions_to_sigs[target_function].keys())[target_arg]=='token'):
+        #     print("output_encodinggggggg")
+        #     #target_invariant_set_for_arg[target_arg] = 9919999999
+        #     target_invariant_set_for_arg[target_arg] = int(rand_target)
+        #     target_type_for_arg[i] = ('str', 'bytes')
+        # elif(list(functions_to_sigs[target_function].keys())[target_arg]=='Tout'):
+        #     print("errorsssssssssss")
+        #     #target_invariant_set_for_arg[target_arg] = 9929999999
+        #     target_invariant_set_for_arg[target_arg] = int(rand_target)
+        #     target_type_for_arg[i] = ('list', 'tuple', 'ndarray')
+        # elif(list(functions_to_sigs[target_function].keys())[target_arg]=='input'):
+        #     print("errorsssssssssss")
+        #     #target_invariant_set_for_arg[target_arg] = 9939999999
+        #     target_invariant_set_for_arg[target_arg] = int(rand_target)
+        #     target_type_for_arg[i] = ('ANY')
+        # elif(list(functions_to_sigs[target_function].keys())[target_arg]=='name'):
+        #     print("errorsssssssssss")
+        #     #target_invariant_set_for_arg[target_arg] = 9939999999
+        #     target_invariant_set_for_arg[target_arg] = int(rand_target)
+        #     target_type_for_arg[i] = ('ANY')
+        # else:                
+        #     target_invariant_set_for_arg[target_arg] = int(rand_target)
+        #     target_type_for_arg[i] = ('NOTFOUND')
+        
+        target_invariant_set_for_arg[target_arg], target_type_for_arg[i] = type_finder_3(functions_to_sigs, target_function, rand_target, target_arg)
 
         return target_invariant_set_for_arg, target_type_for_arg
     else:
@@ -789,30 +853,31 @@ def get_rules(target_function, functions_to_sigs, target_arg,
             print('pick perturb', time.time())
             print('[get_rules]', target_function, target_arg, 'mode:', global_running_mode[target_function][target_arg], ' perturb as [clingo] solution queue size is 0')
             selected_invset = random.choice(undominated_invariant_sets)
-            if(list(functions_to_sigs[target_function].keys())[target_arg]=='token'):
-                print("output_encodinggggggg")
-                #target_invariant_set_for_arg[target_arg] = 9919999999
-                target_invariant_set_for_arg[target_arg] = selected_invset
-                target_type_for_arg[i] = ('str', 'bytes')
-            elif(list(functions_to_sigs[target_function].keys())[target_arg]=='Tout'):
-                print("errorsssssssssss")
-                #target_invariant_set_for_arg[target_arg] = 9929999999
-                target_invariant_set_for_arg[target_arg] = selected_invset
-                target_type_for_arg[i] = ('list', 'tuple', 'ndarray')
-            elif(list(functions_to_sigs[target_function].keys())[target_arg]=='input'):
-                print("errorsssssssssss")
-                #target_invariant_set_for_arg[target_arg] = 9939999999
-                target_invariant_set_for_arg[target_arg] = selected_invset
-                target_type_for_arg[i] = ('ANY')
-            elif(list(functions_to_sigs[target_function].keys())[target_arg]=='name'):
-                print("errorsssssssssss")
-                #target_invariant_set_for_arg[target_arg] = 9939999999
-                target_invariant_set_for_arg[target_arg] = selected_invset
-                target_type_for_arg[i] = ('ANY')
-            else: 
-                target_invariant_set_for_arg[target_arg] = selected_invset
-                target_type_for_arg[i] = ('NOTFOUND')
-
+            # if(list(functions_to_sigs[target_function].keys())[target_arg]=='token'):
+            #     print("output_encodinggggggg")
+            #     #target_invariant_set_for_arg[target_arg] = 9919999999
+            #     target_invariant_set_for_arg[target_arg] = selected_invset
+            #     target_type_for_arg[i] = ('str', 'bytes')
+            # elif(list(functions_to_sigs[target_function].keys())[target_arg]=='Tout'):
+            #     print("errorsssssssssss")
+            #     #target_invariant_set_for_arg[target_arg] = 9929999999
+            #     target_invariant_set_for_arg[target_arg] = selected_invset
+            #     target_type_for_arg[i] = ('list', 'tuple', 'ndarray')
+            # elif(list(functions_to_sigs[target_function].keys())[target_arg]=='input'):
+            #     print("errorsssssssssss")
+            #     #target_invariant_set_for_arg[target_arg] = 9939999999
+            #     target_invariant_set_for_arg[target_arg] = selected_invset
+            #     target_type_for_arg[i] = ('ANY')
+            # elif(list(functions_to_sigs[target_function].keys())[target_arg]=='name'):
+            #     print("errorsssssssssss")
+            #     #target_invariant_set_for_arg[target_arg] = 9939999999
+            #     target_invariant_set_for_arg[target_arg] = selected_invset
+            #     target_type_for_arg[i] = ('ANY')
+            # else: 
+            #     target_invariant_set_for_arg[target_arg] = selected_invset
+            #     target_type_for_arg[i] = ('NOTFOUND')
+            
+            target_invariant_set_for_arg[target_arg], target_type_for_arg[i] = type_finder_4(functions_to_sigs, target_function, target_arg, selected_invset)
             random_or_solved_choices[target_arg].append('perturb')
             return target_invariant_set_for_arg, target_type_for_arg
         else:
@@ -838,30 +903,30 @@ def get_rules(target_function, functions_to_sigs, target_arg,
             for one_invset in to_run.split('__'):
                 for token in one_invset.split('_'):
                     invset = token
-
-                if(list(functions_to_sigs[target_function].keys())[target_arg]=='token'):
-                    print("output_encodinggggggg")
-                    #target_invariant_set_for_arg[target_arg] = 9919999999
-                    target_invariant_set_for_arg[target_arg] = int(invset)
-                    target_type_for_arg[i] = ('str', 'bytes')
-                elif(list(functions_to_sigs[target_function].keys())[target_arg]=='Tout'):
-                    print("errorsssssssssss")
-                    #target_invariant_set_for_arg[target_arg] = 9929999999
-                    target_invariant_set_for_arg[target_arg] = int(invset)
-                    target_type_for_arg[i] = ('list', 'tuple', 'ndarray')
-                elif(list(functions_to_sigs[target_function].keys())[target_arg]=='input'):
-                    print("errorsssssssssss")
-                    #target_invariant_set_for_arg[target_arg] = 9939999999
-                    target_invariant_set_for_arg[target_arg] = int(invset)
-                    target_type_for_arg[i] = ('ANY')
-                elif(list(functions_to_sigs[target_function].keys())[target_arg]=='name'):
-                    print("errorsssssssssss")
-                    #target_invariant_set_for_arg[target_arg] = 9939999999
-                    target_invariant_set_for_arg[target_arg] = int(invset)
-                    target_type_for_arg[i] = ('ANY')
-                else: 
-                    target_invariant_set_for_arg[target_arg] = int(invset)
-                    target_type_for_arg[i] = ('NOTFOUND')
+                # if(list(functions_to_sigs[target_function].keys())[target_arg]=='token'):
+                #     print("output_encodinggggggg")
+                #     #target_invariant_set_for_arg[target_arg] = 9919999999
+                #     target_invariant_set_for_arg[target_arg] = int(invset)
+                #     target_type_for_arg[i] = ('str', 'bytes')
+                # elif(list(functions_to_sigs[target_function].keys())[target_arg]=='Tout'):
+                #     print("errorsssssssssss")
+                #     #target_invariant_set_for_arg[target_arg] = 9929999999
+                #     target_invariant_set_for_arg[target_arg] = int(invset)
+                #     target_type_for_arg[i] = ('list', 'tuple', 'ndarray')
+                # elif(list(functions_to_sigs[target_function].keys())[target_arg]=='input'):
+                #     print("errorsssssssssss")
+                #     #target_invariant_set_for_arg[target_arg] = 9939999999
+                #     target_invariant_set_for_arg[target_arg] = int(invset)
+                #     target_type_for_arg[i] = ('ANY')
+                # elif(list(functions_to_sigs[target_function].keys())[target_arg]=='name'):
+                #     print("errorsssssssssss")
+                #     #target_invariant_set_for_arg[target_arg] = 9939999999
+                #     target_invariant_set_for_arg[target_arg] = int(invset)
+                #     target_type_for_arg[i] = ('ANY')
+                # else: 
+                #     target_invariant_set_for_arg[target_arg] = int(invset)
+                #     target_type_for_arg[i] = ('NOTFOUND')
+                target_invariant_set_for_arg[target_arg], target_type_for_arg[i] = type_finder_5(functions_to_sigs, target_function, target_arg, invset)
             random_or_solved_choices[target_arg].append('solution')
 
             return target_invariant_set_for_arg, target_type_for_arg
@@ -941,7 +1006,7 @@ def read_typedb_cached_file_with_id():
 
                         if len(way.strip()) > 0:
                             # if the `way` does not include any function call or attribtue access and not a primitive type, it's likely to be bogus
-                            if '(' in way or '.' in way or matched_type in ['float', 'bytes', 'int', 'uint8', 'uint32',
+                            if '(' in way or '.' in way or matched_type in ['float', 'bytes', 'int', 'uint8', 'int16', 'int64' 'uint32',
                                                                             'uint64', 'set', 'tuple', 'int32', 'int8', 'ndarray',
                                                                             'float64', 'float32', 'bool', 'bool_', 'Tensor', 'str', 'list', 'EagerTensor', 'RaggedTensor', 'RaggedTensorDynamicShape',
                                                                             'RaggedTensorValue']:
@@ -1397,6 +1462,7 @@ def create_one_test_and_run(target_function, all_functions,
         # print('return created_one', time.time())
         return is_crash, is_no_problemo_runs, is_problem, is_py_error, is_crash, outcome
     else:
+        os.remove(test_file_name)
         print('no test created')
         return False, False, False, False, False, 'invalid'
 

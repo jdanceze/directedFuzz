@@ -153,9 +153,9 @@ if __name__ == '__main__':
     time_skipfuzz_go_ninv_tensorlistresize = [71, 70, 74, 72, 72, 72, 74, 72, 75, 73, 72, 72, 70, 72, 69, 73, 70, 72, 74, 69]
     time_skipfuzz_go_ns_tensorlistresize = [80, 73, 77, 78, 74, 72, 78, 76, 75, 79, 77, 73, 80, 76, 75, 77, 74, 75, 81, 78]
 
-    time_skipfuzz_UnsortedSegmentJoin = [78, 82, 84, 81, 93, 79, 92, 86, 77, 140, 76, 82, 76, 87, 78, 82, 73, 89, 80, 70]
-    time_skipfuzz_go_bb_ns_UnsortedSegmentJoin = [74, 88, 78, 78, 90, 82, 76, 79, 93, 93, 80, 75, 78, 78, 82, 91, 93, 90, 89, 78]
-    time_skipfuzz_go_bb_max_UnsortedSegmentJoin = [81, 96, 94, 87, 74, 82, 83, 76, 88, 76, 77, 84, 92, 80, 92, 72, 91, 89, 82, 88]
+    # time_skipfuzz_UnsortedSegmentJoin = [78, 82, 84, 81, 93, 79, 92, 86, 77, 140, 76, 82, 76, 87, 78, 82, 73, 89, 80, 70]
+    # time_skipfuzz_go_bb_ns_UnsortedSegmentJoin = [74, 88, 78, 78, 90, 82, 76, 79, 93, 93, 80, 75, 78, 78, 82, 91, 93, 90, 89, 78]
+    # time_skipfuzz_go_bb_max_UnsortedSegmentJoin = [81, 96, 94, 87, 74, 82, 83, 76, 88, 76, 77, 84, 92, 80, 92, 72, 91, 89, 82, 88]
 
     time_skipfuzz_EmptyTensorList = [70, 70, 109, 71, 145, 69, 69, 129, 3600, 91, 71, 120, 123, 72, 76, 73, 74, 79, 74, 131]
     time_skipfuzz_go_bb_ns_EmptyTensorList = [130, 79, 91, 74, 73, 73, 72, 75, 71, 111, 136, 129, 73, 72, 108, 71, 144, 72, 70, 70]
@@ -166,7 +166,19 @@ if __name__ == '__main__':
     time_skipfuzz_go_bb_max_SparseMatrixNNZ = [98, 83, 83, 71, 72, 75, 110, 78, 73, 71, 73, 73, 98, 80, 71, 84, 76, 73, 76, 78]
 
     time_skipfuzz_Unbatch = [160, 600, 600, 600, 600, 121, 395, 68, 422, 504, 145, 161, 600, 600, 257, 115, 89, 240, 309, 361]
-    time_skipfuzz_Unbatch_pycond = [600, 600, 600, 600, 600, 600, 376, 600, 600, 398, 600, 600, 600, 600, 105, 103, 374, 600, 600, 600]
+    time_skipfuzz_Unbatch_pycond = [430, 290, 279, 345, 73, 292, 600, 67, 144, 474, 600, 392, 124, 112, 118, 600, 275, 491, 302, 308]
+
+    time_skipfuzz_StagePeek = [116, 217, 120, 600, 128, 209, 293, 211, 230, 462, 135, 130, 401, 507, 461, 479, 69, 190, 79, 68]
+    time_skipfuzz_StagePeek_pycond = [120, 430, 600, 406, 336, 600, 600, 426, 600, 600, 600, 600, 600, 428, 600, 600, 600, 600, 370, 108]
+
+    time_skipfuzz_UnbatchGrad = [78, 81, 79, 77, 78, 76, 78, 80, 77, 77, 80, 80, 77, 79, 80, 76, 80, 79, 79, 79]
+    time_skipfuzz_UnbatchGrad_pycond = [83, 75, 82, 77, 78, 77, 78, 75, 79, 86, 80, 79, 78, 78, 77, 83, 77, 78, 80, 78]
+
+    time_skipfuzz_UnsortedSegmentJoin = [70, 71, 71, 71, 70, 70, 69, 70, 71, 70, 69, 69, 69, 71, 70, 70, 69, 69, 493, 71]
+    time_skipfuzz_UnsortedSegmentJoin_pycond = [68, 68, 67, 70, 372, 69, 70, 69, 67, 69, 68, 67, 67, 67, 67, 67, 67, 68, 66, 67]
+
+    time_skipfuzz_PlaceholderWithDefault = [68, 68, 68, 68, 68, 68, 77, 68, 600, 91, 67, 69, 69, 75, 75, 70, 75, 76, 75, 600]
+    time_skipfuzz_PlaceholderWithDefault_pycond = [600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600]
 
     # estimate_i, magnitude_i = VD_A(i_skipfuzz_go, i_skipfuzz)
     # print("A12-i: ", 1 - estimate_i)
@@ -201,8 +213,8 @@ if __name__ == '__main__':
     estimate_time_tensorlistresize, magnitude_time_tensorlistresize = VD_A(time_skipfuzz_go_ns_tensorlistresize, time_skipfuzz_tensorlistresize)
     print("A12-time tensor list resize: ", 1 - estimate_time_tensorlistresize)
 
-    estimate_time_UnsortedSegmentJoin, magnitude_time_UnsortedSegmentJoin= VD_A(time_skipfuzz_go_bb_max_UnsortedSegmentJoin, time_skipfuzz_UnsortedSegmentJoin)
-    print("A12-time UnsortedSegmentJoin: ", 1 - estimate_time_UnsortedSegmentJoin)
+    # estimate_time_UnsortedSegmentJoin, magnitude_time_UnsortedSegmentJoin= VD_A(time_skipfuzz_go_bb_max_UnsortedSegmentJoin, time_skipfuzz_UnsortedSegmentJoin)
+    # print("A12-time UnsortedSegmentJoin: ", 1 - estimate_time_UnsortedSegmentJoin)
 
     estimate_time_EmptyTensorList, magnitude_time_EmptyTensorList= VD_A(time_skipfuzz_go_bb_ns_EmptyTensorList, time_skipfuzz_EmptyTensorList)
     print("A12-time EmptyTensorList: ", 1 - estimate_time_EmptyTensorList)
@@ -212,6 +224,19 @@ if __name__ == '__main__':
 
     estimate_time_Unbatch, magnitude_time_Unbatch= VD_A(time_skipfuzz_Unbatch_pycond, time_skipfuzz_Unbatch)
     print("A12-time Unbatch: ", 1 - estimate_time_Unbatch)
+
+    estimate_time_StagePeek, magnitude_time_StagePeek= VD_A(time_skipfuzz_StagePeek_pycond, time_skipfuzz_StagePeek)
+    print("A12-time StagePeek: ", 1 - estimate_time_StagePeek)
+
+    estimate_time_UnbatchGrad, magnitude_time_UnbatchGrad= VD_A(time_skipfuzz_UnbatchGrad_pycond, time_skipfuzz_UnbatchGrad)
+    print("A12-time UnbatchGrad: ", 1 - estimate_time_UnbatchGrad)
+
+    estimate_time_UnsortedSegmentJoin, magnitude_time_UnsortedSegmentJoin= VD_A(time_skipfuzz_UnsortedSegmentJoin_pycond, time_skipfuzz_UnsortedSegmentJoin)
+    print("A12-time UnsortedSegmentJoin: ", 1 - estimate_time_UnsortedSegmentJoin)
+
+    estimate_time_PlaceholderWithDefault, magnitude_time_PlaceholderWithDefault = VD_A(time_skipfuzz_PlaceholderWithDefault_pycond, time_skipfuzz_PlaceholderWithDefault)
+    print("A12-time PlaceholderWithDefault: ", 1 - estimate_time_PlaceholderWithDefault)
+
 
     print("scatter: ",ss.mannwhitneyu(x = time_skipfuzz_go_bb_ns_scatter, y = time_skipfuzz_scatter, alternative='less'))
     print("Concat: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_concat, y = time_skipfuzz_concat, alternative='less'))
@@ -223,10 +248,19 @@ if __name__ == '__main__':
     print("poisson: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_poission, y = time_skipfuzz_poisson, alternative='greater'))
     print("broadcast: ",ss.mannwhitneyu(x = time_skipfuzz_go_ninv_broadcast, y = time_skipfuzz_broadcast, alternative='less'))
     print("tensor list resize: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_tensorlistresize, y = time_skipfuzz_tensorlistresize, alternative='less'))
-    print("tensor UnsortedSegmentJoin: ",ss.mannwhitneyu(x = time_skipfuzz_go_bb_max_UnsortedSegmentJoin, y = time_skipfuzz_UnsortedSegmentJoin, alternative='less'))
+    #print("tensor UnsortedSegmentJoin: ",ss.mannwhitneyu(x = time_skipfuzz_go_bb_max_UnsortedSegmentJoin, y = time_skipfuzz_UnsortedSegmentJoin, alternative='less'))
     print("tensor EmptyTensorList: ",ss.mannwhitneyu(x = time_skipfuzz_go_bb_ns_EmptyTensorList, y = time_skipfuzz_EmptyTensorList, alternative='less'))
     print("tensor SparseMatrixNNZ: ",ss.mannwhitneyu(x = time_skipfuzz_go_bb_max_SparseMatrixNNZ, y = time_skipfuzz_SparseMatrixNNZ, alternative='less'))
-    print("tensor Unbatch: ",ss.mannwhitneyu(x = time_skipfuzz_Unbatch_pycond, y = time_skipfuzz_Unbatch, alternative='greater'))
+    print("tensor Unbatch: ",ss.mannwhitneyu(x = time_skipfuzz_Unbatch_pycond, y = time_skipfuzz_Unbatch, alternative='less'))
+    print("tensor StagePeek: ",ss.mannwhitneyu(x = time_skipfuzz_StagePeek_pycond, y = time_skipfuzz_StagePeek, alternative='greater'))
+    print("tensor UnbatchGrad: ",ss.mannwhitneyu(x = time_skipfuzz_UnbatchGrad_pycond, y = time_skipfuzz_UnbatchGrad, alternative='less'))
+    print("tensor UnsortedSegmentJoin: ",ss.mannwhitneyu(x = time_skipfuzz_UnsortedSegmentJoin_pycond, y = time_skipfuzz_UnsortedSegmentJoin, alternative='less'))
+    print("tensor PlaceholderWithDefault: ",ss.mannwhitneyu(x = time_skipfuzz_PlaceholderWithDefault_pycond, y = time_skipfuzz_PlaceholderWithDefault, alternative='greater'))
+
 
     print("New: ", np.mean(time_skipfuzz_Unbatch_pycond))
     print("ori: ", np.mean(time_skipfuzz_Unbatch))
+
+    
+
+    

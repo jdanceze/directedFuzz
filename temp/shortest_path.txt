@@ -1,1 +1,1 @@
-['tensorflow::UnsortedSegmentJoinOp::Compute', 'tensorflow::anonymous_namespace\\{unsorted_segment_join_op::cc\\}::GetOutputShape', 'tensorflow::TensorShapeBase::AddDim']
+['tensorflow::EmptyTensorList::Compute', 'tensorflow::TensorShapeFromTensor', 'tensorflow::PartialTensorShape::MakePartialShape']

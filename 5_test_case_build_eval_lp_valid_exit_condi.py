@@ -27,7 +27,7 @@ final_time = -1
 num_crashes = 0
 last_crash_index = -1
 
-NUM_TESTS_PER_FUNC = 150000
+NUM_TESTS_PER_FUNC = 10
 
 target_function = "tf.raw_ops.PyFunc" + "("
 
@@ -623,7 +623,7 @@ def add_to_queues(history, inferred_queue, solution_queue, target_arg, target_fu
 
 
 def type_finder_1(functions_to_sigs, target_function, undominated_invariant_sets, index):
-    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int'), 'memory_limit': ('int'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int', 'int8', 'int16', 'int32', 'int64'), 'memory_limit': ('int', 'int8', 'int16', 'int32', 'int64'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
     
     if (list(functions_to_sigs[target_function].keys())[index] in spec_type_for_arguement):
         target_invariant_set_for_arg = random.choice(undominated_invariant_sets)
@@ -635,7 +635,7 @@ def type_finder_1(functions_to_sigs, target_function, undominated_invariant_sets
     return target_invariant_set_for_arg, target_type_for_arg
 
 def type_finder_2(functions_to_sigs, target_function, global_name_to_invs, arg_name, index):
-    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int'), 'memory_limit': ('int'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int', 'int8', 'int16', 'int32', 'int64'), 'memory_limit': ('int', 'int8', 'int16', 'int32', 'int64'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
     
     if (list(functions_to_sigs[target_function].keys())[index] in spec_type_for_arguement):
         target_invariant_set_for_arg = random.choice(global_name_to_invs[arg_name])
@@ -647,7 +647,7 @@ def type_finder_2(functions_to_sigs, target_function, global_name_to_invs, arg_n
     return target_invariant_set_for_arg, target_type_for_arg
 
 def type_finder_3(functions_to_sigs, target_function, rand_target, target_arg):
-    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int'), 'memory_limit': ('int'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int', 'int8', 'int16', 'int32', 'int64'), 'memory_limit': ('int', 'int8', 'int16', 'int32', 'int64'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
     
     if (list(functions_to_sigs[target_function].keys())[target_arg] in spec_type_for_arguement):
         target_invariant_set_for_arg = int(rand_target)
@@ -659,7 +659,7 @@ def type_finder_3(functions_to_sigs, target_function, rand_target, target_arg):
 
 
 def type_finder_4(functions_to_sigs, target_function, target_arg, selected_invset):
-    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int'), 'memory_limit': ('int'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int', 'int8', 'int16', 'int32', 'int64'), 'memory_limit': ('int', 'int8', 'int16', 'int32', 'int64'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
     
     if (list(functions_to_sigs[target_function].keys())[target_arg] in spec_type_for_arguement):
         target_invariant_set_for_arg = selected_invset
@@ -671,7 +671,7 @@ def type_finder_4(functions_to_sigs, target_function, target_arg, selected_invse
     return target_invariant_set_for_arg, target_type_for_arg
 
 def type_finder_5(functions_to_sigs, target_function, target_arg, invset):
-    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int'), 'memory_limit': ('int'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int', 'int8', 'int16', 'int32', 'int64'), 'memory_limit': ('int', 'int8', 'int16', 'int32', 'int64'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
     
     if (list(functions_to_sigs[target_function].keys())[target_arg] in spec_type_for_arguement):
         target_invariant_set_for_arg = int(invset)
@@ -772,7 +772,7 @@ def get_rules(target_function, functions_to_sigs, target_arg,
                     #     print("errorsssssssssss")
                     #     #target_invariant_set_for_arg[i] = 9929999999
                     #     target_invariant_set_for_arg[i] =  random.choice(undominated_invariant_sets)
-                    #     target_type_for_arg[i] = ('int')
+                    #     target_type_for_arg[i] = ('int', 'int8', 'int16', 'int32', 'int64')
                     # elif(list(functions_to_sigs[target_function].keys())[i]=='container' or list(functions_to_sigs[target_function].keys())[i]=='shared_name'):
                     #     print("errorsssssssssss")
                     #     #target_invariant_set_for_arg[i] = 9939999999
@@ -1006,7 +1006,7 @@ def read_typedb_cached_file_with_id():
 
                         if len(way.strip()) > 0:
                             # if the `way` does not include any function call or attribtue access and not a primitive type, it's likely to be bogus
-                            if '(' in way or '.' in way or matched_type in ['float', 'bytes', 'int', 'uint8', 'int16', 'int64' 'uint32',
+                            if '(' in way or '.' in way or matched_type in ['float', 'bytes', 'int', 'uint8', 'int16', 'int64', 'uint32',
                                                                             'uint64', 'set', 'tuple', 'int32', 'int8', 'ndarray',
                                                                             'float64', 'float32', 'bool', 'bool_', 'Tensor', 'str', 'list', 'EagerTensor', 'RaggedTensor', 'RaggedTensorDynamicShape',
                                                                             'RaggedTensorValue']:
@@ -1264,7 +1264,7 @@ def create_one_test_and_run(target_function, all_functions,
             start_time = time.time()
             # print('receiving', start_time)
             while data is None or not data.endswith('rann'):
-                s.settimeout(15)
+                s.settimeout(60)
                 data_raw = s.recv(1024)
                 try:
                     data += data_raw.decode('utf-8')
@@ -1281,9 +1281,9 @@ def create_one_test_and_run(target_function, all_functions,
                 #     print('[test builder] after receiving, current message too long,  recv len', len(data_raw))
                 # print('randstr', ''.join(random.choices(string.ascii_uppercase + string.digits, k=3)), time_elapsed)
 
-                if time_elapsed > 15:
+                if time_elapsed > 60:
                     print('too much time elapsed, but has data_raw=', data_raw)
-                if time_elapsed > 15 and len(data_raw) == 0:
+                if time_elapsed > 60 and len(data_raw) == 0:
                     print('receiving: too much time elapsed', end_time)
                     print('too much time elasped', time_elapsed)
                     data = 'Server down!'

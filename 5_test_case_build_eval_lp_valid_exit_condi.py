@@ -27,7 +27,7 @@ final_time = -1
 num_crashes = 0
 last_crash_index = -1
 
-NUM_TESTS_PER_FUNC = 10
+NUM_TESTS_PER_FUNC = 1000000
 
 target_function = "tf.raw_ops.PyFunc" + "("
 
@@ -1006,7 +1006,7 @@ def read_typedb_cached_file_with_id():
 
                         if len(way.strip()) > 0:
                             # if the `way` does not include any function call or attribtue access and not a primitive type, it's likely to be bogus
-                            if '(' in way or '.' in way or matched_type in ['float', 'bytes', 'int', 'uint8', 'int16', 'int64', 'uint32',
+                            if '(' in way or '.' in way or matched_type in ['float', 'bytes', 'int', 'uint8', 'int16', 'int64', 'uint32', 'TensorShape'
                                                                             'uint64', 'set', 'tuple', 'int32', 'int8', 'ndarray',
                                                                             'float64', 'float32', 'bool', 'bool_', 'Tensor', 'str', 'list', 'EagerTensor', 'RaggedTensor', 'RaggedTensorDynamicShape',
                                                                             'RaggedTensorValue']:

@@ -6,4 +6,4 @@
 /tensorflow_src/tensorflow/core/kernels/sparse/sparse_matrix.h
 /tensorflow_src/tensorflow/core/framework/tensor.h
 /tensorflow_src/tensorflow/core/framework/tensor.cc
-/tensorflow/core/kernels/sparse_dense_binary_op_shared.cc
+/tensorflow_src/tensorflow/core/kernels/sparse_dense_binary_op_shared.cc

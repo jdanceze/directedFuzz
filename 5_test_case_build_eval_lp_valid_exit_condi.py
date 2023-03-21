@@ -31,7 +31,13 @@ NUM_TESTS_PER_FUNC = 1000000
 SWITCH_TO_INVALID = 1000
 
 target_function = "tf.raw_ops.PyFunc" + "("
-TARGET_ARG = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int', 'int8', 'int16', 'int32', 'int64'), 'memory_limit': ('int', 'int8', 'int16', 'int32', 'int64'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+#TARGET_ARG = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int', 'int8', 'int16', 'int32', 'int64'), 'memory_limit': ('int', 'int8', 'int16', 'int32', 'int64'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+
+with open('./temp/type_dict.txt', 'r') as f:
+    dict_str = f.read()
+
+TARGET_ARG = eval(dict_str)
+
 
 with open('one_list.json') as f:
         data = json.load(f)
@@ -1011,6 +1017,7 @@ def read_typedb_cached_file_with_id():
                             if '(' in way or '.' in way or matched_type in ['float', 'bytes', 'int', 'uint8', 'int16', 'int64', 'uint32', 'TensorShape',
                                                                             'uint64', 'set', 'tuple', 'int32', 'int8', 'ndarray',
                                                                             'float64', 'float32', 'bool', 'bool_', 'Tensor', 'str', 'list', 'EagerTensor', 'RaggedTensor', 'RaggedTensorDynamicShape',
+                                                                            'bytes_', 'dict',
                                                                             'RaggedTensorValue']:
 
                                 # the last '')'' can be removed since it matches INV_EXTRACTION's opening bracket

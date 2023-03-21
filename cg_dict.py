@@ -60,7 +60,7 @@ if __name__ == '__main__':
     
     callgraphs = dict(result)
 
-    with open('./merged_cg/merged_callgraphs.json', 'w') as fp:
+    with open('./temp/callgraphs_dict.json', 'w') as fp:
         json.dump(callgraphs, fp)
 
     end_time = time.time()

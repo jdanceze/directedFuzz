@@ -94,6 +94,7 @@ def VD_A_DF(data, val_col: str = None, group_col: str = None, sort=True):
 if __name__ == '__main__':
 
 
+
     time_skipfuzz_go_scatter = [230,181,178,172,178,176,180,176,173,172,172,167,173,173,177,186,173,3600,166,172]
     time_skipfuzz_scatter = [176,182,172,179,176,172,171,172,168,179,177,172,174,173,172,182,179,174,174,175]
     time_skipfuzz_go_ninv_scatter = [167,171,172,172,181,175,172,171,173,173,181,181,173,172,170,172,179,173,181,175]
@@ -136,6 +137,8 @@ if __name__ == '__main__':
     time_skipfuzz_go_bb_maxall_pyfunc = [106, 81, 3600, 89, 97, 3600, 3600, 82, 93, 76, 140, 93, 94, 3600, 3600, 3600, 168, 109, 109, 3600]
     time_skipfuzz_go_bb_ns_pyfunc = [80, 146, 143, 97, 102, 101, 85, 81, 138, 84, 82, 72, 114, 104, 100, 73, 77, 117, 118, 86]
     time_skipfuzz_pyfunc_pycond = [79, 67, 73, 73, 75, 72, 75, 70, 72, 70, 77, 93, 68, 68, 68, 74, 84, 70, 68, 81]
+    time_skipfuzz_pyfunc_pycond_1000 = [73, 69, 96, 69, 69, 75, 67, 68, 69, 68, 68, 68, 72, 77, 72, 67, 69, 77, 80, 90]
+    time_skipfuzz_pyfunc_pycond_2000 = [80, 72, 68, 69, 69, 75, 72, 68, 92, 74, 74, 71, 68, 69, 74, 69, 129, 72, 68, 71]
 
     time_skipfuzz_go_outer = [108,86,103,84,101,114,103,111,74,90,90,90,91,90,71,92,71,91,72,88]
     time_skipfuzz_outer = [92,72,96,90,89,90,90,90,70,90,88,89,73,89,90,88,70,89,93,90]
@@ -198,7 +201,7 @@ if __name__ == '__main__':
     estimate_time_composite, magnitude_time_composite = VD_A(time_skipfuzz_composite_pycond, time_skipfuzz_composite)
     print("A12-time composite: ", 1 - estimate_time_composite)
 
-    estimate_time_pyfunc, magnitude_time_pyfunc = VD_A(time_skipfuzz_pyfunc_pycond, time_skipfuzz_pyfunc)
+    estimate_time_pyfunc, magnitude_time_pyfunc = VD_A(time_skipfuzz_pyfunc_pycond_1000, time_skipfuzz_pyfunc_pycond_2000)
     print("A12-time pyfunc: ", 1 - estimate_time_pyfunc)
 
     estimate_time_outer, magnitude_time_outer = VD_A(time_skipfuzz_go_ns_outer, time_skipfuzz_outer)
@@ -243,7 +246,7 @@ if __name__ == '__main__':
     print("extract: ",ss.mannwhitneyu(x = time_skipfuzz_extract_pycond_149, y = time_skipfuzz_extract_149, alternative='greater'))
     print("sobol: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_sobol, y = time_skipfuzz_sobol, alternative='less'))
     print("composite: ",ss.mannwhitneyu(x = time_skipfuzz_composite_pycond, y = time_skipfuzz_composite, alternative='less'))
-    print("pyfunc: ",ss.mannwhitneyu(x = time_skipfuzz_pyfunc_pycond, y = time_skipfuzz_pyfunc, alternative='less'))
+    print("pyfunc: ",ss.mannwhitneyu(x = time_skipfuzz_pyfunc_pycond_1000, y = time_skipfuzz_pyfunc_pycond_2000, alternative='less'))
     print("outer: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_outer, y = time_skipfuzz_outer, alternative='less'))
     print("poisson: ",ss.mannwhitneyu(x = time_skipfuzz_go_ns_poission, y = time_skipfuzz_poisson, alternative='greater'))
     print("broadcast: ",ss.mannwhitneyu(x = time_skipfuzz_go_ninv_broadcast, y = time_skipfuzz_broadcast, alternative='less'))
@@ -258,8 +261,17 @@ if __name__ == '__main__':
     print("tensor PlaceholderWithDefault: ",ss.mannwhitneyu(x = time_skipfuzz_PlaceholderWithDefault_pycond, y = time_skipfuzz_PlaceholderWithDefault, alternative='greater'))
 
 
-    print("New: ", np.mean(time_skipfuzz_Unbatch_pycond))
-    print("ori: ", np.mean(time_skipfuzz_Unbatch))
+    print("New: ", np.mean(time_skipfuzz_pyfunc_pycond_1000))
+    print("ori: ", np.mean(time_skipfuzz_pyfunc_pycond_2000))
+    print("==============================")
+    time_new= [346, 377, 189, 600, 600, 339, 106, 114, 129, 259, 140, 108, 204, 237, 92, 598, 118, 293, 600, 600]
+    time_ori = [160, 600, 600, 600, 600, 121, 395, 68, 422, 504, 145, 161, 600, 600, 257, 115, 89, 240, 309, 361]
+    estimate_time, magnitude_time = VD_A(time_new, time_ori)
+    print("A12-time: ", 1 - estimate_time)
+    print("p-time: ",ss.mannwhitneyu(x = time_new, y = time_ori, alternative='less'))
+    print("new-mean: ", np.mean(time_new))
+    print("ori-mean: ", np.mean(time_ori))
+    print("factor: ", np.mean(time_ori)/np.mean(time_new))
 
     
 

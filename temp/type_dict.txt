@@ -1,0 +1,1 @@
+{'values': ('list', 'tuple', 'ndarray'), 'dtypes': ('list', 'tuple', 'ndarray'), 'container': ('str', 'bytes'), 'shared_name': ('str', 'bytes'), 'name': ('str', 'bytes')}

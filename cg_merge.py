@@ -130,7 +130,7 @@ def get_target_namespace(target_path):
 
 if __name__ == '__main__':
     
-    with open('./merged_cg/merged_callgraphs.json') as json_file:
+    with open('./temp/callgraphs_dict.json') as json_file:
         callgraphs = json.load(json_file)
     
     target_namespace = get_target_namespace("./temp/target_kernel_class.txt")

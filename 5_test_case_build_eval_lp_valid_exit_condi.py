@@ -28,8 +28,10 @@ num_crashes = 0
 last_crash_index = -1
 
 NUM_TESTS_PER_FUNC = 1000000
+SWITCH_TO_INVALID = 1000
 
 target_function = "tf.raw_ops.PyFunc" + "("
+TARGET_ARG = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int', 'int8', 'int16', 'int32', 'int64'), 'memory_limit': ('int', 'int8', 'int16', 'int32', 'int64'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
 
 with open('one_list.json') as f:
         data = json.load(f)
@@ -278,7 +280,7 @@ def create_one_call(API_name, functions_to_sigs,
                 selected_way_ids[arg_id] = select_way_from_invset(API_name, arg_id,invariant_sets[rand_invariant_set])
                 print("Target typeeeeeeeee: ", target_type_for_arg[arg_id])
                 type_list_for_arg = target_type_for_arg[arg_id]
-                if 'NOTFOUND' not in type_list_for_arg and 'ANY' not in type_list_for_arg:
+                if 'NOTFOUND' not in type_list_for_arg and 'ANY' not in type_list_for_arg and test_num <= SWITCH_TO_INVALID:
                     for i in type_list_for_arg:
                         #type_ways = values_store_by_type[i]
                         if type_dict[str(selected_way_ids[arg_id])] == i:
@@ -321,7 +323,7 @@ def create_one_call(API_name, functions_to_sigs,
                     selected_way_ids[arg_id] = sampled_matching_way
                     print("Target typeeeeeeeee: ", target_type_for_arg[arg_id])
                     type_list_for_arg = target_type_for_arg[arg_id]
-                    if 'NOTFOUND' not in type_list_for_arg and 'ANY' not in type_list_for_arg:
+                    if 'NOTFOUND' not in type_list_for_arg and 'ANY' not in type_list_for_arg  and test_num <= SWITCH_TO_INVALID:
                         for i in type_list_for_arg:
                             #type_ways = values_store_by_type[i]
                             if type_dict[str(selected_way_ids[arg_id])] == i:
@@ -340,7 +342,7 @@ def create_one_call(API_name, functions_to_sigs,
                 selected_way_ids[arg_id] = select_way_from_invset(API_name, arg_id, rand_invariant_set)
                 print("Target typeeeeeeeee: ", target_type_for_arg[arg_id])
                 type_list_for_arg = target_type_for_arg[arg_id]
-                if 'NOTFOUND' not in type_list_for_arg and 'ANY' not in type_list_for_arg:
+                if 'NOTFOUND' not in type_list_for_arg and 'ANY' not in type_list_for_arg  and test_num <= SWITCH_TO_INVALID:
                     for i in type_list_for_arg:
                         #type_ways = values_store_by_type[i]
                         if type_dict[str(selected_way_ids[arg_id])] == i:
@@ -623,7 +625,7 @@ def add_to_queues(history, inferred_queue, solution_queue, target_arg, target_fu
 
 
 def type_finder_1(functions_to_sigs, target_function, undominated_invariant_sets, index):
-    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int', 'int8', 'int16', 'int32', 'int64'), 'memory_limit': ('int', 'int8', 'int16', 'int32', 'int64'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+    spec_type_for_arguement = TARGET_ARG
     
     if (list(functions_to_sigs[target_function].keys())[index] in spec_type_for_arguement):
         target_invariant_set_for_arg = random.choice(undominated_invariant_sets)
@@ -635,7 +637,7 @@ def type_finder_1(functions_to_sigs, target_function, undominated_invariant_sets
     return target_invariant_set_for_arg, target_type_for_arg
 
 def type_finder_2(functions_to_sigs, target_function, global_name_to_invs, arg_name, index):
-    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int', 'int8', 'int16', 'int32', 'int64'), 'memory_limit': ('int', 'int8', 'int16', 'int32', 'int64'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+    spec_type_for_arguement = TARGET_ARG
     
     if (list(functions_to_sigs[target_function].keys())[index] in spec_type_for_arguement):
         target_invariant_set_for_arg = random.choice(global_name_to_invs[arg_name])
@@ -647,7 +649,7 @@ def type_finder_2(functions_to_sigs, target_function, global_name_to_invs, arg_n
     return target_invariant_set_for_arg, target_type_for_arg
 
 def type_finder_3(functions_to_sigs, target_function, rand_target, target_arg):
-    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int', 'int8', 'int16', 'int32', 'int64'), 'memory_limit': ('int', 'int8', 'int16', 'int32', 'int64'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+    spec_type_for_arguement = TARGET_ARG
     
     if (list(functions_to_sigs[target_function].keys())[target_arg] in spec_type_for_arguement):
         target_invariant_set_for_arg = int(rand_target)
@@ -659,7 +661,7 @@ def type_finder_3(functions_to_sigs, target_function, rand_target, target_arg):
 
 
 def type_finder_4(functions_to_sigs, target_function, target_arg, selected_invset):
-    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int', 'int8', 'int16', 'int32', 'int64'), 'memory_limit': ('int', 'int8', 'int16', 'int32', 'int64'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+    spec_type_for_arguement = TARGET_ARG
     
     if (list(functions_to_sigs[target_function].keys())[target_arg] in spec_type_for_arguement):
         target_invariant_set_for_arg = selected_invset
@@ -671,7 +673,7 @@ def type_finder_4(functions_to_sigs, target_function, target_arg, selected_invse
     return target_invariant_set_for_arg, target_type_for_arg
 
 def type_finder_5(functions_to_sigs, target_function, target_arg, invset):
-    spec_type_for_arguement = {'dtypes':('list', 'tuple', 'ndarray'), 'capacity': ('int', 'int8', 'int16', 'int32', 'int64'), 'memory_limit': ('int', 'int8', 'int16', 'int32', 'int64'), 'container':('str', 'bytes'), 'shared_name':('str', 'bytes')}
+    spec_type_for_arguement = TARGET_ARG
     
     if (list(functions_to_sigs[target_function].keys())[target_arg] in spec_type_for_arguement):
         target_invariant_set_for_arg = int(invset)
@@ -845,7 +847,7 @@ def get_rules(target_function, functions_to_sigs, target_arg,
         #     target_invariant_set_for_arg[target_arg] = int(rand_target)
         #     target_type_for_arg[i] = ('NOTFOUND')
         
-        target_invariant_set_for_arg[target_arg], target_type_for_arg[i] = type_finder_3(functions_to_sigs, target_function, rand_target, target_arg)
+        target_invariant_set_for_arg[target_arg], target_type_for_arg[target_arg] = type_finder_3(functions_to_sigs, target_function, rand_target, target_arg)
 
         return target_invariant_set_for_arg, target_type_for_arg
     else:
@@ -877,7 +879,7 @@ def get_rules(target_function, functions_to_sigs, target_arg,
             #     target_invariant_set_for_arg[target_arg] = selected_invset
             #     target_type_for_arg[i] = ('NOTFOUND')
             
-            target_invariant_set_for_arg[target_arg], target_type_for_arg[i] = type_finder_4(functions_to_sigs, target_function, target_arg, selected_invset)
+            target_invariant_set_for_arg[target_arg], target_type_for_arg[target_arg] = type_finder_4(functions_to_sigs, target_function, target_arg, selected_invset)
             random_or_solved_choices[target_arg].append('perturb')
             return target_invariant_set_for_arg, target_type_for_arg
         else:
@@ -926,7 +928,7 @@ def get_rules(target_function, functions_to_sigs, target_arg,
                 # else: 
                 #     target_invariant_set_for_arg[target_arg] = int(invset)
                 #     target_type_for_arg[i] = ('NOTFOUND')
-                target_invariant_set_for_arg[target_arg], target_type_for_arg[i] = type_finder_5(functions_to_sigs, target_function, target_arg, invset)
+                target_invariant_set_for_arg[target_arg], target_type_for_arg[target_arg] = type_finder_5(functions_to_sigs, target_function, target_arg, invset)
             random_or_solved_choices[target_arg].append('solution')
 
             return target_invariant_set_for_arg, target_type_for_arg
@@ -1006,7 +1008,7 @@ def read_typedb_cached_file_with_id():
 
                         if len(way.strip()) > 0:
                             # if the `way` does not include any function call or attribtue access and not a primitive type, it's likely to be bogus
-                            if '(' in way or '.' in way or matched_type in ['float', 'bytes', 'int', 'uint8', 'int16', 'int64', 'uint32', 'TensorShape'
+                            if '(' in way or '.' in way or matched_type in ['float', 'bytes', 'int', 'uint8', 'int16', 'int64', 'uint32', 'TensorShape',
                                                                             'uint64', 'set', 'tuple', 'int32', 'int8', 'ndarray',
                                                                             'float64', 'float32', 'bool', 'bool_', 'Tensor', 'str', 'list', 'EagerTensor', 'RaggedTensor', 'RaggedTensorDynamicShape',
                                                                             'RaggedTensorValue']:

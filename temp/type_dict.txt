@@ -1,1 +1,1 @@
-{'metadata': ('str', 'bytes', 'bytes_'), 'Tcomponents': ('list', 'tuple', 'ndarray')}
+{'validate_indices': ('bool', 'bool_')}

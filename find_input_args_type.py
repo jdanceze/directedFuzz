@@ -56,12 +56,30 @@ def sub_kw(src_text, framework):
             continue
         return anno_map[anls[category]][0]
     
+def extract_function(file_path, function_name, output_file_path):
+    with open(file_path) as f:
+        lines = f.readlines()
+
+    result = []
+    result.append('import tensorflow as tf\n')
+    for i in range(len(lines)):
+        if function_name in lines[i]:
+            for j in range(i, len(lines)):
+                if "=" in lines[j]:
+                    break
+                result.append(lines[j])
+            break
+    result.append('=========')
+    with open(output_file_path, "w") as f:
+        f.write("".join(result))
+
 
 if __name__ == '__main__':
     type_dict = {}
     #FUNC_NAME = "tf.raw_ops.MapStage"
     FUNC_NAME = sys.argv[1]
     print(FUNC_NAME)
+    extract_function("./all_functions.txt", FUNC_NAME, "./one_func.txt")
     print("=======parsed_docstring========")
     parsed_docstring = inspect.getdoc(eval(FUNC_NAME))
     print(parsed_docstring)
@@ -88,12 +106,8 @@ if __name__ == '__main__':
                     type_dict[arg] = type_map[sub_kw(arg_description, 'tensorflow')]
             #print("type: ", sub_kw(arg_description, 'tensorflow'))
             print(type_dict)
+            print()
 
     with open('./temp/type_dict.txt', 'w') as file:
         file.write(str(type_dict))
 
-# tf.raw_ops.MapStage
-# tf.compat.v1.extract_volume_patches
-#tf.raw_ops.SparseCross
-# tf.raw_ops.PyFunc
-#tf.raw_ops.UnbatchGrad

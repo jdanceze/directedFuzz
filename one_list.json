@@ -1,0 +1,9 @@
+[
+    {
+        "function": "tf.raw_ops.PyFunc",
+        "TARGET_API_LIST": "/tensorflow_src/tensorflow/one_func.txt",
+        "READ_DIRECTORY": "/fileout_ExtractVolumePatches",
+        "TARGET_FINAL_FILE_NAME": "Final",
+        "FINAL_DIRECTORY_OUT": "/i_final_v"
+    }
+]

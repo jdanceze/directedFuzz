@@ -1,0 +1,45 @@
+
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/control_flow_ops.cc,Abort,AbortOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/cwise_op_abs.cc,Abs,UnaryOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/compiler/tf2xla/kernels/unary_ops.cc,Abs,MlirXlaOpKernel
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/conditional_accumulator_op.cc,AccumulatorApplyGradient,AccumulatorApplyGradientOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/conditional_accumulator_base_op.cc,AccumulatorNumAccumulated,AccumulatorNumAccumulatedOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/conditional_accumulator_base_op.cc,AccumulatorSetGlobalStep,AccumulatorSetGlobalStepOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/conditional_accumulator_op.cc,AccumulatorTakeGradient,AccumulatorTakeGradientOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/cwise_op_add_1.cc,Add,BinaryOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/common_runtime/placer_test.cc,Add,DummyOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/common_runtime/placer_test 2.cc,Add,DummyOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/grappler/optimizers/generic_layout_optimizer_transposer_test.cc,Add,a
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/grappler/optimizers/graph_optimizer_stage_test.cc,Add,ParseNodeNameAndScopeInScope
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/grappler/optimizers/arithmetic_optimizer_test.cc,Add,p
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/compiler/tf2xla/xla_op_registry.h,Add,AddOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/sparse_tensors_map_ops.cc,AddManySparseToTensorsMap,AddManySparseToTensorsMapOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/aggregate_ops.cc,AddN,AddNOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/compiler/tf2xla/kernels/aggregate_ops.cc,AddN,AddNOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/sparse_tensors_map_ops.cc,AddSparseToTensorsMap,AddSparseToTensorsMapOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/cwise_op_add_1.cc,AddV2,BinaryOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/image/adjust_contrast_op.cc,AdjustContrast,AdjustContrastOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/image/adjust_contrast_op.cc,AdjustContrastv2,AdjustContrastOpv2
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/compiler/tf2xla/kernels/image_ops.cc,AdjustContrastv2,AdjustContrastOpV2
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/image/adjust_hue_op.cc,AdjustHue,AdjustHueOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/compiler/tf2xla/kernels/image_ops.cc,AdjustHue,AdjustHueOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/image/adjust_saturation_op.cc,AdjustSaturation,AdjustSaturationOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/compiler/tf2xla/kernels/image_ops.cc,AdjustSaturation,AdjustSaturationOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/reduction_ops_all.cc,All,ReductionOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/compiler/tf2xla/kernels/reduction_ops.cc,All,AllOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/candidate_sampler_ops_new.cc,AllCandidateSampler,AllCandidateSamplerOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/candidate_sampler_ops.cc,AllCandidateSampler,AllCandidateSamplerOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/tpu/kernels/cross_replica_ops 2.cc,AllToAll,AllToAllOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/tpu/kernels/cross_replica_ops.cc,AllToAll,AllToAllOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/cwise_op_arg.cc,Angle,UnaryOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/lookup_table_op.cc,AnonymousHashTable,AnonymousLookupTableOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/data/iterator_ops.cc,AnonymousIterator,AnonymousIteratorHandleOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/compiler/jit/xla_device_ops.h,AnonymousIterator,AnonymousIteratorHandleOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/compiler/jit/xla_device_ops 2.h,AnonymousIterator,AnonymousIteratorHandleOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/data/iterator_ops.cc,AnonymousIteratorV2,AnonymousIteratorHandleOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/compiler/jit/xla_device_ops.h,AnonymousIteratorV2,AnonymousIteratorHandleOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/compiler/jit/xla_device_ops 2.h,AnonymousIteratorV2,AnonymousIteratorHandleOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/data/iterator_ops.cc,AnonymousIteratorV3,AnonymousIteratorHandleOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/compiler/jit/xla_device_ops.h,AnonymousIteratorV3,AnonymousIteratorHandleOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/compiler/jit/xla_device_ops 2.h,AnonymousIteratorV3,AnonymousIteratorHandleOp
+/Users/jdanceze/Desktop/hub/tensorflow/tensorflow/core/kernels/data/cache_ops.cc,AnonymousMemoryCache,AnonymousMemoryCacheHandleOp

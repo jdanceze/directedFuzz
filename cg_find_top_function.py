@@ -4,7 +4,7 @@ import re
 import os
 
 gen_path = "/opt/homebrew/Caskroom/miniforge/base/lib/python3.10/site-packages/tensorflow/python/"
-target_function_namespace = "tensorflow::Tensor::scalar"
+target_function_namespace = "tensorflow::Variant::get"
 
 def find_keys_with_value(d, value, found_keys=None):
     if found_keys is None:
@@ -30,6 +30,7 @@ if __name__ == '__main__':
     # with open('./temp/top_function.txt', 'w') as f:
     #   #f.write(str(keep_namespace))
     #   f.write(str(result))
+    print("result: ", result)
 
     end_time = time.time()
     print("time: ", end_time - start_time)

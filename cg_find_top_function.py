@@ -4,7 +4,7 @@ import re
 import os
 
 gen_path = "/opt/homebrew/Caskroom/miniforge/base/lib/python3.10/site-packages/tensorflow/python/"
-target_function_namespace = "tensorflow::Variant::get"
+target_function_namespace = "tensorflow::Tensor::CheckIsAlignedAndSingleElement"
 
 def find_keys_with_value(d, value, found_keys=None):
     if found_keys is None:
@@ -23,6 +23,14 @@ if __name__ == '__main__':
     class_list = []
     interface_list = set()
     function_interface_list = []
+    with open('./temp/depth_1_dict.json') as file:
+        contents = file.read()
+
+    contents = contents.replace('\\', '')
+
+    with open('./temp/depth_1_dict.json', 'w') as file:
+        file.write(contents)
+
     with open('./temp/depth_1_dict.json') as json_file:
         dictionary = json.load(json_file)
 

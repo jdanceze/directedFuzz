@@ -16,3 +16,4 @@ tf.raw_ops.TensorListScatterV2()
 
 tf.experimental.numpy.outer(a=6,b=value)
 tf.keras.losses.poisson
+tf.quantization.fake_quant_with_min_max_vars_gradient

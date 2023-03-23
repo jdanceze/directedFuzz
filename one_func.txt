@@ -1,8 +1,7 @@
 import tensorflow as tf
-tf.raw_ops.SetSize
-set_indices:Any
-set_values:Any
-set_shape:Any
-validate_indices:Any
+tf.raw_ops.LookupTableFindV2
+table_handle:Any
+keys:Any
+default_value:Any
 name:Any
 =========

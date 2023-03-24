@@ -18,6 +18,13 @@ def find_keys_with_value(d, value, found_keys=None):
             found_keys = find_keys_with_value(v, value, found_keys)
     return found_keys
 
+found_keys = []
+def find_keys_with_value_1_layer(d, value):
+    for k, v in d.items():
+        if value in v and k not in found_keys:
+            found_keys.append(k)
+    return found_keys
+
 if __name__ == '__main__':
     start_time = time.time()
     class_list = []
@@ -34,7 +41,7 @@ if __name__ == '__main__':
     with open('./temp/depth_1_dict.json') as json_file:
         dictionary = json.load(json_file)
 
-    result = find_keys_with_value(dictionary, target_function_namespace)
+    result = find_keys_with_value_1_layer(dictionary, target_function_namespace)
     # with open('./temp/top_function.txt', 'w') as f:
     #   #f.write(str(keep_namespace))
     #   f.write(str(result))
@@ -43,7 +50,6 @@ if __name__ == '__main__':
     end_time = time.time()
     print("time: ", end_time - start_time)
 
-    #result = ['tensorflow::anonymous_namespace{example_proto_helper_test::cc}::SingleExampleProtoToTensorsTest::SetUp', 'tensorflow::BroadcastToOp::Compute', 'tensorflow::functor::BincountFunctor&lt; CPUDevice, Tidx, T, false &gt;::Compute', 'tensorflow::QuantizedRelu6Op::Compute', 'tensorflow::PriorityQueue::TryEnqueueMany', 'tensorflow::barrier::Barrier::TryInsertMany', 'tensorflow::InTopK', 'tensorflow::anonymous_namespace{resource_ops_test::cc}::MockHandleCreationOpKernel::Compute', 'tensorflow::XRTCompileOp::Compute', 'tensorflow::SwitchOp::Compute', 'tensorflow::data::IteratorFromStringHandleOp::Compute', 'tensorflow::CSRZerosOp::Compute', 'tensorflow::graph_transforms::QuantizeWeights', 'tensorflow::graph_transforms::QuantizeWeightsTest::TestQuantizeWeights', 'tensorflow::anonymous_namespace{restore_v2_op_test::cc}::RestoreV2OpTest::RunTest', 'tensorflow::WriteHistogramSummaryOp::Compute', 'tensorflow::SaveV2::Compute', 'tensorflow::OneHot', 'tensorflow::fuzzing::FuzzOneHot::BuildGraph', 'tensorflow::AdjustContrastOp::Compute', 'tensorflow::InitializeTableFromTextFileOp::Compute', 'tensorflow::grappler::ConstantFolding::SimplifyCase', 'tensorflow::grappler::ConstantFolding::SimplifyNode', 'tensorflow::grappler::ConstantFolding::SimplifyGraph', 'tensorflow::grappler::ConstantFolding::RunOptimizationPass', 'tensorflow::grappler::ConstantFolding::Optimize', 'tensorflow::grappler::anonymous_namespace{constant_folding_test::cc}::ConstantFoldingTest::SimpleNeutralElementTest', 'tensorflow::grappler::anonymous_namespace{constant_folding_test::cc}::ConstantFoldingCastConstTest::ConstantFoldingOptimize', 'tensorflow::grappler::anonymous_namespace{constant_folding_test::cc}::ConstantFoldingTest::PaddingWithZeroSize', 'tensorflow::grappler::anonymous_namespace{constant_folding_test::cc}::ConstantFoldingTest::MulConvPushDownTest', 'tensorflow::anonymous_namespace{functional_ops::cc}::ForOp::State::State']
     result = [x for x in result if "Compute" in x]
     
     print(result)
@@ -102,7 +108,7 @@ if __name__ == '__main__':
                                         function_interface_list.append(target_register_op)
                                         break
                                     #print(f"File: {file_path}, Line {line_number + 1}: {line}")
-    with open('./temp/function_for_test.txt', 'w') as f:
+    with open('./temp/function_for_test_1_layer.txt', 'w') as f:
       #f.write(str(keep_namespace))
       f.write(str(function_interface_list))
     print(len(function_interface_list))

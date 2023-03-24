@@ -39,11 +39,6 @@ def sub_kw(src_text, framework):
 
     normalized_text = src_text
     dtype_ls = read_yaml('./dtype_ls_tf.yaml')[framework]
-    # for pre_re in pre_normalize:
-    #     print("pre_re: ", pre_re)
-    #     #print("ori normalized_text: ", normalized_text)
-    #     normalized_text = re.sub(pre_re, pre_normalize[pre_re], normalized_text, flags=re.IGNORECASE)
-    #     #print("pre normalized_text: ", normalized_text)
 
     for anls in anno_dict:
         category = next(iter(anls))
@@ -69,9 +64,11 @@ def extract_function(file_path, function_name, output_file_path):
                     break
                 result.append(lines[j])
             break
-    result.append('=========')
-    with open(output_file_path, "w") as f:
-        f.write("".join(result))
+    result.append('=========\n')
+    if len(result) > 2:
+        with open(output_file_path, "w") as f:
+        #with open(output_file_path, "a+") as f:
+            f.write("".join(result))
 
 
 if __name__ == '__main__':
@@ -87,7 +84,6 @@ if __name__ == '__main__':
     doc_args_section = parsed_docstring.split("Args:\n")[1]
     #returns_section = parsed_docstring.split("Returns:\n")[1]
     print("===============================")
-    dtype_ls = read_yaml('./dtype_ls_tf.yaml')[ 'tensorflow']
     for pre_re in pre_normalize:
         print("pre_re: ", pre_re)
         #print("ori normalized_text: ", doc_args_section)

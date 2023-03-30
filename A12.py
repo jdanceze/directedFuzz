@@ -93,8 +93,8 @@ def VD_A_DF(data, val_col: str = None, group_col: str = None, sort=True):
 
 if __name__ == '__main__':
 
-    time_new= [346, 377, 189, 600, 600, 339, 106, 114, 129, 259, 140, 108, 204, 237, 92, 598, 118, 293, 600, 600]
-    time_ori = [160, 600, 600, 600, 600, 121, 395, 68, 422, 504, 145, 161, 600, 600, 257, 115, 89, 240, 309, 361]
+    time_ori= [226, 75, 76, 94, 83, 76, 85, 78, 85, 78, 78, 76, 76, 76, 77, 79, 79, 77, 75, 77]
+    time_new = [206, 75, 75, 73, 75, 71, 76, 72, 74, 78, 78, 87, 81, 77, 72, 86, 73, 74, 80, 82]
     estimate_time, magnitude_time = VD_A(time_new, time_ori)
     print("A12-time: ", 1 - estimate_time)
     print("p-time: ",ss.mannwhitneyu(x = time_new, y = time_ori, alternative='less'))

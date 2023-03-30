@@ -16,7 +16,8 @@ anno_dict = [
 pre_normalize ={
     r'floating point': 'float',
     r'floating-point': 'float',
-    r'A list of `Tensor`': 'Tensor',
+    r'A list of `Tensor`': 'tensor',
+    r'`Tensor`': 'tensor',
     # r'data\s+type': 'dtype',
 
 }
@@ -29,9 +30,10 @@ type_map = {
     'string' : ('str', 'bytes', 'bytes_'),
     'bool' : ('bool', 'bool_'),
     'dict' : ('dict'),
-    'dictionary' : ('dict')
-
-
+    'dictionary' : ('dict'),
+    'sparsetensor': ('tensor', 'tensor_t', 'tensor_like', 'tensor_like_t', 'tensor_like_'),
+    'tensors': ('tensor', 'tensor_t', 'tensor_like', 'tensor_like_t', 'tensor_like_'),
+    'tensor': ('tensor', 'tensor_t', 'tensor_like', 'tensor_like_t', 'tensor_like_'),
 }
 
 def sub_kw(src_text, framework):
@@ -103,6 +105,22 @@ if __name__ == '__main__':
             #print("type: ", sub_kw(arg_description, 'tensorflow'))
             print(type_dict)
             print()
+    
+    if(len(type_dict) == 0):
+        print("refind")
+        for arg in args_section:
+            arg_description = doc_args_section.split(arg + ":")[1].split("\n")[0].strip()
+            arg_description = arg_description.split(".")[0].strip()
+            arg_description = arg_description.split(":")[0].strip()
+            if(arg != 'name'):
+                print("argument: ", arg)
+                print("description: ", arg_description)
+                if sub_kw(arg_description, 'tensorflow') != None:
+                    if sub_kw(arg_description, 'tensorflow') in type_map:
+                        type_dict[arg] = type_map[sub_kw(arg_description, 'tensorflow')]
+                #print("type: ", sub_kw(arg_description, 'tensorflow'))
+                print(type_dict)
+                print()
 
     with open('./temp/type_dict.txt', 'w') as file:
         file.write(str(type_dict))

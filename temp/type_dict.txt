@@ -1,1 +1,1 @@
-{}
+{'input': ('tensor', 'tensor_t', 'tensor_like', 'tensor_like_t', 'tensor_like_'), 'shape': ('tensor', 'tensor_t', 'tensor_like', 'tensor_like_t', 'tensor_like_')}

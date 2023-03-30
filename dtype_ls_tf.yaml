@@ -84,6 +84,9 @@ tensorflow:
   - strings
   - string
   - boolean
+  - sparsetensor
+  - tensors
+  - tensor
   tensor_t:
   - tf.sparsetensor
   - tf.tensor

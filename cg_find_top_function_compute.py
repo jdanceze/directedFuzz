@@ -5,8 +5,7 @@ import os
 
 gen_path = "/opt/homebrew/Caskroom/miniforge/base/lib/python3.10/site-packages/tensorflow/python/"
 #target_function_namespace = "tensorflow::anonymous_namespace{py_func::cc}::MakeArgTuple"
-target_function_namespace = "tensorflow::anonymous_namespace{execute::cc}::GetDeviceForInput"
-#target_function_namespace = "tensorflow::Variant::get"
+target_function_namespace = "tensorflow::TensorListScatter::Compute"
 def find_keys_with_value(d, value, found_keys=None):
     if found_keys is None:
         found_keys = []
@@ -20,8 +19,12 @@ def find_keys_with_value(d, value, found_keys=None):
     return found_keys
 
 if __name__ == '__main__':
-    start_time = time.time()
     class_list = []
+    start_time = time.time()
+    target_parts = target_function_namespace.split('::')
+    class_list.append(target_parts[len(target_parts)-2])
+    print("class_list: ", class_list)
+    #class_list = ['TensorArrayReadOp']
     interface_list = set()
     function_interface_list = []
     with open('./temp/depth_1_dict.json') as file:
@@ -45,19 +48,19 @@ if __name__ == '__main__':
     print("time: ", end_time - start_time)
 
     #result = ['tensorflow::anonymous_namespace{example_proto_helper_test::cc}::SingleExampleProtoToTensorsTest::SetUp', 'tensorflow::BroadcastToOp::Compute', 'tensorflow::functor::BincountFunctor&lt; CPUDevice, Tidx, T, false &gt;::Compute', 'tensorflow::QuantizedRelu6Op::Compute', 'tensorflow::PriorityQueue::TryEnqueueMany', 'tensorflow::barrier::Barrier::TryInsertMany', 'tensorflow::InTopK', 'tensorflow::anonymous_namespace{resource_ops_test::cc}::MockHandleCreationOpKernel::Compute', 'tensorflow::XRTCompileOp::Compute', 'tensorflow::SwitchOp::Compute', 'tensorflow::data::IteratorFromStringHandleOp::Compute', 'tensorflow::CSRZerosOp::Compute', 'tensorflow::graph_transforms::QuantizeWeights', 'tensorflow::graph_transforms::QuantizeWeightsTest::TestQuantizeWeights', 'tensorflow::anonymous_namespace{restore_v2_op_test::cc}::RestoreV2OpTest::RunTest', 'tensorflow::WriteHistogramSummaryOp::Compute', 'tensorflow::SaveV2::Compute', 'tensorflow::OneHot', 'tensorflow::fuzzing::FuzzOneHot::BuildGraph', 'tensorflow::AdjustContrastOp::Compute', 'tensorflow::InitializeTableFromTextFileOp::Compute', 'tensorflow::grappler::ConstantFolding::SimplifyCase', 'tensorflow::grappler::ConstantFolding::SimplifyNode', 'tensorflow::grappler::ConstantFolding::SimplifyGraph', 'tensorflow::grappler::ConstantFolding::RunOptimizationPass', 'tensorflow::grappler::ConstantFolding::Optimize', 'tensorflow::grappler::anonymous_namespace{constant_folding_test::cc}::ConstantFoldingTest::SimpleNeutralElementTest', 'tensorflow::grappler::anonymous_namespace{constant_folding_test::cc}::ConstantFoldingCastConstTest::ConstantFoldingOptimize', 'tensorflow::grappler::anonymous_namespace{constant_folding_test::cc}::ConstantFoldingTest::PaddingWithZeroSize', 'tensorflow::grappler::anonymous_namespace{constant_folding_test::cc}::ConstantFoldingTest::MulConvPushDownTest', 'tensorflow::anonymous_namespace{functional_ops::cc}::ForOp::State::State']
-    result = [x for x in result if "Compute" in x]
+    #result = [x for x in result if "Compute" in x]
     
-    print(result)
-    for element in result:
-        print("bef: ", element)
-        element = re.sub(r'\{.*?\}', '', element)
-        print("After: ", element)
-        parts = element.split('::')
-        class_name = parts[len(parts)-2]
-        func_name = parts[len(parts)-1]
-        print(f"class element: {class_name}, function element: {func_name}")
-        class_list.append(class_name)
-        print()
+    # print(result)
+    # for element in result:
+    #     print("bef: ", element)
+    #     element = re.sub(r'\{.*?\}', '', element)
+    #     print("After: ", element)
+    #     parts = element.split('::')
+    #     class_name = parts[len(parts)-2]
+    #     func_name = parts[len(parts)-1]
+    #     print(f"class element: {class_name}, function element: {func_name}")
+    #     class_list.append(class_name)
+    #     print()
 
     print(class_list)
 
@@ -72,7 +75,7 @@ if __name__ == '__main__':
             if class_name_each == class_name:
                 print(f"Found class: {class_name}")
                 interface_list.add(function_name)
-                
+    #interface_list.add('GetOptionsOp')
     print(interface_list)
 
     for function_interface in interface_list:
@@ -103,6 +106,7 @@ if __name__ == '__main__':
                                         function_interface_list.append(target_register_op)
                                         #break
                                     #print(f"File: {file_path}, Line {line_number + 1}: {line}")
+    
     function_interface_list = list(dict.fromkeys(function_interface_list))
     with open('./temp/function_for_test.txt', 'w') as f:
       #f.write(str(keep_namespace))

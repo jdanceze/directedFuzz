@@ -27,11 +27,13 @@ final_time = -1
 num_crashes = 0
 last_crash_index = -1
 
-NUM_TESTS_PER_FUNC = 8000
+NUM_TESTS_PER_FUNC = 1000000
 
-target_function = "tf.raw_ops.TensorListConcat" + "("
+target_function = "tf.quantization.fake_quant_with_min_max_vars_gradient" + "("
 
-with open('list_valid.json') as f:
+# target_function = "tf.raw_ops.EmptyTensorList" + "("
+
+with open('one_list.json') as f:
         data = json.load(f)
         for i in data:
             #clear_read_directory(i["READ_DIRECTORY"])
@@ -1215,10 +1217,10 @@ def create_one_test_and_run(target_function, all_functions,
                 final = True
             os.remove(READ_DIRECTORY+ "/" +file)
 
-        if final:
-            final_crash+=1
-            filename = FINAL_DIRECTORY_OUT + "/"+ str(run_i) + "_final_crash_" + str(test_i) + ".py"
-            shutil.copy(test_file_name, filename)
+        #if final:
+        final_crash+=1
+        filename = FINAL_DIRECTORY_OUT + "/"+ str(run_i) + "_final_crash_" + str(test_i) + ".py"
+        shutil.copy(test_file_name, filename)
         
         outcome = 'crash'
         #outcome = 'invalid'
@@ -1400,12 +1402,12 @@ def create_tests_for_the_target_functions(arguments):
     global first_i
     first_i = -1
 
+    global crazy_count
+    crazy_count = 0
+
     global final_time
 
     global start_time
-
-    global crazy_count
-    crazy_count = 0
 
     run_outcomes = {}
     valid_mappings = {}
@@ -1634,10 +1636,9 @@ def create_tests_for_the_target_functions(arguments):
 
                 target_function_i += 1
                 crazy_count += 1
-                # if crazy_count > 10:
-                #     print('too many crazy exceptions, exiting')
-                #     exit()
-
+                #if crazy_count > 10:
+                    #print('too many crazy exceptions, exiting')
+                    #exit()
             print_final(final_sus, final_crash, final_invalid, first_i, start_time, final_time)
             print_outcomes(run_outcomes[target_function], target_function,
                            'outcomes_' + rand_ident + '_' + target_function + '.txt')

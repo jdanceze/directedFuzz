@@ -1,0 +1,353 @@
+import tensorflow as tf
+tf.compat.v1.io.gfile.remove
+path:Any
+=========
+import tensorflow as tf
+tf.compat.v1.math.acosh
+x:Any
+name:Any
+=========
+import tensorflow as tf
+tf.compat.v1.app.flags.EnumClassFlag.__init__
+name:Any
+default:Any
+help:Any
+enum_class:Any
+short_name:Any
+case_sensitive:Any
+args:Any
+=========
+import tensorflow as tf
+tf.compat.v1.initializers.global_variables
+=========
+import tensorflow as tf
+tf.raw_ops.ReadVariableOp
+resource:Any
+dtype:Any
+name:Any
+=========
+import tensorflow as tf
+tf.compat.v1.keras.metrics.MeanSquaredLogarithmicError.__init__
+name:Any
+dtype:Any
+=========
+import tensorflow as tf
+tf.compat.v1.tanh
+x:Any
+name:Any
+=========
+import tensorflow as tf
+tf.image.per_image_standardization
+image:Any
+=========
+import tensorflow as tf
+tf.raw_ops.SigmoidGrad
+y:Any
+dy:Any
+name:Any
+=========
+import tensorflow as tf
+tf.data.experimental.AutotuneOptions.__init__
+=========
+import tensorflow as tf
+tf.compat.v1.nn.conv3d_backprop_filter
+input:Any
+filter_sizes:Any
+out_backprop:Any
+strides:Any
+padding:Any
+data_format:Any
+dilations:Any
+name:Any
+=========
+import tensorflow as tf
+tf.compat.v1.summary.scalar
+name:Any
+tensor:Any
+collections:Any
+family:Any
+=========
+import tensorflow as tf
+tf.math.reduce_prod
+input_tensor:Any
+axis:Any
+keepdims:Any
+name:Any
+=========
+import tensorflow as tf
+tf.compat.v1.keras.models.load_model
+filepath:Any
+custom_objects:Any
+compile:Any
+options:Any
+=========
+import tensorflow as tf
+tf.compat.v1.recompute_grad
+f:Any
+=========
+import tensorflow as tf
+tf.compat.v1.assert_less_equal
+x:Any
+y:Any
+data:Any
+summarize:Any
+message:Any
+name:Any
+=========
+import tensorflow as tf
+tf.train.load_variable
+ckpt_dir_or_file:Any
+name:Any
+=========
+import tensorflow as tf
+tf.compat.v1.debugging.assert_all_finite
+t:Any
+msg:Any
+name:Any
+x:Any
+message:Any
+=========
+import tensorflow as tf
+tf.keras.preprocessing.image.DirectoryIterator.__init__
+directory:Any
+image_data_generator:Any
+target_size:Any
+color_mode:Any
+classes:Any
+class_mode:Any
+batch_size:Any
+shuffle:Any
+seed:Any
+data_format:Any
+save_to_dir:Any
+save_prefix:Any
+save_format:Any
+follow_links:Any
+subset:Any
+interpolation:Any
+dtype:Any
+=========
+import tensorflow as tf
+tf.compat.v1.keras.losses.kullback_leibler_divergence
+y_true:Any
+y_pred:Any
+=========
+import tensorflow as tf
+tf.import_graph_def
+graph_def:Any
+input_map:Any
+return_elements:Any
+name:Any
+op_dict:Any
+producer_op_list:Any
+=========
+import tensorflow as tf
+tf.raw_ops.BatchFFT2D
+input:Any
+name:Any
+=========
+import tensorflow as tf
+tf.compat.v1.convert_to_tensor_or_sparse_tensor
+value:Any
+dtype:Any
+name:Any
+=========
+import tensorflow as tf
+tf.raw_ops.SamplingDataset
+input_dataset:Any
+rate:Any
+seed:Any
+seed2:Any
+output_types:Any
+output_shapes:Any
+name:Any
+=========
+import tensorflow as tf
+tf.experimental.numpy.append
+arr:Any
+values:Any
+axis:Any
+=========
+import tensorflow as tf
+tf.argmax
+input:Any
+axis:Any
+output_type:Any
+name:Any
+=========
+import tensorflow as tf
+tf.nn.fractional_max_pool
+value:Any
+pooling_ratio:Any
+pseudo_random:Any
+overlapping:Any
+seed:Any
+name:Any
+=========
+import tensorflow as tf
+tf.raw_ops.LoadTPUEmbeddingStochasticGradientDescentParameters
+parameters:Any
+num_shards:Any
+shard_id:Any
+table_id:Any
+table_name:Any
+config:Any
+name:Any
+=========
+import tensorflow as tf
+tf.compat.v1.keras.layers.Convolution1DTranspose.__init__
+filters:Any
+kernel_size:Any
+strides:Any
+padding:Any
+output_padding:Any
+data_format:Any
+dilation_rate:Any
+activation:Any
+use_bias:Any
+kernel_initializer:Any
+bias_initializer:Any
+kernel_regularizer:Any
+bias_regularizer:Any
+activity_regularizer:Any
+kernel_constraint:Any
+bias_constraint:Any
+kwargs:Any
+=========
+import tensorflow as tf
+tf.random.experimental.stateless_fold_in
+seed:Any
+data:Any
+alg:Any
+=========
+import tensorflow as tf
+tf.keras.layers.GlobalAvgPool2D.__init__
+data_format:Any
+keepdims:Any
+kwargs:Any
+=========
+import tensorflow as tf
+tf.keras.preprocessing.image.apply_channel_shift
+x:Any
+intensity:Any
+channel_axis:Any
+=========
+import tensorflow as tf
+tf.errors.InvalidArgumentError.__init__
+node_def:Any
+op:Any
+message:Any
+args:Any
+=========
+import tensorflow as tf
+tf.compat.v1.keras.utils.load_img
+path:Any
+grayscale:Any
+color_mode:Any
+target_size:Any
+interpolation:Any
+=========
+import tensorflow as tf
+tf.experimental.numpy.hypot
+x1:Any
+x2:Any
+=========
+import tensorflow as tf
+tf.raw_ops.PrefetchDataset
+input_dataset:Any
+buffer_size:Any
+output_types:Any
+output_shapes:Any
+slack_period:Any
+legacy_autotune:Any
+buffer_size_min:Any
+metadata:Any
+name:Any
+=========
+import tensorflow as tf
+tf.math.confusion_matrix
+labels:Any
+predictions:Any
+num_classes:Any
+weights:Any
+dtype:Any
+name:Any
+=========
+import tensorflow as tf
+tf.optimizers.Adamax.__init__
+learning_rate:Any
+beta_1:Any
+beta_2:Any
+epsilon:Any
+name:Any
+kwargs:Any
+=========
+import tensorflow as tf
+tf.debugging.enable_traceback_filtering
+=========
+import tensorflow as tf
+tf.compat.v1.strings.join
+inputs:Any
+separator:Any
+name:Any
+=========
+import tensorflow as tf
+tf.compat.v1.config.experimental.tensor_float_32_execution_enabled
+=========
+import tensorflow as tf
+tf.experimental.numpy.finfo
+dtype:Any
+=========
+import tensorflow as tf
+tf.compat.v1.initializers.lecun_normal
+seed:Any
+=========
+import tensorflow as tf
+tf.compat.v1.enable_control_flow_v2
+=========
+import tensorflow as tf
+tf.compat.v1.py_function
+func:Any
+inp:Any
+Tout:Any
+name:Any
+=========
+import tensorflow as tf
+tf.optimizers.schedules.CosineDecay.__init__
+initial_learning_rate:Any
+decay_steps:Any
+alpha:Any
+name:Any
+=========
+import tensorflow as tf
+tf.distribute.ReductionToOneDevice.__init__
+reduce_to_device:Any
+accumulation_fn:Any
+=========
+import tensorflow as tf
+tf.compat.v1.spectral.ifft2d
+input:Any
+name:Any
+=========
+import tensorflow as tf
+tf.nn.softsign
+features:Any
+name:Any
+=========
+import tensorflow as tf
+tf.compat.v1.strings.strip
+input:Any
+name:Any
+=========
+import tensorflow as tf
+tf.raw_ops.Mean
+input:Any
+axis:Any
+keep_dims:Any
+name:Any
+=========
+import tensorflow as tf
+tf.sigmoid
+x:Any
+name:Any
+=========

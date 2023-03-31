@@ -31,9 +31,9 @@ type_map = {
     'bool' : ('bool', 'bool_'),
     'dict' : ('dict'),
     'dictionary' : ('dict'),
-    'sparsetensor': ('tensor', 'tensor_t', 'tensor_like', 'tensor_like_t', 'tensor_like_'),
-    'tensors': ('tensor', 'tensor_t', 'tensor_like', 'tensor_like_t', 'tensor_like_'),
-    'tensor': ('tensor', 'tensor_t', 'tensor_like', 'tensor_like_t', 'tensor_like_'),
+    'sparsetensor': ('Tensor','EagerTensor','Literal', 'RaggedTensor', 'RaggedTensorDynamicShape', 'RaggedTensorValue', 'range', 'SparseTensor','list', 'tuple', 'ndarray','int', 'int8', 'int16', 'int32', 'int64', 'str', 'bytes', 'bytes_'),
+    'tensors': ('Tensor','EagerTensor','Literal', 'RaggedTensor', 'RaggedTensorDynamicShape', 'RaggedTensorValue', 'range', 'SparseTensor','list', 'tuple', 'ndarray','int', 'int8', 'int16', 'int32', 'int64', 'str', 'bytes', 'bytes_'),
+    'tensor': ('Tensor','EagerTensor','Literal', 'RaggedTensor', 'RaggedTensorDynamicShape', 'RaggedTensorValue', 'range', 'SparseTensor','list', 'tuple', 'ndarray','int', 'int8', 'int16', 'int32', 'int64', 'str', 'bytes', 'bytes_'),
 }
 
 def sub_kw(src_text, framework):
@@ -60,7 +60,12 @@ def extract_function(file_path, function_name, output_file_path):
     result = []
     result.append('import tensorflow as tf\n')
     for i in range(len(lines)):
-        if function_name in lines[i]:
+        if function_name == lines[i].strip():
+            # if(function_name!=lines[i]):
+            #     continue
+            print("function_name: ", function_name)
+            print("lines[i]: ", lines[i])
+            print(lines[i])
             for j in range(i, len(lines)):
                 if "=" in lines[j]:
                     break
@@ -99,7 +104,7 @@ if __name__ == '__main__':
         if(arg != 'name'):
             print("argument: ", arg)
             print("description: ", arg_description)
-            if sub_kw(arg_description, 'tensorflow') != None and r'A `Tensor` of' not in arg_description and r'Tensor objects with' not in arg_description:
+            if sub_kw(arg_description, 'tensorflow') != None and r'A `Tensor` of' not in arg_description and r'Tensor objects with' not in arg_description and r'tensor' not in arg_description:
                 if sub_kw(arg_description, 'tensorflow') in type_map:
                     type_dict[arg] = type_map[sub_kw(arg_description, 'tensorflow')]
             #print("type: ", sub_kw(arg_description, 'tensorflow'))

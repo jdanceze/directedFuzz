@@ -9,7 +9,7 @@ def extract_function(file_path, function_name, output_file_path):
     result = []
     result.append('import tensorflow as tf\n')
     for i in range(len(lines)):
-        if function_name in lines[i]:
+        if function_name == lines[i].strip():
             for j in range(i, len(lines)):
                 if "=" in lines[j]:
                     break

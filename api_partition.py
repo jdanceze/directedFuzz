@@ -1,5 +1,5 @@
 input_file = 'all_functions.txt'
-output_base_name = './partition/partition_'
+output_base_name = './partition/'
 delimiter = "========="
 count = 0
 output_index = 0

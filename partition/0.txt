@@ -1,0 +1,37 @@
+import tensorflow as tf
+tf.raw_ops.EagerPyFunc
+input:Any
+token:Any
+Tout:Any
+is_async:Any
+name:Any
+=========
+import tensorflow as tf
+tf.raw_ops.PyFuncStateless
+input:Any
+token:Any
+Tout:Any
+name:Any
+=========
+import tensorflow as tf
+tf.raw_ops.ScatterNdAdd
+ref:Any
+indices:Any
+updates:Any
+use_locking:Any
+name:Any
+=========
+import tensorflow as tf
+tf.raw_ops.TensorListScatterIntoExistingList
+input_handle:Any
+tensor:Any
+indices:Any
+name:Any
+=========
+import tensorflow as tf
+tf.raw_ops.TensorListConcatLists
+input_a:Any
+input_b:Any
+element_dtype:Any
+name:Any
+=========
